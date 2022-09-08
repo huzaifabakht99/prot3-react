@@ -11,6 +11,7 @@ import paymentIcon from "../assets/Group 7490.svg"
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { CartMenubar } from '../Components/CartMenubar';
 
 const theme = createTheme({
   palette: {
@@ -25,19 +26,33 @@ export const OrderDetail = () => {
     <ThemeProvider theme={theme}>
       <div className="menu-bar" >
         <KeyboardBackspaceRoundedIcon className="clear"/>
-        <h3 className="h3">Order # 564778</h3>
+        <h3 className="order-detail-menubar-heading">Order # 564778</h3>
         <CloseRoundedIcon className='clear'/>
     </div>
-      <div classNameName='orderDetail-main'>
+      <div className='orderDetail-main'>
 
         {/* <h2>Order Detail</h2> */}
-        <img className='gif' src={gif} alt='gif'/>
+        <h2 className='oderDeatial-heading'>Thankyou Hadia!</h2>
+        <p class="orderDetail-text">Your order is confirmed. We have accepted your order, 
+            and we’re getting it ready.</p>
+        <div className='gif-div'><img className='gif' src={gif} alt='gif'/></div>
         <h4 className='detail-heading'>You’ve Provided the following details:</h4>
         <div className='card-border'>
-          <OrderReviewCards heading={'Contact'} subheading={'card'} iconUrl={phoneIcon} text={"03305281803"} verified={true} btn={false}/>
-          <OrderReviewCards heading={'Shipping Info'} subheading={'card'} iconUrl={homeIcon} text={"03305281803"} verified={false} btn={false}/>
-          <OrderReviewCards heading={'Delivery Type'} subheading={'card'} iconUrl={deliveryIcon} text={"03305281803"} verified={false} btn={false}/>
-          <OrderReviewCards heading={'Payment Method'} subheading={'card'} iconUrl={paymentIcon} text={"03305281803"} verified={false} btn={false}/>
+          <div className='card-space'>
+            <OrderReviewCards className='card-space' heading={'Contact'} subheading={''} iconUrl={phoneIcon} text={"03305281803"} verified={true} btn={false}/>
+          </div>
+          <div className='card-space'>
+          <OrderReviewCards className='card-space' heading={'Shipping Info'} subheading={'card'} iconUrl={homeIcon} text={"03305281803"} verified={false} btn={false}/>
+
+          </div>
+          <div className='card-space'>
+          <OrderReviewCards className='card-space' heading={'Delivery Type'} subheading={'card'} iconUrl={deliveryIcon} text={"03305281803"} verified={false} btn={false}/>
+
+          </div>
+          <div className='card-space'>
+          <OrderReviewCards className='card-space' heading={'Payment Method'} subheading={'card'} iconUrl={paymentIcon} text={"03305281803"} verified={false} btn={false}/>
+
+          </div>
         </div>
         <div className='card-border'>
         <TotalCard/>
@@ -49,6 +64,7 @@ export const OrderDetail = () => {
           </div>
       </div>
       <div class="dummy-div"></div>
+      <footer  className='cartFixed'><CartMenubar/></footer>
     </ThemeProvider>
     </>
   )

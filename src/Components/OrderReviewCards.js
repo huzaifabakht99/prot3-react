@@ -21,7 +21,7 @@ export const OrderReviewCards = (props) => {
             </div>
         </div>
         <div>
-            { props.btn ?<button className="card-btn">
+            { props.btn ?<button className="card-btn" onClick={props.onClick}>
             Edit  <KeyboardArrowDownIcon />
             </button> :""}
             { props.verified? <img src={verifiedIcon} alt="" /> :""}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { OrderReviewCards } from '../Components/OrderReviewCards'
 import { TotalCard } from '../Components/TotalCard'
 import homeIcon from "../assets/Group 7492.svg"
@@ -8,6 +8,12 @@ import paymentIcon from "../assets/Group 7490.svg"
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { Drawer } from '@mui/material'
+import { EditContactInfo } from '../Components/EditContactInfo'
+import { EditShippingAddress } from '../Components/EditShippingAddress'
+import { EditDeliveryType } from '../Components/EditDeliveryType'
+import { EditPaymentMethod } from '../Components/EditPaymentMethod'
+import { CartMenubar } from '../Components/CartMenubar'
 // import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';
 
 
@@ -19,22 +25,26 @@ const theme = createTheme({
     },
   });
 export const ReturningUser = () => {
+  const [isEditContactOpen, setIsEditContactOpen] = useState(false)
+  const [isEditShippingOpen, setIsEditShippingOpen] = useState(false)
+  const [isEditDeliveryOpen, setIsEditDeliveryOpen] = useState(false)
+  const [isEditPaymentOpen, setIsEditPaymentOpen] = useState(false)
   return (
     <>
      <ThemeProvider theme={theme}>
     <div className='returningUser-main'>
         <h2 className='returningUser-heading'>Order Review</h2>
         <div className='card'>
-        <OrderReviewCards heading={'Contact'} subheading={'card'} iconUrl={phoneIcon} text={"03305281803"} btn={true} verified={false}/>
+        <OrderReviewCards heading={'Contact'} subheading={'card'} onClick={()=>setIsEditContactOpen(true)} iconUrl={phoneIcon} text={"03305281803"} btn={true} verified={false}/>
         </div>
         <div className='card'>
-        <OrderReviewCards heading={'Shipping Info'} subheading={'card'} iconUrl={homeIcon} text={"03305281803"} btn={true} verified={false}/>
+        <OrderReviewCards heading={'Shipping Info'} subheading={'card'} onClick={()=>setIsEditShippingOpen(true)} iconUrl={homeIcon} text={"03305281803"} btn={true} verified={false}/>
         </div>
         <div className='card'>
-        <OrderReviewCards heading={'Delivery Type'} subheading={'card'} iconUrl={deliveryIcon} text={"03305281803"} btn={true} verified={false}/>
+        <OrderReviewCards heading={'Delivery Type'} subheading={'card'} onClick={()=>setIsEditDeliveryOpen(true)} iconUrl={deliveryIcon} text={"03305281803"} btn={true} verified={false}/>
         </div>
         <div className='card'>
-        <OrderReviewCards heading={'Payment Method'} subheading={'card'} iconUrl={paymentIcon} text={"03305281803"} btn={true} verified={false}/>
+        <OrderReviewCards heading={'Payment Method'} subheading={'card'} onClick={()=>setIsEditPaymentOpen(true)} iconUrl={paymentIcon} text={"03305281803"} btn={true} verified={false}/>
         </div>
         <div className='card'>
         <TotalCard/>
@@ -49,6 +59,24 @@ checkout next time" />
 
     </div>
     <div class="dummy-div"></div>
+    <footer  className='cartFixed'><CartMenubar/></footer>
+    <Drawer anchor='bottom' open={isEditContactOpen} onClose={ ()=> setIsEditContactOpen(false)}>
+    
+        <EditContactInfo/>
+    </Drawer>
+    <Drawer  anchor='bottom' open={isEditShippingOpen} onClose={ ()=> setIsEditShippingOpen(false)}>
+    
+     <EditShippingAddress/>
+    </Drawer>
+    <Drawer  anchor='bottom' open={isEditDeliveryOpen} onClose={ ()=> setIsEditDeliveryOpen(false)}>
+    
+      <EditDeliveryType/>
+    </Drawer>
+    <Drawer  anchor='bottom' open={isEditPaymentOpen} onClose={ ()=> setIsEditPaymentOpen(false)}>
+      <EditPaymentMethod/>
+
+    </Drawer>
+
     </ThemeProvider>
     </>
   )

@@ -5,7 +5,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 
 
-export const EditDeliverType = (props) => {
+export const EditDeliveryType = (props) => {
   return (
     <>
     <div className='drawer-main'>

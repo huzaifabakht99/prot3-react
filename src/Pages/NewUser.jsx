@@ -15,6 +15,7 @@ import infoImg1 from "../assets/Group.svg"
 import RadioGroup from '@mui/material/RadioGroup';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles'
 import { Header } from '../Components/Header';
+import { CartMenubar } from '../Components/CartMenubar';
 
 // import TextField from '@mui/material/TextField';
 const theme = createTheme({
@@ -83,6 +84,7 @@ export const NewUser = (props) => {
         
     </div>
     <div class="dummy-div"></div>
+    <footer  className='cartFixed'><CartMenubar/></footer>
     </ThemeProvider>
 
 
