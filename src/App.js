@@ -4,6 +4,7 @@ import { NewUser } from './Pages/NewUser';
 import { ReturningUser } from './Pages/ReturningUser';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { SignIn } from './Pages/SignIn';
+import { OrderDetail } from './Pages/OrderDetail';
 import { Header } from './Components/Header';
 import { EditContactInfo } from './Components/EditContactInfo';
 
@@ -28,15 +29,16 @@ function App() {
    
     {/* <ReturningUser/>
     <OrderDetail/> */}
-    <Header/>
-    <Router>
+    {window.location.pathname!=='/order-detail' ? <Header/>:''}
+    {/* <Router>
     <Routes>
         <Route  path='/' element={<SignIn/>} />
         <Route  path='/new-user' element={<NewUser/>} />
         <Route  path='/returning-user' element={<ReturningUser/>} />
       </Routes>
-    </Router>
+    </Router> */}
     {/* <EditContactInfo/> */}
+    <OrderDetail/>
  
    
     </>
