@@ -31,16 +31,16 @@ function App() {
     {/* <ReturningUser/>
     <OrderDetail/> */}
     <Header/>
-    {/* <Router>
+    <Router>
     <Routes>
         <Route  path='/' element={<SignIn/>} />
         <Route  path='/new-user' element={<NewUser/>} />
         <Route  path='/returning-user' element={<ReturningUser/>} />
       </Routes>
-    </Router> */}
+    </Router>
     {/* <EditContactInfo/> */}
-    <OrderDetail/>
-    <ReturningUser/>
+    {/* <OrderDetail/>
+    <ReturningUser/> */}
 
     <footer  className='cartFixed'><CartMenubar/></footer>
  

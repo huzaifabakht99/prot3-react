@@ -62,6 +62,7 @@ button:disabled,
 .radio-div{
   display: flex;
   flex-direction: row;
+  /* width: 100%; */
 
 }
 .delivery-type-box{
@@ -71,6 +72,19 @@ button:disabled,
   border-radius: 6px;
   padding: 11px 13px;
   box-sizing: border-box;
+}
+.box{
+  /* width: 342px; */
+  height: auto;
+  color: #7D7D7D;
+  border-radius: 6px;
+  font-size:13px ;
+  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; */
+  padding: 11px;
+  margin: 10px 0px;
+  /* background-color: #F4F4F4; */
+  background-color: #f4f4f4;
+  margin-bottom: 25px;
 }
 .delivery-type-text-div{
   display: flex;
@@ -131,6 +145,15 @@ button:disabled,
   display: flex;
   align-items: center;
 
+
+
+}
+.radio-div-payment{
+
+  display: flex;
+
+  justify-content: space-between;
+  width: 100%;
 
 }
 .plans{

@@ -35,7 +35,7 @@ export const SignIn = () => {
 
         </div>
         <div class="dummy-div"></div>
-        <footer  className='cartFixed'><CartMenubar/></footer>
+        {/* <footer  className='cartFixed'><CartMenubar/></footer> */}
     </>
   )
 }

@@ -4,10 +4,8 @@ import {  useNavigate } from 'react-router-dom';
 
 
 export const Otp = () => {
-  const navigate = useNavigate;
-  const navToPage=()=>{
-    navigate('/newuser')
-  }
+  const navigate = useNavigate();
+  
   return (
     <>
     <div className="otp-main">
@@ -22,8 +20,8 @@ export const Otp = () => {
         <div className="otp-body">
             <div className="otp-input">
             <input id="partitioned" type="text" maxLength={4} />{" "}
-            <button onClick={()=> navToPage() } className="signIn">NewUser</button>
-            <button onClick={()=> navigate('/returninguser')} className="signIn">ReturningUser</button>
+            <button onClick={()=> navigate('/new-user') } className="signIn">NewUser</button>
+            <button onClick={()=> navigate('/returning-user')} className="signIn">ReturningUser</button>
             </div>
             <div className="otp-text">
             Enter the code we sent over SMS to <b>+(201) 555-0123</b>

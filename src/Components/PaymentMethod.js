@@ -8,14 +8,22 @@ export const PaymentMethod = (props) => {
   return (
     <>
     <div className="payment-method-div">
-        <div className='img-div'>
-        <MyFormControlLabel  id={props.DeliveryType}  value={props.value} control={<Radio />} />
-            <img src={props.imgUrl} alt="" />
+       
+        <MyFormControlLabel sx={{
+        display:'contents',
+        padding:'20px',
+        justifyContent:'space-between'}} label={
+        <div className='radio-div-payment'>
+          <div >
+              <img src={props.imgUrl} alt="" />
+          </div>
+          <div className='palns-div'>
+              <div className="plans">{props.plan}</div>
+              <div>  <KeyboardArrowDownIcon className='paymentMethod-icon'/></div>
+          </div>
         </div>
-        <div className='palns-div'>
-            <div className="plans">{props.plan}</div>
-          <div>  <KeyboardArrowDownIcon className='paymentMethod-icon'/></div>
-        </div>
+        }  id={props.DeliveryType}  value={props.value} control={<Radio />} />
+        
     </div>
 
     </>

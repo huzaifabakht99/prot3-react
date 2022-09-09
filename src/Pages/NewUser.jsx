@@ -16,6 +16,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles'
 import { Header } from '../Components/Header';
 import { CartMenubar } from '../Components/CartMenubar';
+import { Checkpoints } from '../Components/Checkpoints';
 
 // import TextField from '@mui/material/TextField';
 const theme = createTheme({
@@ -29,7 +30,8 @@ export const NewUser = (props) => {
   return (
     <>
     <ThemeProvider theme={theme}>
-     
+
+     {window.location.pathname==='/new-user' ?<Checkpoints/>:''}
     <div className='newUser-main'>
     
         {/* <CustomCheckbox defaultChecked /> */}
@@ -45,6 +47,9 @@ export const NewUser = (props) => {
         <FormControlLabel className='newUser-checkBox' control={<Checkbox defaultChecked />} label="My billing address is same as shipping." />
 
         <h2 className='newUser-headings'>2. Delivery Type</h2>
+        {/* <div class="box disabled" >
+                    <div class="required-shippingadd">Shipping options will show up once you enter shipping address</div>
+                </div> */}
         <RadioGroup aria-labelledby="demo-radio-buttons-group-label" defaultValue="Standard" name="radio-buttons-group">
             <DeliveryType DeliveryType={'Standard'} heading={' (6 to 9 business days) '} price={'$5.95'} date={' Thurs, Jan 16'}/>
             <DeliveryType DeliveryType={'Express'} heading={' (6 to 9 business days) '} price={'$12.95'} date={' Mon, Jan 13'}/>
@@ -84,7 +89,7 @@ export const NewUser = (props) => {
         
     </div>
     <div class="dummy-div"></div>
-    <footer  className='cartFixed'><CartMenubar/></footer>
+    {/* <footer  className='cartFixed'><CartMenubar/></footer> */}
     </ThemeProvider>
 
 
