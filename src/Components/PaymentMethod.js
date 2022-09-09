@@ -11,7 +11,7 @@ export const PaymentMethod = (props) => {
        
         <MyFormControlLabel sx={{
         display:'contents',
-        padding:'20px',
+        
         justifyContent:'space-between'}} label={
         <div className='radio-div-payment'>
           <div >
