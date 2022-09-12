@@ -6,16 +6,19 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import thumbnail from "../assets/Rectangle 206 (1).svg"
 import remove from "../assets/Group 697.svg"
+import { O3ds } from '../Components/O3ds'
 import { Cart } from './Cart';
+import { Dialog } from '@mui/material';
 
 export const CartMenubar = (props) => {
     
-    const [isCartOpen, setIsCartOpen] = useState(false)
+  const [is3dsOpen, setIs3dsOpen] =useState(false)
+  const [isCartOpen, setIsCartOpen] = useState(false)
   return (
     <>
     <div className="main">
         <button onClick={()=> setIsCartOpen(true)} className="price-btn"><div></div> $360 <KeyboardArrowUpIcon className='right-icon'/></button>
-        <button className="buy-btn">Buy <TrendingFlatRoundedIcon/></button>
+        <button className="buy-btn" onClick={()=> setIs3dsOpen(true)}>Buy<TrendingFlatRoundedIcon/></button>
     </div>
     <Drawer sx={{
         borderRadius:'5px',
@@ -25,6 +28,17 @@ export const CartMenubar = (props) => {
     
         <Cart/>
     </Drawer>
+    {/* <Drawer anchor='bottom' open={is3dsOpen} onClose={ ()=> setIs3dsOpen(false)}>
+      <O3ds/>
+      
+    </Drawer> */}
+
+<Dialog
+        open={is3dsOpen}
+        onClose={()=> setIs3dsOpen(false)}
+      >
+       <O3ds/>
+      </Dialog>
    
     </>
   )

@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import thumbnail from "../assets/Rectangle 206 (1).svg"
 import remove from "../assets/Group 697.svg"
 
 export const Cart = () => {
+const [showCounter, setShowCounter] =useState(false)
+const[ count, setCount] =useState(1) 
   return (
     <>
     <span className="cart-main">
@@ -28,20 +30,21 @@ export const Cart = () => {
                 <div className="amount">$360.00</div>
             </div>
             </div>
-            <div className="counter-div">
+            
+            {showCounter?<div className="counter-div">
             
                 <img src={remove} alt="" />
           
             <div className="counter">
-                <button className='btn-add-remove-counter'>
+                <button className='btn-add-remove-counter' onClick={()=> setCount(count-1)}>
                 <RemoveCircleRoundedIcon/>
                 </button>
-                <div>1</div>
-                <button className='btn-add-remove-counter'>
+                <div className='count'>{count}</div>
+                <button className='btn-add-remove-counter' onClick={()=> setCount(count+1)}>
                 <AddCircleRoundedIcon/>
                 </button>
             </div>
-            </div>
+            </div>:''}
             <hr  className='hr-cart'/>
             {/* <div><img src="../assets/Group 7550.svg" alt=""></div> */}
             <div>
@@ -73,7 +76,7 @@ export const Cart = () => {
             </div>
         </div>
         <div className="button-div">
-            <button className="edit-order">Edit Order</button>
+            <button onClick={()=> setShowCounter(!showCounter)} className="edit-order">Edit Order</button>
         </div>
     </span>
 

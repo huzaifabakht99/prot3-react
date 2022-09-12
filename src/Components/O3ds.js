@@ -1,7 +1,11 @@
 import React from 'react'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import { useNavigate, Link, useHistory } from 'react-router-dom';
+
 
 export const O3ds = () => {
+
+
   return (
     <>
     <div className="o3ds-main">
@@ -22,7 +26,7 @@ export const O3ds = () => {
           <div className="o3ds-input">
             <input id="partitioned" type="text" maxLength={4} />
           </div>
-          <button className="o3ds-btn">Confirm Payment</button>
+          <a href='/order-detail'><button className="o3ds-btn" >Confirm Payment</button></a>
           <div className="o3ds-resend">
             <a>Resend code</a>
           </div>

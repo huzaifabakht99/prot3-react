@@ -33,9 +33,10 @@ function App() {
     <Header/>
     <Router>
     <Routes>
-        <Route  path='/' element={<SignIn/>} />
-        <Route  path='/new-user' element={<NewUser/>} />
-        <Route  path='/returning-user' element={<ReturningUser/>} />
+        <Route  path='/' element={<SignIn/>}/>
+        <Route  path='/new-user' element={<NewUser/>}/>
+        <Route  path='/order-detail' element={<OrderDetail/>}/>
+        <Route  path='/returning-user' element={<ReturningUser/>}/>
       </Routes>
     </Router>
     {/* <EditContactInfo/> */}

@@ -20,7 +20,7 @@ export const Otp = () => {
         <div className="otp-body">
             <div className="otp-input">
             <input id="partitioned" type="text" maxLength={4} />{" "}
-            <button onClick={()=> navigate('/new-user') } className="signIn">NewUser</button>
+            <button onClick={()=> navigate('/new-user')} className="signIn">NewUser</button>
             <button onClick={()=> navigate('/returning-user')} className="signIn">ReturningUser</button>
             </div>
             <div className="otp-text">

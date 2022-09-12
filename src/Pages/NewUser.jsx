@@ -17,6 +17,7 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles'
 import { Header } from '../Components/Header';
 import { CartMenubar } from '../Components/CartMenubar';
 import { Checkpoints } from '../Components/Checkpoints';
+import { CardInput } from '../Components/CardInput';
 
 // import TextField from '@mui/material/TextField';
 const theme = createTheme({
