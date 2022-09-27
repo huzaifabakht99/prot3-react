@@ -1,51 +1,37 @@
 // import logo from './logo.svg';
-import './App.css';
-import { NewUser } from './Pages/NewUser';
-import { ReturningUser } from './Pages/ReturningUser';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { SignIn } from './Pages/SignIn';
-import { Header } from './Components/Header';
-import { EditContactInfo } from './Components/EditContactInfo';
-import { OrderDetail } from './Pages/OrderDetail';
-import { CartMenubar } from './Components/CartMenubar';
-
-
-
-
-
+import "./App.css";
+import { NewUser } from "./Pages/NewUser";
+import { ReturningUser } from "./Pages/ReturningUser";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { SignIn } from "./Pages/SignIn";
+import { Header } from "./Components/Header";
+import { EditContactInfo } from "./Components/EditContactInfo";
+import { OrderDetail } from "./Pages/OrderDetail";
+import { CartMenubar } from "./Components/CartMenubar";
+import { createContext, useState } from "react";
+import { inputContext } from "./Context/inputContext";
+import { Button } from "@mui/material";
 
 function App() {
+  const [formInputs, setFormInputs] = useState(5.95);
+
   return (
     <>
-    {/* <Input flagIcon={true} placeholder={'Phone Number'} button={true}/>
-    <DeliveryType DeliveryType={'Standard'} heading={' (6 to 9 business days) '} price={'$5.95'} date={' Thurs, Jan 16'}/>
-    <PaymentMethod/>
-    <Checkpoints/>
-    <CartMenubar/>
-    <Cart/>
-    <Otp/>
-    <O3ds/>
-    <TotalCard/>
-    <OrderReviewCards heading={'contact'} subheading={'card'} iconUrl={'../assets/Gruop7536.svg'} text={"03305281803"} btn={true} verified={true}/> */}
-   
-    {/* <ReturningUser/>
-    <OrderDetail/> */}
-    <Header/>
-    <Router>
-    <Routes>
-        <Route  path='/' element={<SignIn/>}/>
-        <Route  path='/new-user' element={<NewUser/>}/>
-        <Route  path='/order-detail' element={<OrderDetail/>}/>
-        <Route  path='/returning-user' element={<ReturningUser/>}/>
-      </Routes>
-    </Router>
-    {/* <EditContactInfo/> */}
-    {/* <OrderDetail/>
-    <ReturningUser/> */}
-
-    <footer  className='cartFixed'><CartMenubar/></footer>
- 
-   
+      <Button onClick={() => console.log(formInputs)}> asfasdsafa</Button>
+      {window.location.pathname !== "/order-detail" ? <Header /> : ""}
+      <inputContext.Provider value={{ formInputs, setFormInputs }}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<SignIn />} />
+            <Route path="/new-user" element={<NewUser />} />
+            <Route path="/order-detail" element={<OrderDetail />} />
+            <Route path="/returning-user" element={<ReturningUser />} />
+          </Routes>
+        </Router>
+        <footer className="cartFixed">
+          <CartMenubar />
+        </footer>
+      </inputContext.Provider>
     </>
   );
 }

@@ -8,11 +8,12 @@ export const PaymentMethod = (props) => {
   return (
     <>
     <div className="payment-method-div">
+      
        
         <MyFormControlLabel sx={{
         display:'contents',
         
-        justifyContent:'space-between'}} label={
+        justifyContent:'space-between'}}  id={props.DeliveryType}  value={props.value} control={<Radio />} />
         <div className='radio-div-payment'>
           <div >
               <img src={props.imgUrl} alt="" />
@@ -22,7 +23,6 @@ export const PaymentMethod = (props) => {
               <div>  <KeyboardArrowDownIcon className='paymentMethod-icon'/></div>
           </div>
         </div>
-        }  id={props.DeliveryType}  value={props.value} control={<Radio />} />
         
     </div>
 

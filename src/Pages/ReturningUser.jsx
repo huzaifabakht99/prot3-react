@@ -14,6 +14,7 @@ import { EditShippingAddress } from '../Components/EditShippingAddress'
 import { EditDeliveryType } from '../Components/EditDeliveryType'
 import { EditPaymentMethod } from '../Components/EditPaymentMethod'
 import { CartMenubar } from '../Components/CartMenubar'
+
 // import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';
 
 
@@ -54,6 +55,8 @@ checkout next time" />
         <div className='termsNpolicy'>
             By clicking Pay, you agree to create a 1-Click Checkout account under our <span className='terms'>Terms</span> of Use and <span className='policy'>Privacy Policy</span>
         </div>
+
+
 
 
 
