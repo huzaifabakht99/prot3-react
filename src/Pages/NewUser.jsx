@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DeliveryType } from "../Components/DeliveryType";
 import { Input } from "../Components/Input";
 import { PaymentMethod } from "../Components/PaymentMethod";
 import cardLogo from "../assets/Group 6939.svg";
+import MyFormControlLabel from "@mui/material/FormControlLabel";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import paypalLogo from "../assets/Group 6943.svg";
 import klarnaLogo from "../assets/Group 7552.svg";
@@ -15,11 +17,25 @@ import infoImg1 from "../assets/Group.svg";
 import RadioGroup from "@mui/material/RadioGroup";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Checkpoints } from "../Components/Checkpoints";
-import { Button, InputAdornment, TextField } from "@mui/material";
+import headerImg from "../assets/Group 7553 (1).svg";
+import {
+  Button,
+  Hidden,
+  InputAdornment,
+  Radio,
+  TextField,
+} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import CreditCardInput from "react-credit-card-input";
 import { inputContext } from "../Context/inputContext";
 import { useContext } from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import klarnaImg from "../assets/Group 7439.svg";
+import afterpayImg from "../assets/Group 7439 (1).svg";
 
 // import TextField from '@mui/material/TextField';
 const theme = createTheme({
@@ -51,7 +67,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const NewUser = (props) => {
-  // const formInputContext = useContext(inputContext);
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+  const { formInputs, setFormInputs } = useContext(inputContext);
   const [selectedDeliveryType, setDeliveryType] = useState(5.95);
   const handleDeliveryTypeChange = (ev) => {
     setDeliveryType({ selectedDeliveryType: ev.target.value });
@@ -59,33 +80,50 @@ export const NewUser = (props) => {
   const [selectedPaymentMethod, setPaymentMethod] = useState("card");
 
   const handlePaymentMethodChange = (ev) => {
-    setPaymentMethod({ selectedDeliveryType: ev.target.value });
+    setPaymentMethod({ selectedPaymentMethod: ev.target.value });
   };
   const [promoMsgShow, setPromoMsgShow] = useState(false);
   const classes = useStyles();
   const [isManualAddressOpen, setisManualAddressOpen] = useState(false);
 
-  const [inputs, setInputs] = useState({
-    email: "",
-    fullName: "",
-    shippingAddress: "",
-    addressLine1: "",
-    addressLine2: "",
-    city: "",
-    province: "",
-    country: "",
-    zip: "",
-    promoCode: "",
-  });
+  // const [inputs, setInputs] = useState({
+  //   email: "",
+  //   fullName: "",
+  //   shippingAddress: "",
+  //   addressLine1: "",
+  //   addressLine2: "",
+  //   city: "",
+  //   province: "",
+  //   country: "",
+  //   zip: "",
+  //   promoCode: "",
+  // });
   const handleInputChange = (e) => {
-    setInputs((prevState) => ({
+    setFormInputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs);
+    console.log(formInputs);
+  };
+  useEffect(() => {
+    setFormInputs((prevState) => ({
+      ...prevState,
+      disabledBtn: false,
+      station: "new-user",
+    }));
+  }, []);
+  useEffect(() => {
+    console.log("are you workign");
+  }, []);
+  const onPromoClick = () => {
+    setPromoMsgShow(true);
+    setFormInputs((prevState) => ({
+      ...prevState,
+      discount: 3,
+    }));
   };
 
   return (
@@ -102,7 +140,7 @@ export const NewUser = (props) => {
               sx={{ width: "100%" }}
               onChange={handleInputChange}
               name="email"
-              value={inputs.email}
+              value={formInputs.email}
               InputProps={{ disableUnderline: true }}
               className={classes.root}
               placeholder=" "
@@ -113,7 +151,7 @@ export const NewUser = (props) => {
 
             <TextField
               sx={{ width: "100%" }}
-              value={inputs.fullName}
+              value={formInputs.fullName}
               name="fullName"
               onChange={handleInputChange}
               InputProps={{ disableUnderline: true }}
@@ -126,7 +164,7 @@ export const NewUser = (props) => {
             <TextField
               sx={{ width: "100%" }}
               name="shippingAddress"
-              value={inputs.shippingAddress}
+              value={formInputs.shippingAddress}
               onChange={handleInputChange}
               InputProps={{ disableUnderline: true }}
               className={classes.root}
@@ -135,6 +173,7 @@ export const NewUser = (props) => {
               error={false}
               variant="filled"
             />
+
             {/* <Input flagIcon={true} placeholder={'Email'} button={false}/>  
                 <Input flagIcon={true} placeholder={'Full Name'} button={false}/> 
                 <Input flagIcon={true} placeholder={'Shipping Address'} button={false}/>  */}
@@ -159,7 +198,7 @@ export const NewUser = (props) => {
                   sx={{ width: "100%", paddingTop: "10px" }}
                   InputProps={{ disableUnderline: true }}
                   name="addressLine1"
-                  value={inputs.addressLine1}
+                  value={formInputs.addressLine1}
                   onChange={handleInputChange}
                   className={classes.root}
                   placeholder=" "
@@ -172,7 +211,7 @@ export const NewUser = (props) => {
                   sx={{ width: "100%" }}
                   InputProps={{ disableUnderline: true }}
                   name="addressLine2"
-                  value={inputs.addressLine2}
+                  value={formInputs.addressLine2}
                   onChange={handleInputChange}
                   className={classes.root}
                   placeholder=""
@@ -183,35 +222,8 @@ export const NewUser = (props) => {
                 <div className="flex-feilds">
                   <TextField
                     sx={{ width: "100%", paddingRight: "10px" }}
-                    InputProps={{ disableUnderline: true }}
-                    name="city"
-                    value={inputs.city}
-                    onChange={handleInputChange}
-                    className={classes.root}
-                    placeholder=""
-                    label="City"
-                    error={false}
-                    variant="filled"
-                  />
-                  <TextField
-                    sx={{ width: "100%" }}
-                    InputProps={{ disableUnderline: true }}
-                    name="province"
-                    value={inputs.province}
-                    onChange={handleInputChange}
-                    className={classes.root}
-                    placeholder=" "
-                    label="Province"
-                    error={false}
-                    variant="filled"
-                  />
-                </div>
-
-                <div className="flex-feilds">
-                  <TextField
-                    sx={{ width: "100%", paddingRight: "10px" }}
                     name="country"
-                    value={inputs.country}
+                    value={formInputs.country}
                     onChange={handleInputChange}
                     InputProps={{ disableUnderline: true }}
                     className={classes.root}
@@ -221,10 +233,36 @@ export const NewUser = (props) => {
                     variant="filled"
                   />
                   <TextField
-                    f
+                    sx={{ width: "100%" }}
+                    InputProps={{ disableUnderline: true }}
+                    name="province"
+                    value={formInputs.state}
+                    onChange={handleInputChange}
+                    className={classes.root}
+                    placeholder=" "
+                    label="State"
+                    error={false}
+                    variant="filled"
+                  />
+                </div>
+
+                <div className="flex-feilds">
+                  <TextField
+                    sx={{ width: "100%", paddingRight: "10px" }}
+                    InputProps={{ disableUnderline: true }}
+                    name="city"
+                    value={formInputs.city}
+                    onChange={handleInputChange}
+                    className={classes.root}
+                    placeholder=""
+                    label="City"
+                    error={false}
+                    variant="filled"
+                  />
+                  <TextField
                     sx={{ width: "100%" }}
                     name="zip"
-                    value={inputs.zip}
+                    value={formInputs.zip}
                     onChange={handleInputChange}
                     InputProps={{ disableUnderline: true }}
                     className={classes.root}
@@ -243,93 +281,423 @@ export const NewUser = (props) => {
             {/* <div class="box disabled" >
                         <div class="required-shippingadd">Shipping options will show up once you enter shipping address</div>
                     </div> */}
-            <RadioGroup
-              onChange={handleDeliveryTypeChange}
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="Standard"
-              name="radio-buttons-group"
-            >
-              <DeliveryType
-                DeliveryType={"Standard"}
-                heading={" (6 to 9 business days) "}
-                price={5.95}
-                date={" Thurs, Jan 16"}
-              />
-              <DeliveryType
-                DeliveryType={"Express"}
-                heading={" (6 to 9 business days) "}
-                price={12.95}
-                date={" Mon, Jan 13"}
-                // onChange={() =>
-                //   formInputContext.setFormInputs(
-                //     selectedDeliveryType.selectedDeliveryType
-                //   )
-                // }
-              />
-              <DeliveryType
-                className="deliveryTypeSpace"
-                DeliveryType={"Next Day"}
-                heading={" (6 to 9 business days) "}
-                price={22.95}
-                date={" Thurs, Jan 09"}
-                // onChange={() =>
-                //   formInputContext.setFormInputs(
-                //     selectedDeliveryType.selectedDeliveryType
-                //   )
-                // }
-              />
-            </RadioGroup>
+            {formInputs.shippingAddress ? (
+              <RadioGroup
+                onChange={handleDeliveryTypeChange}
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue={5.95}
+                name="radio-buttons-group"
+              >
+                <div
+                  className="delivery-type-box"
+                  style={{
+                    border:
+                      formInputs.deliveryType === "Standard"
+                        ? "1px solid #E71583"
+                        : "",
+                  }}
+                >
+                  <DeliveryType
+                    DeliveryType={"Standard"}
+                    heading={" (6 to 9 business days) "}
+                    price={5.95}
+                    date={" Thurs, Jan 16"}
+                  />
+                </div>
+                <div
+                  className="delivery-type-box"
+                  style={{
+                    border:
+                      formInputs.deliveryType === "Express"
+                        ? "1px solid #E71583"
+                        : "",
+                  }}
+                >
+                  <DeliveryType
+                    DeliveryType={"Express"}
+                    heading={" (6 to 9 business days) "}
+                    price={12.95}
+                    date={" Mon, Jan 13"}
+                    // onChange={() =>
+                    //   formInputContext.setFormformInputs(
+                    //     selectedDeliveryType.selectedDeliveryType
+                    //   )
+                    // }
+                  />
+                </div>
+                <div
+                  className="delivery-type-box"
+                  style={{
+                    border:
+                      formInputs.deliveryType === "Next Day"
+                        ? "1px solid #E71583"
+                        : "",
+                  }}
+                >
+                  <DeliveryType
+                    className="deliveryTypeSpace"
+                    DeliveryType={"Next Day"}
+                    heading={" (6 to 9 business days) "}
+                    price={22.95}
+                    date={" Thurs, Jan 09"}
+                    // onChange={() =>
+                    //   formInputContext.setFormformInputs(
+                    //     selectedDeliveryType.selectedDeliveryType
+                    //   )
+                    // }
+                  />
+                </div>
+              </RadioGroup>
+            ) : (
+              <div className="box disabled">
+                <div className="required-shippingadd">
+                  Shipping options will show up once you enter shipping address
+                </div>
+              </div>
+            )}
             <h2 className="newUser-headings">3. Payment Method</h2>
             <RadioGroup
               onChange={handlePaymentMethodChange}
               aria-labelledby="demo-radio-buttons-group-label"
               name="radio-buttons-group"
+              defaultValue={formInputs.paymentMethod}
             >
-              <PaymentMethod
-                className="newUser-payment-method"
-                imgUrl={cardLogo}
-                plan={"PAY FULL"}
-                value={"card"}
-              />
-              <CreditCardInput
-                className={classes.cardInput}
-                cardCVCInputProps={{
-                  onBlur: (e) => console.log("cvc blur", e),
-                  onChange: (e) => console.log("cvc change", e),
-                  onError: (err) => console.log(`cvc error: ${err}`),
-                }}
-              />
-              <PaymentMethod
-                className="newUser-payment-method"
-                imgUrl={paypalLogo}
-                plan={"PAY FULL"}
-                value={"paypal"}
-              />
-              <PaymentMethod
-                className="newUser-payment-method"
-                imgUrl={klarnaLogo}
-                plan={"PAY PLAN"}
-                value={"klarna"}
-              />
-              <PaymentMethod
-                className="newUser-payment-method"
-                imgUrl={clearpayLogo}
-                plan={"PAY PALN"}
-                value={"clearpay"}
-              />
-              <PaymentMethod
-                className="newUser-payment-method"
-                imgUrl={amazonLogo}
-                plan={"PAY FULL"}
-                value={"amazon"}
-              />
+              {/* <div>
+                <Accordion
+                  expanded={expanded === "panel0"}
+                  onChange={handleChange("panel0")}
+                >
+                  <AccordionSummary
+                    aria-controls="panel1bh-content"
+                    id="panel1bh-header"
+                  >
+                    <div className="payment-method-div">
+                      <MyFormControlLabel
+                        sx={{
+                          display: "contents",
+
+                          justifyContent: "space-between",
+                        }}
+                        id="cod"
+                        value="cod"
+                        control={<Radio />}
+                      />
+                      <div className="radio-div-payment">
+                        <div>
+                          <div className="cod">Cash on Delivery</div>
+                        </div>
+                        <div className="palns-div">
+                          <div className="plans">COD</div>
+                          <div>
+                            {" "}
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </AccordionSummary>
+                </Accordion>
+                <Accordion
+                  expanded={expanded === "panel1"}
+                  onChange={handleChange("panel1")}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1bh-content"
+                    id="panel1bh-header"
+                  >
+                    <PaymentMethod
+                      className="newUser-payment-method"
+                      imgUrl={cardLogo}
+                      plan={"PAY FULL"}
+                      value={"card"}
+                    />
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <CreditCardInput
+                      className={classes.cardInput}
+                      cardCVCInputProps={{
+                        onBlur: (e) => console.log("cvc blur", e),
+                        onChange: (e) => console.log("cvc change", e),
+                        onError: (err) => console.log(`cvc error: ${err}`),
+                      }}
+                    />
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion
+                  expanded={expanded === "panel2"}
+                  onChange={handleChange("panel2")}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel2bh-content"
+                    id="panel2bh-header"
+                  >
+                    <PaymentMethod
+                      className="newUser-payment-method"
+                      imgUrl={paypalLogo}
+                      plan={"PAY FULL"}
+                      value={"paypal"}
+                    />
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div class="option-expandes-more">
+                      <div class="website-link">
+                        <div class="text">
+                          Complete your transaction via PayPal by clicking on
+                          the button below
+                        </div>
+                        <div class="accordion-grey-text">
+                          PayPal will open in a new tab.
+                        </div>
+                      </div>
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion
+                  expanded={expanded === "panel3"}
+                  onChange={handleChange("panel3")}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel3bh-content"
+                    id="panel3bh-header"
+                  >
+                    <PaymentMethod
+                      className="newUser-payment-method"
+                      imgUrl={klarnaLogo}
+                      plan={"PAY PLAN"}
+                      value={"klarna"}
+                    />
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div class="klarna-div">
+                      <img src={klarnaImg} alt="" />
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion
+                  expanded={expanded === "panel4"}
+                  onChange={handleChange("panel4")}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel4bh-content"
+                    id="panel4bh-header"
+                  >
+                    <PaymentMethod
+                      className="newUser-payment-method"
+                      imgUrl={clearpayLogo}
+                      plan={"PAY PALN"}
+                      value={"clearpay"}
+                    />
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div class="option-expandes-more">
+                      <div class="afterpay-div">
+                        <img src={afterpayImg} alt="" />
+                      </div>
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion
+                  expanded={expanded === "panel5"}
+                  onChange={handleChange("panel5")}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel4bh-content"
+                    id="panel4bh-header"
+                  >
+                    <PaymentMethod
+                      className="newUser-payment-method"
+                      imgUrl={amazonLogo}
+                      plan={"PAY FULL"}
+                      value={"amazon"}
+                    />
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div class="option-expandes-more">
+                      <div class="website-link">
+                        <div class="accordion-text">
+                          Complete your transaction via PayPal by clicking on
+                          the button below
+                        </div>
+                        <div class="accordion-grey-text">
+                          Amazon will open in a new tab.
+                        </div>
+                      </div>
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
+              </div> */}
+              {/* -------------------1------------------------ */}
+              <div className="newUser-payment-method">
+                <div className="payment-method-div">
+                  <MyFormControlLabel
+                    sx={{
+                      display: "contents",
+
+                      justifyContent: "space-between",
+                    }}
+                    id="cod"
+                    value="cod"
+                    control={
+                      <Radio
+                        onClick={() =>
+                          setFormInputs((prevState) => ({
+                            ...prevState,
+                            paymentMethod: "cod",
+                          }))
+                        }
+                      />
+                    }
+                  />
+                  <div
+                    onClick={() =>
+                      setFormInputs((prevState) => ({
+                        ...prevState,
+                        paymentMethod: "cod",
+                      }))
+                    }
+                    className="radio-div-payment"
+                  >
+                    <div>
+                      <div className="cod">Cash on Delivery</div>
+                    </div>
+                    <div className="palns-div">
+                      <div
+                        style={{
+                          border:
+                            formInputs.paymentMethod === "cod"
+                              ? "2px solid #E71583"
+                              : " ",
+                        }}
+                        className="plans"
+                      >
+                        COD
+                      </div>
+                      <div>
+                        <KeyboardArrowDownIcon
+                          sx={{ visibility: "hidden" }}
+                          className="paymentMethod-icon"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* -------------------2------------------------ */}
+              <div className="newUser-payment-method">
+                <PaymentMethod
+                  className="newUser-payment-method"
+                  imgUrl={cardLogo}
+                  plan={"PAY FULL"}
+                  value={"card"}
+                />
+              </div>
+              {formInputs.paymentMethod === "card" ? (
+                <div className="card-input">
+                  <CreditCardInput
+                    className={classes.cardInput}
+                    cardCVCInputProps={{
+                      onBlur: (e) => console.log("cvc blur", e),
+                      onChange: (e) => console.log("cvc change", e),
+                      onError: (err) => console.log(`cvc error: ${err}`),
+                    }}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
+              {/* -------------------3------------------------ */}
+              <div className="newUser-payment-method">
+                <PaymentMethod
+                  className="newUser-payment-method"
+                  imgUrl={paypalLogo}
+                  plan={"PAY FULL"}
+                  value={"paypal"}
+                />
+              </div>
+              {formInputs.paymentMethod == "paypal" ? (
+                <div class="option-expandes-more">
+                  <div class="website-link">
+                    <div class="accordion-text">
+                      Complete your transaction via PayPal by clicking on the
+                      Buy button below
+                    </div>
+                    <div class="accordion-grey-text">
+                      PayPal will open in a new tab.
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+              {/* -------------------4------------------------ */}
+              <div className="newUser-payment-method">
+                <PaymentMethod
+                  className="newUser-payment-method"
+                  imgUrl={klarnaLogo}
+                  plan={"PAY PLAN"}
+                  value={"klarna"}
+                />
+              </div>
+              {formInputs.paymentMethod == "klarna" ? (
+                <div class="klarna-div">
+                  <img src={klarnaImg} alt="" />
+                </div>
+              ) : (
+                ""
+              )}
+              {/* -------------------5------------------------ */}
+              <div className="newUser-payment-method">
+                <PaymentMethod
+                  className="newUser-payment-method"
+                  imgUrl={clearpayLogo}
+                  plan={"PAY PLAN"}
+                  value={"clearpay"}
+                />
+              </div>
+              {formInputs.paymentMethod == "clearpay" ? (
+                <div class="option-expandes-more">
+                  <div class="afterpay-div">
+                    <img src={afterpayImg} alt="" />
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+              {/* -------------------1------------------------ */}
+              <div className="newUser-payment-method">
+                <PaymentMethod
+                  className="newUser-payment-method"
+                  imgUrl={amazonLogo}
+                  plan={"PAY FULL"}
+                  value={"amazon"}
+                />
+              </div>
+              {formInputs.paymentMethod == "amazon" ? (
+                <div class="option-expandes-more">
+                  <div class="website-link">
+                    <div class="accordion-text">
+                      Complete your transaction via PayPal by clicking on the
+                      Buy button below
+                    </div>
+                    <div class="accordion-grey-text">
+                      Amazon will open in a new tab.
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
             </RadioGroup>
             {/* <div className="promo-input-feild">
                 <input className="promo-feild" matinput="" placeholder=" Enter Promo Code" />
                 <button className="verify">Apply</button>
             </div> */}
             <TextField
-              f
               sx={{ width: "100%" }}
               InputProps={{
                 disableUnderline: true,
@@ -338,16 +706,16 @@ export const NewUser = (props) => {
                     <Button
                       sx={{ fontSize: "15px", fontWeight: "800" }}
                       className="verify"
-                      onClick={() => setPromoMsgShow(true)}
+                      onClick={() => onPromoClick()}
                     >
                       Apply
                     </Button>
                   </InputAdornment>
                 ),
               }}
-              type="number"
+              type="text"
               name="promoCode"
-              value={inputs.promoCode}
+              value={formInputs.promoCode}
               onChange={handleInputChange}
               disableUnderline={true}
               className={classes.root}
@@ -356,12 +724,22 @@ export const NewUser = (props) => {
               error={false}
               variant="filled"
             />
-            {promoMsgShow ? (
+            {formInputs.promoCode === "2020" && promoMsgShow == true ? (
               <div className="promo">
                 {/* <img src="../../assets/Promo Code Added! Please review your order detail for updated cart before making the payment..svg" alt=""> */}
                 <div className="promo-text">
                   Promo Code Added! Please review your order detail for updated
                   cart before making the payment.
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+            {formInputs.promoCode !== "2020" && promoMsgShow == true ? (
+              <div className="promo">
+                {/* <img src="../../assets/Promo Code Added! Please review your order detail for updated cart before making the payment..svg" alt=""> */}
+                <div className="promo-text-wrong">
+                  Unfortunatly!Promo Code didnt apply!
                 </div>
               </div>
             ) : (
@@ -375,14 +753,6 @@ export const NewUser = (props) => {
                 <img className="info-img-2" src={infoImg2} alt="" />
               </div>
             </div>
-            <Button
-              type="submit"
-              onClick={() =>
-                console.log(selectedDeliveryType.selectedDeliveryType)
-              }
-            >
-              Submit
-            </Button>
           </form>
         </div>
         <div class="dummy-div"></div>

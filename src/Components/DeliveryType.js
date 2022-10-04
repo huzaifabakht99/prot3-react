@@ -3,16 +3,21 @@ import React, { useContext } from "react";
 import MyFormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import { inputContext } from "../Context/inputContext";
+import { Email } from "@mui/icons-material";
 
 export const DeliveryType = (props) => {
   const { formInputs, setFormInputs } = useContext(inputContext);
+
   return (
     <>
-      <div className="delivery-type-box deliveryTypeSpace">
+      <div>
         {/* <input type="radio" id={props.DeliveryType} name="age" /> */}
 
         <div className="radio-div">
           <MyFormControlLabel
+            sx={{
+              alignItems: "start",
+            }}
             label={
               <div className="delivery-type-text-div">
                 <h4 className="delivery-type-text-heading">
@@ -34,7 +39,22 @@ export const DeliveryType = (props) => {
             }
             id={props.DeliveryType}
             value={props.price}
-            control={<Radio onClick={() => setFormInputs(props.price)} />}
+            control={
+              <Radio
+                sx={{
+                  paddingTop: "0px",
+                }}
+                onClick={() =>
+                  // newForm.deliveryType(50)
+
+                  setFormInputs((prevState) => ({
+                    ...prevState,
+                    deliveryType: props.DeliveryType,
+                    deliveryTypeAmount: props.price,
+                  }))
+                }
+              />
+            }
           />
         </div>
       </div>
