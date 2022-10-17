@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MyFormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
@@ -7,6 +7,13 @@ import { inputContext } from "../Context/inputContext";
 
 export const PaymentMethod = (props) => {
   const { formInputs, setFormInputs } = useContext(inputContext);
+  const handleRadio = () => {
+    props.setCardSelectedState(props.value);
+    setFormInputs((prevState) => ({
+      ...prevState,
+      paymentMethod: props.value,
+    }));
+  };
   return (
     <>
       <div className="payment-method-div">
@@ -17,30 +24,31 @@ export const PaymentMethod = (props) => {
 
             justifyContent: "space-between",
           }}
+          name={props.value}
           id={props.DeliveryType}
           value={props.value}
           control={
             <Radio
+              checked={props.value === props.cardSelectedState ? true : false}
               sx={{
                 paddingTop: "0px",
               }}
-              onClick={() =>
-                setFormInputs((prevState) => ({
-                  ...prevState,
-                  paymentMethod: props.value,
-                }))
-              }
+              onClick={handleRadio}
             />
           }
         />
         <div
           className="radio-div-payment"
-          onClick={() =>
+          onClick={() => {
             setFormInputs((prevState) => ({
               ...prevState,
               paymentMethod: props.value,
-            }))
-          }
+            }));
+
+            console.log("props.value => ", props.value);
+            console.log("props.cardSelectedState => ", props.cardSelectedState);
+            props.setCardSelectedState(props.value);
+          }}
         >
           <div>
             <img src={props.imgUrl} alt="" />

@@ -6,6 +6,9 @@ import {
   ThemeProvider,
   RadioGroup,
 } from "@mui/material";
+import OtpInput from "react-otp-input";
+import OTPInput, { ResendOTP } from "otp-input-react";
+
 import AddIcon from "@mui/icons-material/Add";
 import React, { useContext, useState } from "react";
 import MyFormControlLabel from "@mui/material/FormControlLabel";
@@ -38,6 +41,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const EditContactInfo = (props) => {
+  const [otp, setOtp] = useState("");
+  const handleChange = (e) => {
+    setOtp(e.target.value);
+  };
   const [inputList, setInputList] = useState([{ number: 133052818031 }]);
 
   const classes = useStyles();
@@ -174,8 +181,38 @@ export const EditContactInfo = (props) => {
               Please enter the 4-digit verification code we just sent to{" "}
               <b>{"nomber"}</b>{" "}
             </div>
-            <div class="otp-input">
-              <input id="partitioned" type="text" maxlength="4" />
+            <div style={{ margin: "30px", paddingLeft: "20px" }}>
+              {/* <OtpInput
+                value={OTP}
+                onChange={handleChange}
+                numInputs={4}
+                separator={<span style={{ width: "8px" }}></span>}
+                isInputNum={true}
+                shouldAutoFocus={true}
+                inputStyle={{
+                  border: "1px solid #e72e80",
+                  borderRadius: "4px",
+                  width: "30px",
+                  height: "30px",
+                  fontSize: "14px",
+                  color: "#000",
+                  fontWeight: "400",
+                  caretColor: "blue",
+                }}
+                focusStyle={{
+                  border: "1px solid #e72e80",
+                  boxShadow: "0 0 0.2rem #e72380",
+
+                  outline: "none",
+                }}
+              /> */}
+              <input
+                id="partitioned"
+                maxLength={4}
+                onChange={handleChange}
+                value={otp}
+                inputMode={"numeric"}
+              />
             </div>
             <div
               class="email-text"

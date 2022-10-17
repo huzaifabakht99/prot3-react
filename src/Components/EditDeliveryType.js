@@ -64,7 +64,9 @@ export const EditDeliveryType = (props) => {
               }}
               label={
                 <div>
-                  <p class="edit-dt-heading">Standard</p>
+                  <p class="edit-dt-heading">
+                    Standard <b>Free</b>
+                  </p>
                   <p class="edit-dt-detail">(6 to 9 Bussiness days)</p>
                 </div>
               }
@@ -81,7 +83,7 @@ export const EditDeliveryType = (props) => {
                     setReturningUserInputs((prevState) => ({
                       ...prevState,
 
-                      deliveryTypeAmount: 5.95,
+                      deliveryTypeAmount: 0,
                     }))
                   }
                 />

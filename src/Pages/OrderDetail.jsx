@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
 import img2 from "../assets/Group 7489.svg";
@@ -30,6 +30,14 @@ const theme = createTheme({
 });
 export const OrderDetail = () => {
   const { formInputs, setFormInputs } = useContext(inputContext);
+  useEffect(() => {
+    setFormInputs((prevState) => ({
+      ...prevState,
+      disabledBtn: false,
+      station: "order-detail",
+    }));
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <ThemeProvider theme={theme}>

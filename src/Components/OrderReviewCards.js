@@ -20,7 +20,7 @@ export const OrderReviewCards = (props) => {
             <img src={props.iconUrl} alt="" />
           </div>
           <div className="detail-info">
-            <h6 className="card-heading">{props.heading}</h6>
+            <h6 className="card-heading">{props.heading} </h6>
             {props.isImg ? (
               <div>
                 {returningUserInputs.paymentMethod === "cod" ||
@@ -60,9 +60,7 @@ export const OrderReviewCards = (props) => {
             ) : (
               ""
             )}
-            <h6 className="card-sub-heading">
-              {props ? props.subheading : "load"}
-            </h6>
+            <h6 className="card-sub-heading">{props.subheading} </h6>
             <div className="verified-contact">
               <p className="card-text">{props.text}</p>
             </div>

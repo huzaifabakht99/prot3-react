@@ -1,15 +1,41 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { useNavigate, Link, useHistory } from "react-router-dom";
-import OTPInput, { ResendOTP } from "otp-input-react";
+import OTPInput from "otp-input-react";
+import { inputContext } from "../Context/inputContext";
+import { Button } from "@mui/material";
+import OtpInput from "react-otp-input";
 
 export const O3ds = (props) => {
+  const { returningUserInputs, setReturningUserInputs } =
+    useContext(inputContext);
+  const { is3dsOpen, setIs3dsOpen } = useContext(inputContext);
+  const { formInputs, setFormInputs } = useContext(inputContext);
   const navigate = useNavigate();
   const onConfirmPayment = () => {
-    navigate("/order-detail");
+    {
+      formInputs.station === "new-user"
+        ? navigate("/order-detail")
+        : navigate("/order-detail-returning");
+    }
+    setIs3dsOpen(false);
   };
 
-  const [OTP, setOTP] = useState("");
+  const [otp, setOtp] = useState("");
+
+  // const handleChange = (element, index) => {
+  //   if (isNaN(element.value)) return false;
+
+  //   setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
+
+  //   //Focus next input
+  //   if (element.nextSibling) {
+  //     element.nextSibling.focus();
+  //   }
+  // };
+  const handleChange = (e) => {
+    setOtp(e.target.value);
+  };
   return (
     <>
       <div className="o3ds-main">
@@ -24,7 +50,12 @@ export const O3ds = (props) => {
             <div className="o3ds-heading">Purchase Authentication</div>
             <div className="o3ds-text">
               We have sent you text message to your registered mobile number{" "}
-              <b>+(201) 555-0123</b>
+              <b>
+                +
+                {formInputs.station === "new-user"
+                  ? formInputs.numberThroughSignin
+                  : formInputs.newNumber}
+              </b>
             </div>
             <h6 className="confirm-code-heading">Confirmation Code</h6>
 
@@ -36,9 +67,30 @@ export const O3ds = (props) => {
                 paddingLeft: "20px",
               }}
             >
-              <OTPInput
+              <input
+                id="partitioned"
+                maxLength={4}
+                onChange={handleChange}
+                value={otp}
+                inputMode={"numeric"}
+              />
+              {/* {otp.map((data, index) => {
+                return (
+                  <input
+                    className="single-otp-input-3ds"
+                    type="tel"
+                    name="otp"
+                    maxLength="1"
+                    key={index}
+                    value={data}
+                    onChange={(e) => handleChange(e.target, index)}
+                    onFocus={(e) => e.target.select()}
+                  />
+                );
+              })} */}
+              {/* <OTPInput
                 value={OTP}
-                onChange={setOTP}
+                onChange={(e) => setOTP(e.target.value)}
                 autoFocus
                 OTPLength={4}
                 otpType="number"
@@ -47,13 +99,18 @@ export const O3ds = (props) => {
                   border: "1px solid #000000",
                   borderRadius: "5px",
                 }}
-              />
+              /> */}
             </div>
 
             <a>
-              <button onClick={onConfirmPayment} className="o3ds-btn">
+              <Button
+                onClick={onConfirmPayment}
+                variant="contained"
+                disabled={otp === ""}
+                className="o3ds-btn"
+              >
                 Confirm Payment
-              </button>
+              </Button>
             </a>
             <div className="o3ds-resend">
               <a>Resend code</a>

@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 import thumbnail from "../assets/Rectangle 206 (1).svg";
@@ -18,7 +19,18 @@ export const Cart = (props) => {
         <div className="cart">
           {/* <img src="../assets/Group 7548.svg" alt=""> */}
           <div>
-            <h2 className="brand-name">Forever21</h2>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <h2 className="brand-name">Forever21</h2>
+              <a>
+                <CloseRoundedIcon className="clear" onClick={props.onClose} />
+              </a>
+            </div>
             <div className="product-detail">
               <div className="product-img-with-detail">
                 <img className="icon" src={thumbnail} alt="" />
@@ -79,7 +91,7 @@ export const Cart = (props) => {
                 {props.subtotal}
               </div>
             </div>
-            {formInputs.deliveryTypeAmount != 0 ||
+            {formInputs.station !== "" ||
             formInputs.station === "returning-user" ? (
               <div className="amount-row">
                 <div className="text">Shipping</div>

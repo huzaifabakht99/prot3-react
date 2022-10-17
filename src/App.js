@@ -2,6 +2,7 @@
 import "./App.css";
 import { NewUser } from "./Pages/NewUser";
 import { ReturningUser } from "./Pages/ReturningUser";
+import { OrderDetailReturning } from "./Pages/OrderDetailReturning";
 import {
   BrowserRouter,
   BrowserRouter as Router,
@@ -17,16 +18,18 @@ import { CartMenubar } from "./Components/CartMenubar";
 import { createContext, useState } from "react";
 import { inputContext } from "./Context/inputContext";
 import { Button } from "@mui/material";
+import { SignIn2 } from "./Pages/SignIn2";
 
 function App() {
   // variavle that have EditForm belongs to edit shipping drawer
+  const [is3dsOpen, setIs3dsOpen] = useState(false);
   const [returningUserInputs, setReturningUserInputs] = useState({
     numberThroughSignin: 1,
     fullName: "Huzaifa Bakht",
     shippingAddress: "545 W. 14th Street way , NY 77011",
     deliveryType: "Standard",
     paymentMethod: "cod",
-    deliveryTypeAmount: 5.95,
+    deliveryTypeAmount: 0,
   });
   const [formInputs, setFormInputs] = useState({
     numberThroughSignin: 1,
@@ -52,8 +55,9 @@ function App() {
     disabledBtn: false,
     station: "",
     deliveryTypeAmount: 0,
+    closeDialog: true,
 
-    productAmount: 360,
+    productAmount: 360.0,
     Quantity: 1,
     tax: 1.26,
     discount: 0,
@@ -70,12 +74,18 @@ function App() {
           setFormInputs,
           returningUserInputs,
           setReturningUserInputs,
+          is3dsOpen,
+          setIs3dsOpen,
         }}
       >
         <Routes>
-          <Route path="/" element={<SignIn />} />
+          <Route path="/" element={<SignIn2 />} />
           <Route path="/new-user" element={<NewUser />} />
           <Route path="/order-detail" element={<OrderDetail />} />
+          <Route
+            path="/order-detail-returning"
+            element={<OrderDetailReturning />}
+          />
           <Route path="/returning-user" element={<ReturningUser />} />
         </Routes>
 

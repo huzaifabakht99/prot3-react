@@ -50,7 +50,7 @@ export const CartMenubar = (props) => {
   const { returningUserInputs, setReturningUserInputs } =
     useContext(inputContext);
   const { formInputs, setFormInputs } = useContext(inputContext);
-  const [is3dsOpen, setIs3dsOpen] = useState(false);
+  const { is3dsOpen, setIs3dsOpen } = useContext(inputContext);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const handleCart = () => {
@@ -58,15 +58,28 @@ export const CartMenubar = (props) => {
     setIsCartOpen(true);
     console.log("working");
   };
+  const disable =
+    (formInputs.fullName !== "" &&
+      formInputs.email !== "" &&
+      formInputs.shippingAddress !== "" &&
+      formInputs.deliveryTypeAmount !== 0 &&
+      formInputs.paymentMethod !== "") ||
+    formInputs.disabledBtn !== false;
 
   return (
     <>
       <ThemeProvider theme={theme}>
         <div className="main">
+          {/* <div className="SignIn2-orderDetail">Order Detail</div> */}
           <button
             variant="contained"
             onClick={handleCart}
-            className="price-btn"
+            // onClick={() => console.log(disable)}
+            className="price-btn price-btn-signIn2 "
+            // style={{
+            //   transform: " translateY(-3px)",
+            //   boxShadow: " 0 10px 20px rgba(0, 0, 0, 0.2)",
+            // }}
           >
             <div></div> $
             {formInputs.station === "returning-user"
@@ -84,11 +97,29 @@ export const CartMenubar = (props) => {
             sx={{ backgroudColor: "#69696" }}
             variant="contained"
             className="buy-btn"
-            disabled={formInputs.disabledBtn}
-            onClick={() => setIs3dsOpen(true)}
+            disabled={
+              formInputs.station === "new-user"
+                ? !disable
+                : formInputs.disabledBtn
+            }
+            onClick={() => {
+              formInputs.station === "order-detail"
+                ? setIs3dsOpen(false)
+                : setIs3dsOpen(true);
+            }}
           >
-            Buy
-            <TrendingFlatRoundedIcon />
+            {formInputs.station === "order-detail" ? (
+              <span style={{ fontSize: "11px", lineHeight: "11px" }}>
+                Continue Shopping
+              </span>
+            ) : (
+              "Buy"
+            )}
+            {formInputs.station === "order-detail" ? (
+              ""
+            ) : (
+              <TrendingFlatRoundedIcon />
+            )}
           </Button>
         </div>
         <Drawer
@@ -96,15 +127,17 @@ export const CartMenubar = (props) => {
             borderRadius: "5px",
             position: "absolute",
             bottom: "100px",
+            paddingBottom: "8px",
           }}
           anchor="bottom"
           open={isCartOpen}
           onClose={() => setIsCartOpen(false)}
         >
           <Cart
+            onClose={() => setIsCartOpen(false)}
             currency="$"
             productName="Slim Fit"
-            productAmount={formInputs.productAmount}
+            productAmount={parseFloat(formInputs.productAmount.toFixed(2))}
             subtotal={
               formInputs.productAmount.toLocaleString(undefined, {
                 maximumFractionDigits: 2,
@@ -115,10 +148,13 @@ export const CartMenubar = (props) => {
             discount={formInputs.discount}
           />
         </Drawer>
-        {/* <Drawer anchor='bottom' open={is3dsOpen} onClose={ ()=> setIs3dsOpen(false)}>
-      <O3ds/>
-      
-    </Drawer> */}
+        {/* <Drawer
+          anchor="bottom"
+          open={is3dsOpen}
+          onClose={() => setIs3dsOpen(false)}
+        >
+          <O3ds onClose={() => setIs3dsOpen(false)} />
+        </Drawer> */}
         <Dialog open={is3dsOpen} onClose={() => setIs3dsOpen(false)}>
           <O3ds onClose={() => setIs3dsOpen(false)} />
         </Dialog>

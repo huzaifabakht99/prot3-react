@@ -28,7 +28,7 @@ Header {
   top: 0px;
   padding: 0px 10px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   box-shadow: 0px 0px 4px 0px rgb(130, 130, 130);
   height: 45px;
@@ -96,7 +96,7 @@ button:disabled {
   margin-top: 10px;
 }
 .card-input {
-  border: 1px solid #9a9696;
+  /* border: 1px solid #9a9696; */
   border-radius: 5px;
   padding: 6px;
 }
@@ -390,7 +390,7 @@ button:disabled {
 }
 .div {
   position: relative;
-  animation: mymove 3s infinite;
+  animation: mymove 3s forwards;
 }
 
 @keyframes mymove {
@@ -656,6 +656,42 @@ button:hover {
 }
 
 /* otp  */
+.single-otp-input {
+  color: black;
+  background-color: transparent;
+  width: 30px;
+  height: 30px;
+  outline: none;
+  padding: 0px;
+  margin: 0rem 0.3rem;
+  font-size: 14px;
+  font-weight: 400;
+  border: 1px solid #e72e80;
+  text-align: center;
+  border-radius: 4px;
+}
+.single-otp-input:focus,
+.single-otp-input:valid {
+  box-shadow: 0 0 0.2rem #e72380;
+}
+.single-otp-input-3ds {
+  color: black;
+  background-color: transparent;
+  width: 30px;
+  height: 30px;
+  outline: none;
+  padding: 0px;
+  margin: 0rem 0.3rem;
+  font-size: 14px;
+  font-weight: 400;
+  border: 1px solid #000000;
+  text-align: center;
+  border-radius: 4px;
+}
+.single-otp-input-3ds:focus,
+.single-otp-input-3ds:valid {
+  box-shadow: 0 0 0.2rem #000000;
+}
 .none {
   width: 24px;
   height: 24px;
@@ -679,17 +715,23 @@ input {
   border: none;
 }
 #partitioned {
+  order: 1px solid black;
   letter-spacing: 25px;
   border: 0;
-  /* background-image: linear-gradient(to left, black 70%, rgba(255, 255, 255, 0) 0%); */
-  background-position: bottom;
-  background-size: 50px 1px;
-  background-repeat: repeat-x;
-  background-position-x: 35px;
-  /* width: 220px; */
+  /* background-image: linear-gradient( to left, black 100%, rgba(196, 196, 196, 0) 50% ); */
+  background-image: url(./assets/Group7567.svg);
+  background-position: left;
+  /* background-size: 50px 1px; */
+  background-repeat: no-repeat;
+  /* background-position-x: 35px; */
+  width: 167px;
   outline: none;
   font-size: 15px;
-  text-align: center;
+  /* text-align: center; */
+  height: 30px;
+  padding: 0px 34px;
+  position: relative;
+  left: 31px;
 }
 .yourBrand {
   padding: 5px;
@@ -705,7 +747,7 @@ input {
   line-height: 16px;
   letter-spacing: 0em;
   text-align: left;
-  padding-top: 21px;
+  padding-top: 6px;
   padding-bottom: 35px;
 }
 .resend {
@@ -737,11 +779,12 @@ input {
   background-color: #e71583;
   color: white;
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 16px;
   letter-spacing: 0.01em;
   border-radius: 5px;
-  padding: 6px 17px;
+  padding: 6px 0px;
+  width: 102px;
 }
 .temp-btn {
   display: flex;
@@ -836,10 +879,14 @@ input {
 }
 
 .signIn-div {
+  position: absolute;
   background-color: white;
   padding: 15px;
   padding-top: 20px;
   box-shadow: 0px 14px 15px 0px #898888;
+  z-index: 3;
+  width: 100%;
+  box-sizing: border-box;
 }
 .signIn-heading {
   font-weight: 600;
@@ -862,7 +909,7 @@ input {
 .lock-text {
   width: 100px;
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   /* position: fixed;
   bottom: 130px; */
@@ -1031,6 +1078,9 @@ input {
 }
 
 /* Returning User  */
+.returningUser-heading {
+  margin-top: 0px;
+}
 
 .returningUser-main {
   padding: 30px 17px;
@@ -1210,4 +1260,29 @@ input {
 }
 .icon-img {
   width: 18px;
+}
+/* opt screen */
+.Otp-Fields-New {
+  height: 60px !important;
+  width: 60px !important;
+  border-radius: 10px;
+  /* border-color: rgba(0, 0, 0, 0.1); */
+  text-align: center;
+  font-size: 22px !important;
+  /* margin-left: 10px; */
+  margin-right: 10px;
+  border: 1px solid #d1d5db;
+}
+.Otp-Fields-New:focus {
+  outline: none;
+  border-color: #e72e817a !important;
+  box-shadow: 0 0px 0px 0.25rem #e72e8128 !important;
+  /* outline: 0 none !important; */
+}
+
+@media (max-width: 426px) {
+  .Otp-Fields-New {
+    height: 50px !important;
+    width: 50px !important;
+  }
 }

@@ -36,6 +36,8 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import klarnaImg from "../assets/Group 7439.svg";
 import afterpayImg from "../assets/Group 7439 (1).svg";
+import Cards from "react-credit-cards";
+import "react-credit-cards/es/styles-compiled.css";
 
 // import TextField from '@mui/material/TextField';
 const theme = createTheme({
@@ -67,11 +69,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const NewUser = (props) => {
-  const [expanded, setExpanded] = React.useState(false);
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardName, setCardName] = useState("");
+  const [cardExpiry, setCardExpiry] = useState("");
+  const [cardCvc, setCardCvc] = useState("");
+  const [focus, setFocus] = useState("");
+  // const [expanded, setExpanded] = React.useState(false);
 
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
+  // const handleChange = (panel) => (event, isExpanded) => {
+  //   setExpanded(isExpanded ? panel : false);
+  // };
   const { formInputs, setFormInputs } = useContext(inputContext);
   const [selectedDeliveryType, setDeliveryType] = useState(5.95);
   const handleDeliveryTypeChange = (ev) => {
@@ -85,6 +92,8 @@ export const NewUser = (props) => {
   const [promoMsgShow, setPromoMsgShow] = useState(false);
   const classes = useStyles();
   const [isManualAddressOpen, setisManualAddressOpen] = useState(false);
+
+  const [cardSelectedState, setCardSelectedState] = useState("cod");
 
   // const [inputs, setInputs] = useState({
   //   email: "",
@@ -104,6 +113,13 @@ export const NewUser = (props) => {
       [e.target.name]: e.target.value,
     }));
   };
+  const handleShippingInputChange = (e) => {
+    setFormInputs((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+      deliveryTypeAmount: 0,
+    }));
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formInputs);
@@ -115,15 +131,22 @@ export const NewUser = (props) => {
       station: "new-user",
     }));
   }, []);
-  useEffect(() => {
-    console.log("are you workign");
-  }, []);
+
   const onPromoClick = () => {
     setPromoMsgShow(true);
     setFormInputs((prevState) => ({
       ...prevState,
       discount: 3,
     }));
+  };
+  const handleCardNumberInput = (e) => {
+    setCardNumber(e.target.value);
+  };
+  const handleCardExpiryInput = (e) => {
+    setCardExpiry(e.target.value);
+  };
+  const handleCardCvcInput = (e) => {
+    setCardCvc(e.target.value);
   };
 
   return (
@@ -165,7 +188,7 @@ export const NewUser = (props) => {
               sx={{ width: "100%" }}
               name="shippingAddress"
               value={formInputs.shippingAddress}
-              onChange={handleInputChange}
+              onChange={handleShippingInputChange}
               InputProps={{ disableUnderline: true }}
               className={classes.root}
               placeholder=""
@@ -285,14 +308,14 @@ export const NewUser = (props) => {
               <RadioGroup
                 onChange={handleDeliveryTypeChange}
                 aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue={5.95}
+                defaultValue={0}
                 name="radio-buttons-group"
               >
                 <div
                   className="delivery-type-box"
                   style={{
                     border:
-                      formInputs.deliveryType === "Standard"
+                      formInputs.deliveryTypeAmount === 0
                         ? "1px solid #E71583"
                         : "",
                   }}
@@ -300,7 +323,7 @@ export const NewUser = (props) => {
                   <DeliveryType
                     DeliveryType={"Standard"}
                     heading={" (6 to 9 business days) "}
-                    price={5.95}
+                    price={0}
                     date={" Thurs, Jan 16"}
                   />
                 </div>
@@ -308,14 +331,14 @@ export const NewUser = (props) => {
                   className="delivery-type-box"
                   style={{
                     border:
-                      formInputs.deliveryType === "Express"
+                      formInputs.deliveryTypeAmount === 12.95
                         ? "1px solid #E71583"
                         : "",
                   }}
                 >
                   <DeliveryType
                     DeliveryType={"Express"}
-                    heading={" (6 to 9 business days) "}
+                    heading={" (2 to 3 business days) "}
                     price={12.95}
                     date={" Mon, Jan 13"}
                     // onChange={() =>
@@ -329,7 +352,7 @@ export const NewUser = (props) => {
                   className="delivery-type-box"
                   style={{
                     border:
-                      formInputs.deliveryType === "Next Day"
+                      formInputs.deliveryTypeAmount === 22.95
                         ? "1px solid #E71583"
                         : "",
                   }}
@@ -337,7 +360,7 @@ export const NewUser = (props) => {
                   <DeliveryType
                     className="deliveryTypeSpace"
                     DeliveryType={"Next Day"}
-                    heading={" (6 to 9 business days) "}
+                    heading={" (1 to 2 business days) "}
                     price={22.95}
                     date={" Thurs, Jan 09"}
                     // onChange={() =>
@@ -360,7 +383,6 @@ export const NewUser = (props) => {
               onChange={handlePaymentMethodChange}
               aria-labelledby="demo-radio-buttons-group-label"
               name="radio-buttons-group"
-              defaultValue={formInputs.paymentMethod}
             >
               {/* <div>
                 <Accordion
@@ -531,7 +553,9 @@ export const NewUser = (props) => {
                   </AccordionDetails>
                 </Accordion>
               </div> */}
+
               {/* -------------------1------------------------ */}
+
               <div className="newUser-payment-method">
                 <div className="payment-method-div">
                   <MyFormControlLabel
@@ -544,6 +568,7 @@ export const NewUser = (props) => {
                     value="cod"
                     control={
                       <Radio
+                        checked={cardSelectedState === "cod" ? true : false}
                         onClick={() =>
                           setFormInputs((prevState) => ({
                             ...prevState,
@@ -554,29 +579,14 @@ export const NewUser = (props) => {
                     }
                   />
                   <div
-                    onClick={() =>
-                      setFormInputs((prevState) => ({
-                        ...prevState,
-                        paymentMethod: "cod",
-                      }))
-                    }
+                    onClick={() => setCardSelectedState("cod")}
                     className="radio-div-payment"
                   >
                     <div>
                       <div className="cod">Cash on Delivery</div>
                     </div>
                     <div className="palns-div">
-                      <div
-                        style={{
-                          border:
-                            formInputs.paymentMethod === "cod"
-                              ? "2px solid #E71583"
-                              : " ",
-                        }}
-                        className="plans"
-                      >
-                        COD
-                      </div>
+                      <div className="plans">COD</div>
                       <div>
                         <KeyboardArrowDownIcon
                           sx={{ visibility: "hidden" }}
@@ -594,16 +604,129 @@ export const NewUser = (props) => {
                   imgUrl={cardLogo}
                   plan={"PAY FULL"}
                   value={"card"}
+                  setCardSelectedState={setCardSelectedState}
+                  cardSelectedState={cardSelectedState}
                 />
               </div>
               {formInputs.paymentMethod === "card" ? (
-                <div className="card-input">
+                <div
+                  className="card-input"
+                  style={{
+                    flexDirection: "column",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div className="cards-div">
+                    {/* <div style={{ paddingBottom: "20px" }}>
+                      <Cards
+                        cvc={cardCvc}
+                        expiry={cardExpiry}
+                        focused={focus}
+                        name={cardName}
+                        number={cardNumber}
+                      />
+                    </div> */}
+                    {/* <div>
+                      <TextField
+                        sx={{ width: "100%" }}
+                        onChange={handleCardInput}
+                        type="tel"
+                        name="cardNumber"
+                        placeholder="Card Number"
+                        value={cardNumber}
+                        InputProps={{ disableUnderline: true }}
+                        className={classes.root}
+                        label="Card Number"
+                        error={false}
+                        variant="filled"
+                        onFocus={(e) => setFocus(e.target.name)}
+                        onInput={(e) => {
+                          e.target.value = Math.max(0, e.target.value)
+                            .toString()
+                            .slice(0, 16);
+                        }}
+                      />
+                      <TextField
+                        sx={{ width: "100%" }}
+                        onChange={(e) => setCardName(e.target.value)}
+                        name="cardName"
+                        value={cardName}
+                        InputProps={{ disableUnderline: true }}
+                        className={classes.root}
+                        placeholder=" "
+                        label="Card Name"
+                        error={false}
+                        variant="filled"
+                        onFocus={(e) => setFocus(e.target.name)}
+                      />
+                      <div style={{ display: "flex" }}>
+                        <TextField
+                          sx={{ width: "100%", paddingRight: "10px" }}
+                          onChange={(e) => setCardExpiry(e.target.value)}
+                          name="expiry"
+                          value={cardExpiry}
+                          InputProps={{ disableUnderline: true }}
+                          className={classes.root}
+                          placeholder=" "
+                          label="Expiry"
+                          type="number"
+                          error={false}
+                          variant="filled"
+                          onFocus={(e) => setFocus(e.target.name)}
+                          onInput={(e) => {
+                            e.target.value = Math.max(0, e.target.value)
+                              .toString()
+                              .slice(0, 4);
+                          }}
+                        />
+                        <TextField
+                          type="password"
+                          sx={{ width: "100%" }}
+                          onChange={(e) => setCardCvc(e.target.value)}
+                          name="cvc"
+                          value={cardCvc}
+                          InputProps={{ disableUnderline: true }}
+                          className={classes.root}
+                          placeholder=" "
+                          label="CVC"
+                          error={false}
+                          variant="filled"
+                          onFocus={(e) => setFocus(e.target.name)}
+                          onInput={(e) => {
+                            e.target.value = Math.max(0, e.target.value)
+                              .toString()
+                              .slice(0, 3);
+                          }}
+                        />
+                      </div>
+                    </div> */}
+                  </div>
+
                   <CreditCardInput
                     className={classes.cardInput}
+                    // cardCVCInputProps={{
+                    //   onBlur: (e) => console.log("cvc blur", e),
+                    //   onChange: (e) => console.log("cvc change", e),
+                    //   // onError: (err) => console.log(`cvc error: ${err}`),
+                    // }}
+                    cardNumberInputProps={{
+                      value: cardNumber,
+                      onChange: handleCardNumberInput,
+                    }}
+                    cardExpiryInputProps={{
+                      value: cardExpiry,
+                      onChange: handleCardExpiryInput,
+                    }}
                     cardCVCInputProps={{
-                      onBlur: (e) => console.log("cvc blur", e),
-                      onChange: (e) => console.log("cvc change", e),
-                      onError: (err) => console.log(`cvc error: ${err}`),
+                      value: cardCvc,
+                      onChange: handleCardCvcInput,
+                    }}
+                    containerStyle={{}}
+                    fieldStyle={{
+                      border: "1px solid #c2c2c2",
+                      padding: "20px 10px",
+                      borderRadius: "6px",
                     }}
                   />
                 </div>
@@ -617,6 +740,8 @@ export const NewUser = (props) => {
                   imgUrl={paypalLogo}
                   plan={"PAY FULL"}
                   value={"paypal"}
+                  setCardSelectedState={setCardSelectedState}
+                  cardSelectedState={cardSelectedState}
                 />
               </div>
               {formInputs.paymentMethod == "paypal" ? (
@@ -641,6 +766,8 @@ export const NewUser = (props) => {
                   imgUrl={klarnaLogo}
                   plan={"PAY PLAN"}
                   value={"klarna"}
+                  setCardSelectedState={setCardSelectedState}
+                  cardSelectedState={cardSelectedState}
                 />
               </div>
               {formInputs.paymentMethod == "klarna" ? (
@@ -657,6 +784,8 @@ export const NewUser = (props) => {
                   imgUrl={clearpayLogo}
                   plan={"PAY PLAN"}
                   value={"clearpay"}
+                  setCardSelectedState={setCardSelectedState}
+                  cardSelectedState={cardSelectedState}
                 />
               </div>
               {formInputs.paymentMethod == "clearpay" ? (
@@ -675,6 +804,8 @@ export const NewUser = (props) => {
                   imgUrl={amazonLogo}
                   plan={"PAY FULL"}
                   value={"amazon"}
+                  setCardSelectedState={setCardSelectedState}
+                  cardSelectedState={cardSelectedState}
                 />
               </div>
               {formInputs.paymentMethod == "amazon" ? (
@@ -739,7 +870,7 @@ export const NewUser = (props) => {
               <div className="promo">
                 {/* <img src="../../assets/Promo Code Added! Please review your order detail for updated cart before making the payment..svg" alt=""> */}
                 <div className="promo-text-wrong">
-                  Unfortunatly!Promo Code didnt apply!
+                  Unfortunately!Promo Code didn't apply!
                 </div>
               </div>
             ) : (

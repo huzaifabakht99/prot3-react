@@ -26,7 +26,8 @@ export const DeliveryType = (props) => {
                   </span>
                   {props.heading}
                   <span className="delivery-type-heading-price">
-                    ${props.price.toString()}
+                    ${props.price}
+                    <span>{props.price !== 0 ? "" : " Free"}</span>
                   </span>
                 </h4>
                 <p className="delivery-type-text-detail">

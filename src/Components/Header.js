@@ -6,14 +6,14 @@ export const Header = (props) => {
   return (
     <>
       <div className="header-main">
-        <div class="none"></div>
+        {/* <div class="none"></div> */}
         <div className="images-div">
           <img src={headerImg} alt="" />
           <span class="yourBrand">Your Brand</span>
         </div>
-        <a>
+        {/* <a>
           <CloseRoundedIcon className="clear" />
-        </a>
+        </a> */}
       </div>
     </>
   );
