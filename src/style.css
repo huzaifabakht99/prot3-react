@@ -17,13 +17,14 @@
 }
 /* SinnIn2 */
 .signIn-heading {
-  margin-top: 45px !important;
-  font-size: 18px !important;
+  margin-top: 17px !important;
+  font-size: 16px !important;
   font-weight: 700 !important;
   line-height: 23px !important;
   letter-spacing: 0.01em !important;
   text-align: left !important;
-  margin-bottom: 7px;
+
+  padding-left: 0px !important;
 }
 .price-btn-signIn2 {
   background-color: #e72e80;
@@ -43,19 +44,20 @@
   text-align: left;
 }
 .signIn-text {
-  margin-bottom: 57px;
-  font-family: Manrope;
+  margin-bottom: 14px;
+
   font-size: 12px;
   font-weight: 500;
   line-height: 16px;
   letter-spacing: 0em;
   text-align: left;
+  padding-left: 0px !important;
 }
 .main-signIn2 {
   padding: 0px 14px;
 }
 .button-div {
-  margin-top: 85px;
+  margin-top: 22px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -63,13 +65,13 @@
 }
 .buttons {
   border: none;
-  background-color: black;
+  background-color: #e72e80;
   color: white;
   height: 50px;
   border-radius: 6px;
   width: 292px;
   font-family: Manrope;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 23px;
 }

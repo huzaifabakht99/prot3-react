@@ -92,15 +92,13 @@ export const SignIn2 = () => {
     <>
       <ThemeProvider theme={theme}>
         <div className="main-signIn2">
-          <div className="signIn-heading">
-            Sign In for a Faster Checkout and Access to Rewards
-          </div>
+          <div className="signIn-heading">Start your Checkout!</div>
           <div className="signIn-text">
-            We’ll send you a 4-digit code via SMS{" "}
-            <InfoOutlinedIcon
+            Enter your phone number below to start with the checkout process.
+            {/* <InfoOutlinedIcon
               fontSize="12px"
               sx={{ position: "relative", top: "2px" }}
-            ></InfoOutlinedIcon>
+            ></InfoOutlinedIcon> */}
           </div>
           <div className="singIn-number-input">
             <TextField
@@ -181,8 +179,7 @@ export const SignIn2 = () => {
               label={
                 <div className="lable">
                   By continuing. I agree to QisstPay{" "}
-                  <span className="terms">Terms of service</span> and authorize
-                  QisstPay to obtain, use, and share consumer reports about me.
+                  <span className="terms">Terms of service.</span>
                 </div>
               }
             />
@@ -193,7 +190,7 @@ export const SignIn2 = () => {
               onClick={() => setIsOtpOpen(true)}
               disabled={formInputs.numberThroughSignin.toString().length < 12}
             >
-              Sign In
+              Send OTP
             </button>
             <button className="white buttons">Guest Checkout</button>
           </div>
