@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import TrendingFlatRoundedIcon from "@mui/icons-material/TrendingFlatRounded";
 import Drawer from "@mui/material/Drawer";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
@@ -11,11 +10,13 @@ import { Cart } from "./Cart";
 import { Button, createTheme, Dialog, ThemeProvider } from "@mui/material";
 import { inputContext } from "../Context/inputContext";
 import { makeStyles } from "@mui/styles";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import LockIcon from "@mui/icons-material/Lock";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#111111",
+      main: "#e73e80",
     },
     disabled: { main: "#696969" },
   },
@@ -69,32 +70,39 @@ export const CartMenubar = (props) => {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <div className="main">
-          {/* <div className="SignIn2-orderDetail">Order Detail</div> */}
-          <button
-            variant="contained"
-            onClick={handleCart}
-            // onClick={() => console.log(disable)}
-            className="price-btn price-btn-signIn2 "
-            // style={{
-            //   transform: " translateY(-3px)",
-            //   boxShadow: " 0 10px 20px rgba(0, 0, 0, 0.2)",
-            // }}
+        <div
+          className="main"
+          style={{ dispaly: "flex", flexDirection: "column" }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              paddingTop: "7px",
+            }}
+            onClick={() => setIsCartOpen(true)}
           >
-            <div></div> $
-            {formInputs.station === "returning-user"
-              ? formInputs.productAmount * formInputs.Quantity +
-                returningUserInputs.deliveryTypeAmount +
-                formInputs.tax * formInputs.Quantity -
-                formInputs.discount
-              : formInputs.productAmount * formInputs.Quantity +
-                formInputs.deliveryTypeAmount +
-                formInputs.tax * formInputs.Quantity -
-                formInputs.discount}{" "}
-            <KeyboardArrowUpIcon className="right-icon" />
-          </button>
+            <div style={{ display: "flex" }}>
+              <ShoppingCartIcon fontSize="small" />
+              <div className="cart-menubar-text">Order Total (1 item) </div>
+              <KeyboardArrowUpIcon className="right-icon" />
+            </div>
+            <div className="cart-menubar-text">
+              $
+              {formInputs.station === "returning-user"
+                ? formInputs.productAmount * formInputs.Quantity +
+                  returningUserInputs.deliveryTypeAmount +
+                  formInputs.tax * formInputs.Quantity -
+                  formInputs.discount
+                : formInputs.productAmount * formInputs.Quantity +
+                  formInputs.deliveryTypeAmount +
+                  formInputs.tax * formInputs.Quantity -
+                  formInputs.discount}{" "}
+            </div>
+          </div>
           <Button
-            sx={{ backgroudColor: "#69696" }}
+            sx={{ width: "100%", height: "45px" }}
             variant="contained"
             className="buy-btn"
             disabled={
@@ -109,16 +117,16 @@ export const CartMenubar = (props) => {
             }}
           >
             {formInputs.station === "order-detail" ? (
+              ""
+            ) : (
+              <LockIcon fontSize="14px" />
+            )}
+            {formInputs.station === "order-detail" ? (
               <span style={{ fontSize: "11px", lineHeight: "11px" }}>
                 Continue Shopping
               </span>
             ) : (
-              "Buy"
-            )}
-            {formInputs.station === "order-detail" ? (
-              ""
-            ) : (
-              <TrendingFlatRoundedIcon />
+              " Place Order"
             )}
           </Button>
         </div>
