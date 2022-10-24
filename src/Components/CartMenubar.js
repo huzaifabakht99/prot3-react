@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import Drawer from "@mui/material/Drawer";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 import thumbnail from "../assets/Rectangle 206 (1).svg";
@@ -10,7 +12,6 @@ import { Cart } from "./Cart";
 import { Button, createTheme, Dialog, ThemeProvider } from "@mui/material";
 import { inputContext } from "../Context/inputContext";
 import { makeStyles } from "@mui/styles";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LockIcon from "@mui/icons-material/Lock";
 
 const theme = createTheme({
@@ -35,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
       border: "1px solid #C2C2C2",
       borderRadius: "6px",
     },
+  },
+  drawerPaper: {
+    borderRadius: "20px 20px 0 0",
   },
   cardInput: {
     border: "1px solid black",
@@ -72,7 +76,13 @@ export const CartMenubar = (props) => {
       <ThemeProvider theme={theme}>
         <div
           className="main"
-          style={{ dispaly: "flex", flexDirection: "column" }}
+          style={{
+            dispaly: "flex",
+            flexDirection: "column",
+            boxShadow: formInputs.isAnimation
+              ? "0px 0px 7px 0px #e72e80"
+              : "0px 0px 4px 0px rgb(130, 130, 130)",
+          }}
         >
           <div
             style={{
@@ -80,11 +90,16 @@ export const CartMenubar = (props) => {
               justifyContent: "space-between",
               width: "100%",
               paddingTop: "7px",
+              marginBottom: "10px",
             }}
             onClick={() => setIsCartOpen(true)}
           >
-            <div style={{ display: "flex" }}>
-              <ShoppingCartIcon fontSize="small" />
+            <div
+              style={{
+                display: "flex",
+              }}
+            >
+              <ShoppingCartIcon fontSize="small" sx={{ padding: "2px" }} />
               <div className="cart-menubar-text">Order Total (1 item) </div>
               <KeyboardArrowUpIcon className="right-icon" />
             </div>
@@ -131,6 +146,7 @@ export const CartMenubar = (props) => {
           </Button>
         </div>
         <Drawer
+          classes={{ paper: classes.drawerPaper }}
           sx={{
             borderRadius: "5px",
             position: "absolute",
@@ -144,7 +160,7 @@ export const CartMenubar = (props) => {
           <Cart
             onClose={() => setIsCartOpen(false)}
             currency="$"
-            productName="Slim Fit"
+            productName="MAVERICK STRONG ADHESIVE"
             productAmount={parseFloat(formInputs.productAmount.toFixed(2))}
             subtotal={
               formInputs.productAmount.toLocaleString(undefined, {

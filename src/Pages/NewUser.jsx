@@ -38,6 +38,13 @@ import klarnaImg from "../assets/Group 7439.svg";
 import afterpayImg from "../assets/Group 7439 (1).svg";
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import PlacesAutocomplete from "react-places-autocomplete";
+import {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng,
+} from "react-places-autocomplete";
 
 // import TextField from '@mui/material/TextField';
 const theme = createTheme({
@@ -51,12 +58,29 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiFilledInput-root.Mui-focused": {
       backgroundColor: "white",
-      border: "1px solid #E71583",
+      outline: " none",
+      borderColor: "#e72e817a ",
+      boxShadow: " 0 0px 0px 0.15rem #e72e8128",
     },
     "& .MuiFilledInput-root": {
-      background: "white",
+      background: "#F6F6F6",
       width: "100%",
       marginBottom: "10px",
+
+      border: "1px solid #F6F6F6",
+      borderRadius: "6px",
+    },
+  },
+  promo: {
+    "& .MuiFilledInput-root.Mui-focused": {
+      backgroundColor: "white",
+      outline: " none",
+      borderColor: "#e72e817a ",
+      boxShadow: " 0 0px 0px 0.15rem #e72e8128",
+    },
+    "& .MuiFilledInput-root": {
+      background: "#F6F6F6",
+      width: "100%",
 
       border: "1px solid #C2C2C2",
       borderRadius: "6px",
@@ -69,6 +93,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const NewUser = (props) => {
+  const [address, setAddress] = useState("");
+  const [coordinates, setCoordinates] = useState({
+    lat: null,
+    long: null,
+  });
+  const handleSelectAddress = async (value) => {
+    const result = await geocodeByAddress(value);
+    const ll = getLatLng(result[0]);
+    console.log(ll);
+    setAddress(value);
+    setCoordinates(ll);
+  };
+
+  const [moreShippingAddress, setMoreShippingAddress] = useState(false);
+  const [manualShippingAddress, setManualShippingAddress] = useState(false);
   const [cardNumber, setCardNumber] = useState("");
   const [cardName, setCardName] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
@@ -113,10 +152,11 @@ export const NewUser = (props) => {
       [e.target.name]: e.target.value,
     }));
   };
+
   const handleShippingInputChange = (e) => {
     setFormInputs((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      shippingAddress: e.target.value,
       deliveryTypeAmount: 0,
     }));
   };
@@ -139,6 +179,14 @@ export const NewUser = (props) => {
       discount: 3,
     }));
   };
+  const onPromoRemove = () => {
+    setFormInputs((prevState) => ({
+      ...prevState,
+
+      promoCode: "",
+    }));
+    setPromoMsgShow(false);
+  };
   const handleCardNumberInput = (e) => {
     setCardNumber(e.target.value);
   };
@@ -147,6 +195,10 @@ export const NewUser = (props) => {
   };
   const handleCardCvcInput = (e) => {
     setCardCvc(e.target.value);
+  };
+  const handleMoreAdd = () => {
+    setMoreShippingAddress(false);
+    setManualShippingAddress(false);
   };
 
   return (
@@ -157,20 +209,7 @@ export const NewUser = (props) => {
           <form onSubmit={handleSubmit}>
             {/* <CustomCheckbox defaultChecked /> */}
 
-            <h2 className="newUser-headings">1. Shipping Information</h2>
-
-            <TextField
-              sx={{ width: "100%" }}
-              onChange={handleInputChange}
-              name="email"
-              value={formInputs.email}
-              InputProps={{ disableUnderline: true }}
-              className={classes.root}
-              placeholder=" "
-              label="Email"
-              error={false}
-              variant="filled"
-            />
+            <h2 className="newUser-headings">Enter Shipping Information</h2>
 
             <TextField
               sx={{ width: "100%" }}
@@ -186,6 +225,19 @@ export const NewUser = (props) => {
             />
             <TextField
               sx={{ width: "100%" }}
+              onChange={handleInputChange}
+              name="email"
+              value={formInputs.email}
+              InputProps={{ disableUnderline: true }}
+              className={classes.root}
+              placeholder=" "
+              label="Email"
+              error={false}
+              variant="filled"
+            />
+
+            {/* <TextField
+              sx={{ width: "100%" }}
               name="shippingAddress"
               value={formInputs.shippingAddress}
               onChange={handleShippingInputChange}
@@ -195,7 +247,69 @@ export const NewUser = (props) => {
               label="Shipping Address"
               error={false}
               variant="filled"
-            />
+            /> */}
+            {/* <p>latitude:{coordinates.lat}</p>
+            <p>longitude:{coordinates.long}</p>
+            <p>address:{address}</p> */}
+            <PlacesAutocomplete
+              value={address}
+              onChange={setAddress}
+              onSelect={handleSelectAddress}
+            >
+              {({
+                getInputProps,
+                suggestions,
+                getSuggestionItemProps,
+                loading,
+              }) => (
+                <div>
+                  {/* <input
+                    {...getInputProps({
+                      placeholder: "Search Places ...",
+                      className: "location-search-input",
+                    })}
+                  /> */}
+                  <TextField
+                    {...getInputProps({
+                      // placeholder: "Search Places ...",
+                      className: "location-search-input",
+                    })}
+                    sx={{ width: "100%" }}
+                    name="shippingAddress"
+                    // value={formInputs.shippingAddress}
+                    // onChange={handleShippingInputChange}
+                    InputProps={{ disableUnderline: true }}
+                    className={classes.root}
+                    // placeholder=""
+                    label="Shipping Address"
+                    error={false}
+                    variant="filled"
+                  />
+                  <div className="autocomplete-dropdown-container">
+                    {loading && <div>Loading...</div>}
+                    {suggestions.map((suggestion) => {
+                      const className = suggestion.active
+                        ? "suggestion-item--active"
+                        : "suggestion-item";
+                      // inline style for demonstration purpose
+                      const style = suggestion.active
+                        ? { backgroundColor: "#fafafa", cursor: "pointer" }
+                        : { backgroundColor: "#ffffff", cursor: "pointer" };
+                      return (
+                        <div
+                          {...getSuggestionItemProps(suggestion, {
+                            className,
+                            style,
+                          })}
+                        >
+                          <span>{suggestion.description}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </PlacesAutocomplete>
 
             {/* <Input flagIcon={true} placeholder={'Email'} button={false}/>  
                 <Input flagIcon={true} placeholder={'Full Name'} button={false}/> 
@@ -203,33 +317,142 @@ export const NewUser = (props) => {
             {/* <TextField className='newUser-textField' id="outlined-basic" label="Email" variant="outlined" />
                 <TextField className='newUser-textField' id="outlined-basic" label="Full Name" variant="outlined" />
                 <TextField className='newUser-textField' id="outlined-basic" label="Shipping Address" variant="outlined" /> */}
-            {/* <p className='manual-address'>Enter Address Manually</p>  */}
+            <p className="more-add-div">
+              {manualShippingAddress ? (
+                <a
+                  className="more-shipping-add"
+                  onClick={() => setMoreShippingAddress(!moreShippingAddress)}
+                >
+                  + Appartment, suit, building, etc.
+                </a>
+              ) : (
+                <a
+                  className="manual-address"
+                  onClick={() => setManualShippingAddress(true)}
+                >
+                  Enter Address Manually
+                </a>
+              )}
+            </p>
+            {moreShippingAddress ? (
+              <TextField
+                sx={{ width: "100%" }}
+                name="shippingAddress"
+                value={formInputs.shippingAddress}
+                onChange={handleShippingInputChange}
+                InputProps={{ disableUnderline: true }}
+                className={classes.root}
+                placeholder=""
+                label="Shipping Address"
+                error={false}
+                variant="filled"
+              />
+            ) : (
+              ""
+            )}
+            {manualShippingAddress ? (
+              <div>
+                <div className="flex-feilds">
+                  <TextField
+                    sx={{ width: "100%", paddingRight: "10px" }}
+                    name="zip"
+                    value={formInputs.zip}
+                    onChange={handleInputChange}
+                    InputProps={{ disableUnderline: true }}
+                    className={classes.root}
+                    placeholder=""
+                    label="Zip Code"
+                    error={false}
+                    variant="filled"
+                  />
+                  <TextField
+                    sx={{ width: "100%" }}
+                    InputProps={{ disableUnderline: true }}
+                    name="city"
+                    value={formInputs.city}
+                    onChange={handleInputChange}
+                    className={classes.root}
+                    placeholder=""
+                    label="City"
+                    error={false}
+                    variant="filled"
+                  />
+                </div>
+                <div className="flex-feilds">
+                  <TextField
+                    sx={{ width: "100%", paddingRight: "10px" }}
+                    InputProps={{ disableUnderline: true }}
+                    name="province"
+                    value={formInputs.state}
+                    onChange={handleInputChange}
+                    className={classes.root}
+                    placeholder=" "
+                    label="State"
+                    error={false}
+                    variant="filled"
+                  />
+                  <TextField
+                    sx={{ width: "100%" }}
+                    name="country"
+                    value={formInputs.country}
+                    onChange={handleInputChange}
+                    InputProps={{ disableUnderline: true }}
+                    className={classes.root}
+                    placeholder=""
+                    label="Country"
+                    error={false}
+                    variant="filled"
+                  />
+                </div>
+                <p className="more-add-div">
+                  <a className="more-shipping-add" onClick={handleMoreAdd}>
+                    or use Google auto fill address
+                  </a>
+                </p>
+              </div>
+            ) : (
+              ""
+            )}
             <FormControlLabel
               className="newUser-checkBox"
               control={
                 <Checkbox
+                  sx={{
+                    marginTop: "0px",
+                    // marginBottom: "10px",
+                    // paddingBottom: "20px",
+                    "& .MuiSvgIcon-root": {
+                      fontSize: "19px",
+                      color: "#000000",
+                      // paddingBottom: "20px",
+                    },
+                  }}
                   defaultChecked
                   onClick={() => setisManualAddressOpen(!isManualAddressOpen)}
                 />
               }
-              label="My billing address is same as shipping."
+              label={
+                <div className="lable">
+                  My billing address is same as shipping.
+                </div>
+              }
             />
 
             {isManualAddressOpen ? (
               <div>
                 <TextField
-                  sx={{ width: "100%", paddingTop: "10px" }}
+                  sx={{ width: "100%" }}
                   InputProps={{ disableUnderline: true }}
                   name="addressLine1"
                   value={formInputs.addressLine1}
                   onChange={handleInputChange}
                   className={classes.root}
                   placeholder=" "
-                  label="Address Line 1"
+                  label="Billing Address"
                   error={false}
                   variant="filled"
                 />
-
+                {/* 
                 <TextField
                   sx={{ width: "100%" }}
                   InputProps={{ disableUnderline: true }}
@@ -294,13 +517,15 @@ export const NewUser = (props) => {
                     error={false}
                     variant="filled"
                   />
-                </div>
+                </div> */}
               </div>
             ) : (
               ""
             )}
 
-            <h2 className="newUser-headings">2. Delivery Type</h2>
+            <hr className="newUser-hr" />
+
+            <h2 className="newUser-headings">Select Delivery Type</h2>
             {/* <div class="box disabled" >
                         <div class="required-shippingadd">Shipping options will show up once you enter shipping address</div>
                     </div> */}
@@ -374,11 +599,15 @@ export const NewUser = (props) => {
             ) : (
               <div className="box disabled">
                 <div className="required-shippingadd">
-                  Shipping options will show up once you enter shipping address
+                  Please enter shipping address to select delivery type.
                 </div>
               </div>
             )}
-            <h2 className="newUser-headings">3. Payment Method</h2>
+            <hr className="newUser-hr" />
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <h2 className="newUser-headings">Select Payment Method</h2>
+              <img className="info-img-2" src={infoImg2} alt="" />
+            </div>
             <RadioGroup
               onChange={handlePaymentMethodChange}
               aria-labelledby="demo-radio-buttons-group-label"
@@ -586,7 +815,7 @@ export const NewUser = (props) => {
                       <div className="cod">Cash on Delivery</div>
                     </div>
                     <div className="palns-div">
-                      <div className="plans">COD</div>
+                      <div className="plans">FULL PAYMENT</div>
                       <div>
                         <KeyboardArrowDownIcon
                           sx={{ visibility: "hidden" }}
@@ -602,7 +831,7 @@ export const NewUser = (props) => {
                 <PaymentMethod
                   className="newUser-payment-method"
                   imgUrl={cardLogo}
-                  plan={"PAY FULL"}
+                  plan={"FULL PAYMENT"}
                   value={"card"}
                   setCardSelectedState={setCardSelectedState}
                   cardSelectedState={cardSelectedState}
@@ -738,7 +967,7 @@ export const NewUser = (props) => {
                 <PaymentMethod
                   className="newUser-payment-method"
                   imgUrl={paypalLogo}
-                  plan={"PAY FULL"}
+                  plan={"FULL PAYMENT"}
                   value={"paypal"}
                   setCardSelectedState={setCardSelectedState}
                   cardSelectedState={cardSelectedState}
@@ -764,7 +993,7 @@ export const NewUser = (props) => {
                 <PaymentMethod
                   className="newUser-payment-method"
                   imgUrl={klarnaLogo}
-                  plan={"PAY PLAN"}
+                  plan={"INSTALLMENTS"}
                   value={"klarna"}
                   setCardSelectedState={setCardSelectedState}
                   cardSelectedState={cardSelectedState}
@@ -782,7 +1011,7 @@ export const NewUser = (props) => {
                 <PaymentMethod
                   className="newUser-payment-method"
                   imgUrl={clearpayLogo}
-                  plan={"PAY PLAN"}
+                  plan={"INSTALLMENTS"}
                   value={"clearpay"}
                   setCardSelectedState={setCardSelectedState}
                   cardSelectedState={cardSelectedState}
@@ -802,7 +1031,7 @@ export const NewUser = (props) => {
                 <PaymentMethod
                   className="newUser-payment-method"
                   imgUrl={amazonLogo}
-                  plan={"PAY FULL"}
+                  plan={"FULL PAYMENT"}
                   value={"amazon"}
                   setCardSelectedState={setCardSelectedState}
                   cardSelectedState={cardSelectedState}
@@ -828,19 +1057,60 @@ export const NewUser = (props) => {
                 <input className="promo-feild" matinput="" placeholder=" Enter Promo Code" />
                 <button className="verify">Apply</button>
             </div> */}
+
+            <div className="info">
+              <img id="info-img" src={infoImg1} alt="" />
+              <div className="info-text">
+                We will set this payment method as your default, that you can
+                change later.
+              </div>
+            </div>
+            <hr className="newUser-hr " />
+
+            <div className="promo-hr">Do you have a promode?</div>
             <TextField
               sx={{ width: "100%" }}
               InputProps={{
                 disableUnderline: true,
+                startAdornment: (
+                  <InputAdornment position="center" component="div">
+                    {formInputs.promoCode === "2020" && promoMsgShow == true ? (
+                      <VerifiedIcon
+                        sx={{
+                          paddingTop: "16px",
+                          paddingRight: "5px",
+                          color: "#2CAB00",
+                        }}
+                      />
+                    ) : (
+                      <VerifiedIcon
+                        sx={{
+                          paddingTop: "16px",
+                          paddingRight: "5px",
+                        }}
+                      />
+                    )}
+                  </InputAdornment>
+                ),
                 endAdornment: (
                   <InputAdornment position="center" component="div">
-                    <Button
-                      sx={{ fontSize: "15px", fontWeight: "800" }}
-                      className="verify"
-                      onClick={() => onPromoClick()}
-                    >
-                      Apply
-                    </Button>
+                    {formInputs.promoCode === "2020" && promoMsgShow == true ? (
+                      <Button
+                        sx={{ fontSize: "15px", fontWeight: "800" }}
+                        className="verify"
+                        onClick={() => onPromoRemove()}
+                      >
+                        Remove
+                      </Button>
+                    ) : (
+                      <Button
+                        sx={{ fontSize: "15px", fontWeight: "800" }}
+                        className="verify"
+                        onClick={() => onPromoClick()}
+                      >
+                        Apply
+                      </Button>
+                    )}
                   </InputAdornment>
                 ),
               }}
@@ -849,7 +1119,7 @@ export const NewUser = (props) => {
               value={formInputs.promoCode}
               onChange={handleInputChange}
               disableUnderline={true}
-              className={classes.root}
+              className={classes.promo}
               placeholder=""
               label="Enter Promo code here"
               error={false}
@@ -858,15 +1128,12 @@ export const NewUser = (props) => {
             {formInputs.promoCode === "2020" && promoMsgShow == true ? (
               <div className="promo">
                 {/* <img src="../../assets/Promo Code Added! Please review your order detail for updated cart before making the payment..svg" alt=""> */}
-                <div className="promo-text">
-                  Promo Code Added! Please review your order detail for updated
-                  cart before making the payment.
-                </div>
+                <div className="promo-text">-$5.00 (10% Off)</div>
               </div>
             ) : (
               ""
             )}
-            {formInputs.promoCode !== "2020" && promoMsgShow == true ? (
+            {formInputs.promoCode !== "2020" && promoMsgShow === true ? (
               <div className="promo">
                 {/* <img src="../../assets/Promo Code Added! Please review your order detail for updated cart before making the payment..svg" alt=""> */}
                 <div className="promo-text-wrong">
@@ -876,14 +1143,6 @@ export const NewUser = (props) => {
             ) : (
               ""
             )}
-            <div className="info">
-              <img id="info-img" src={infoImg1} alt="" />
-              <div className="info-text">
-                We will set this payment method as your default, that you can
-                change later.
-                <img className="info-img-2" src={infoImg2} alt="" />
-              </div>
-            </div>
           </form>
         </div>
         <div class="dummy-div"></div>

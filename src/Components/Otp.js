@@ -50,6 +50,7 @@ export const Otp = (props) => {
         <div className="otp-body">
           <div style={{ display: "inline-flex" }}>
             {/* <input android:inputType="textFilter"></input> */}
+
             <OtpInput
               // android:inputType="textNoSuggestions"
               // android:inputType="textFilter"
@@ -64,6 +65,7 @@ export const Otp = (props) => {
               // containerStyle="otp-container"
               shouldAutoFocus={true}
             />
+
             {/* {otp.map((data, index) => {
               return (
                 <input

@@ -20,6 +20,7 @@
     "react-native-credit-card-input": "^0.4.1",
     "react-otp-input": "^2.4.0",
     "react-phone-input-2": "^2.15.1",
+    "react-places-autocomplete": "^7.3.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.6",

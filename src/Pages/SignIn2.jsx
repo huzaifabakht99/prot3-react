@@ -6,6 +6,9 @@ import { Checkpoints } from "../Components/Checkpoints";
 import { Input } from "../Components/Input";
 import { makeStyles } from "@mui/styles";
 import AddIcon from "@mui/icons-material/Add";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import flagIcon from "../assets/Group 7554.svg";
 import { OrderReviewCards } from "../Components/OrderReviewCards";
@@ -17,6 +20,8 @@ import IntlTelInput from "react-intl-tel-input";
 import "react-intl-tel-input/dist/main.css";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import thumbnail from "../assets/Rectangle 206 (1).svg";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Button,
   createTheme,
@@ -51,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const SignIn2 = () => {
+  const [orderDetailOpen, setOrderDeatilOpen] = useState(true);
   const [isOtpOpen, setIsOtpOpen] = useState(false);
   const [phone, setPhone] = useState("");
   const classes = useStyles();
@@ -171,14 +177,20 @@ export const SignIn2 = () => {
               className="newUser-checkBox"
               control={
                 <Checkbox
-                  fontSize="5px"
-                  sx={{ paddingTop: "0px", marginTop: "0px" }}
+                  sx={{
+                    paddingTop: "1px",
+                    marginTop: "0px",
+                    "& .MuiSvgIcon-root": {
+                      fontSize: "19px",
+                      color: "#000000",
+                    },
+                  }}
                   defaultChecked
                 />
               }
               label={
                 <div className="lable">
-                  By continuing. I agree to QisstPay{" "}
+                  By continuing, I agree to QisstPay{" "}
                   <span className="terms">Terms of service.</span>
                 </div>
               }
@@ -193,6 +205,145 @@ export const SignIn2 = () => {
               Send OTP
             </button>
             <button className="white buttons">Guest Checkout</button>
+          </div>
+          <div className="signIn-ordeDetail">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+              onClick={() => setOrderDeatilOpen(!orderDetailOpen)}
+            >
+              <div style={{ display: " flex ", alignItems: "center" }}>
+                <ShoppingCartIcon fontSize="small" sx={{ padding: "2px" }} />
+                <h2 className="brand-name"> Order Detail </h2>
+              </div>
+              {orderDetailOpen ? (
+                <KeyboardArrowUpIcon className="right-icon" />
+              ) : (
+                <KeyboardArrowDownIcon className="right-icon" />
+              )}
+            </div>
+
+            {orderDetailOpen ? (
+              <div>
+                <div>
+                  <div className="product-detail">
+                    <div className="product-img-with-detail">
+                      <img className="icon" src={thumbnail} alt="" />
+                      <div className="product">
+                        <div className="text">MAVERICK STRONG ADHESIVE</div>
+                        <div>
+                          <div className="quantity">
+                            Size: 10ml, Qty: {formInputs.Quantity}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="amount">
+                      <div>
+                        {" "}
+                        ${parseFloat(formInputs.productAmount.toFixed(2))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr className="hr-cart" />
+                {/* <div><img src="../assets/Group 7550.svg" alt=""></div> */}
+                <div>
+                  <div className="amount-row">
+                    <div className="text">Subtotal</div>
+                    <div className="amount">
+                      $
+                      {formInputs.productAmount.toLocaleString(undefined, {
+                        maximumFractionDigits: 2,
+                      }) * formInputs.Quantity}
+                    </div>
+                  </div>
+                  <div className="amount-row">
+                    <div className="text">Shipping</div>
+                    <div className="amount">
+                      {formInputs.station !== "" ||
+                      formInputs.station === "returning-user" ? (
+                        <div>
+                          $
+                          {formInputs.station === "returning-user" ? (
+                            returningUserInputs.deliveryTypeAmount
+                          ) : (
+                            <div>
+                              {parseFloat(
+                                formInputs.deliveryTypeAmount.toFixed(2)
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="toBe-text">To be calculated</div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="amount-row">
+                    <div className="text">
+                      {formInputs.shippingAddress == ""
+                        ? "Estimated Tax"
+                        : "Tax"}
+                    </div>
+                    {formInputs.shippingAddress == "" ? (
+                      <div className="toBe-text">To be calculated</div>
+                    ) : (
+                      <div className="amount">
+                        ${" "}
+                        {parseFloat(
+                          formInputs.tax * formInputs.Quantity
+                        ).toFixed(2)}
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    className="amount-row"
+                    fxlayout="row"
+                    fxlayoutalign="space-between center"
+                  >
+                    <div className="text">Discount </div>
+                    <div className="amount">
+                      {formInputs.promoCode === "2020" ? (
+                        <div>${formInputs.discount}</div>
+                      ) : (
+                        "$0"
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <hr className="hr-cart" />
+                <div className="total-div" style={{ marginBottom: "30px" }}>
+                  <div className="total">Total</div>
+                  <div className="total">
+                    $
+                    {formInputs.station === "returning-user"
+                      ? parseFloat(
+                          (
+                            formInputs.productAmount * formInputs.Quantity +
+                            returningUserInputs.deliveryTypeAmount +
+                            formInputs.tax * formInputs.Quantity -
+                            formInputs.discount
+                          ).toFixed(2)
+                        )
+                      : parseFloat(
+                          (
+                            formInputs.productAmount * formInputs.Quantity +
+                            formInputs.deliveryTypeAmount +
+                            formInputs.tax * formInputs.Quantity -
+                            formInputs.discount
+                          ).toFixed(2)
+                        )}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </ThemeProvider>

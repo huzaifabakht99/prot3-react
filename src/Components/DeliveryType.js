@@ -52,6 +52,7 @@ export const DeliveryType = (props) => {
                     ...prevState,
                     deliveryType: props.DeliveryType,
                     deliveryTypeAmount: props.price,
+                    isAnimation: "glow",
                   }))
                 }
               />

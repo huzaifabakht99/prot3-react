@@ -32,7 +32,7 @@
   font-weight: 600;
 }
 .lable {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 16.39px;
 }
 .SignIn2-orderDetail {
@@ -55,6 +55,13 @@
 }
 .main-signIn2 {
   padding: 0px 14px;
+  margin-bottom: 165px;
+}
+.signIn-ordeDetail {
+  padding: 0px 15px 0px 15px;
+  margin-top: 30px;
+  border: 1px solid #cecece;
+  border-radius: 10px;
 }
 .button-div {
   margin-top: 22px;

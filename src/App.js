@@ -62,6 +62,8 @@ function App() {
     tax: 1.26,
     discount: 0,
     total: 0,
+
+    isAnimation: "",
   });
 
   return (
