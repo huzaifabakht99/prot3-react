@@ -191,7 +191,7 @@ export const SignIn2 = () => {
               label={
                 <div className="lable">
                   By continuing, I agree to QisstPay{" "}
-                  <span className="terms">Terms of service.</span>
+                  <button className="terms">Terms of service.</button>
                 </div>
               }
             />
@@ -204,7 +204,12 @@ export const SignIn2 = () => {
             >
               Send OTP
             </button>
-            <button className="white buttons">Guest Checkout</button>
+            <button
+              disabled={formInputs.numberThroughSignin.toString().length < 12}
+              className="white guest-btn buttons"
+            >
+              Guest Checkout
+            </button>
           </div>
           <div className="signIn-ordeDetail">
             <div
@@ -215,15 +220,24 @@ export const SignIn2 = () => {
               }}
               onClick={() => setOrderDeatilOpen(!orderDetailOpen)}
             >
-              <div style={{ display: " flex ", alignItems: "center" }}>
-                <ShoppingCartIcon fontSize="small" sx={{ padding: "2px" }} />
-                <h2 className="brand-name"> Order Detail </h2>
+              <div
+                style={{
+                  display: "flex",
+
+                  alignItems: "center",
+                }}
+              >
+                <div style={{ display: " flex ", alignItems: "center" }}>
+                  <ShoppingCartIcon fontSize="small" sx={{ padding: "2px" }} />
+                  <h2 className="brand-name"> Order Detail </h2>
+                </div>
+                {orderDetailOpen ? (
+                  <KeyboardArrowUpIcon className="right-icon" />
+                ) : (
+                  <KeyboardArrowDownIcon className="right-icon" />
+                )}
               </div>
-              {orderDetailOpen ? (
-                <KeyboardArrowUpIcon className="right-icon" />
-              ) : (
-                <KeyboardArrowDownIcon className="right-icon" />
-              )}
+              <div className="pink-btn-signin">+ Add More Products</div>
             </div>
 
             {orderDetailOpen ? (
@@ -251,9 +265,9 @@ export const SignIn2 = () => {
                 </div>
                 <hr className="hr-cart" />
                 {/* <div><img src="../assets/Group 7550.svg" alt=""></div> */}
-                <div>
+                <div style={{ paddingBottom: "5px" }}>
                   <div className="amount-row">
-                    <div className="text">Subtotal</div>
+                    <div className="text toBe-text">Subtotal</div>
                     <div className="amount">
                       $
                       {formInputs.productAmount.toLocaleString(undefined, {
@@ -262,7 +276,7 @@ export const SignIn2 = () => {
                     </div>
                   </div>
                   <div className="amount-row">
-                    <div className="text">Shipping</div>
+                    <div className="text toBe-text">Shipping</div>
                     <div className="amount">
                       {formInputs.station !== "" ||
                       formInputs.station === "returning-user" ? (
@@ -285,7 +299,7 @@ export const SignIn2 = () => {
                   </div>
 
                   <div className="amount-row">
-                    <div className="text">
+                    <div className="text toBe-text">
                       {formInputs.shippingAddress == ""
                         ? "Estimated Tax"
                         : "Tax"}
@@ -306,7 +320,7 @@ export const SignIn2 = () => {
                     fxlayout="row"
                     fxlayoutalign="space-between center"
                   >
-                    <div className="text">Discount </div>
+                    <div className="text toBe-text">Discount </div>
                     <div className="amount">
                       {formInputs.promoCode === "2020" ? (
                         <div>${formInputs.discount}</div>
@@ -316,8 +330,8 @@ export const SignIn2 = () => {
                     </div>
                   </div>
                 </div>
-                <hr className="hr-cart" />
-                <div className="total-div" style={{ marginBottom: "30px" }}>
+                {/* <hr className="hr-cart" /> */}
+                {/* <div className="total-div" style={{ marginBottom: "30px" }}>
                   <div className="total">Total</div>
                   <div className="total">
                     $
@@ -339,7 +353,7 @@ export const SignIn2 = () => {
                           ).toFixed(2)
                         )}
                   </div>
-                </div>
+                </div> */}
               </div>
             ) : (
               ""

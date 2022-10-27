@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import MyFormControlLabel from "@mui/material/FormControlLabel";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { inputContext } from "../Context/inputContext";
+import DoneIcon from "@mui/icons-material/Done";
 
 export const EditDeliveryType = (props) => {
   const { returningUserInputs, setReturningUserInputs } =
@@ -47,113 +48,93 @@ export const EditDeliveryType = (props) => {
       <div className="edit-drawer-header">
         <h5 className="drawer-heading">DELIVERY TYPE</h5>
         <a>
-          <CloseRoundedIcon className="clear" onClick={props.onClose} />
+          <CloseRoundedIcon
+            className="clear"
+            fontSize="1.3rem"
+            onClick={props.onClose}
+          />
         </a>
       </div>
+      <hr className="hr-drawer" />
+
       <div className="drawer-main">
         <div className="contactInfo">
-          <RadioGroup
-            onChange={handleDeliveryTypeChange}
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue={returningUserInputs.deliveryType}
-            name="radio-buttons-group"
+          <div
+            className="drawer-item-div"
+            onClick={() =>
+              setReturningUserInputs((prevState) => ({
+                ...prevState,
+                deliveryType: "Free Shipping",
+                deliveryTypeAmount: 0,
+              }))
+            }
           >
-            <MyFormControlLabel
-              sx={{
-                alignItems: "start",
-              }}
-              label={
-                <div>
-                  <p class="edit-dt-heading">
-                    Standard <b>Free</b>
-                  </p>
-                  <p class="edit-dt-detail">(6 to 9 Bussiness days)</p>
-                </div>
-              }
-              value={"Standard"}
-              name={5.95}
-              control={
-                <Radio
-                  sx={{
-                    paddingTop: "0px",
-                  }}
-                  onClick={() =>
-                    // newForm.deliveryType(50)
-
-                    setReturningUserInputs((prevState) => ({
-                      ...prevState,
-
-                      deliveryTypeAmount: 0,
-                    }))
-                  }
-                />
-              }
-            />
-            <MyFormControlLabel
-              sx={{
-                alignItems: "start",
-              }}
-              label={
-                <div>
-                  <p class="edit-dt-heading">Express</p>
-                  <p class="edit-dt-detail">(2 to 3 Bussiness days)</p>
-                </div>
-              }
-              value={"Express"}
-              name={12.95}
-              control={
-                <Radio
-                  sx={{
-                    paddingTop: "0px",
-                  }}
-                  onClick={() =>
-                    // newForm.deliveryType(50)
-
-                    setReturningUserInputs((prevState) => ({
-                      ...prevState,
-                      // deliveryType: selectedDeliveryType,
-                      deliveryTypeAmount: 12.95,
-                    }))
-                  }
-                />
-              }
-            />
-            <MyFormControlLabel
-              sx={{
-                alignItems: "start",
-              }}
-              label={
-                <div>
-                  <p class="edit-dt-heading">Next Day</p>
-                  <p class="edit-dt-detail">(1 to 2 Bussiness days)</p>
-                </div>
-              }
-              value={"Next Day"}
-              name={22.95}
-              control={
-                <Radio
-                  sx={{
-                    paddingTop: "0px",
-                  }}
-                  onClick={() =>
-                    // newForm.deliveryType(50)
-
-                    setReturningUserInputs((prevState) => ({
-                      ...prevState,
-                      // deliveryType: selectedDeliveryType,
-                      deliveryTypeAmount: 22.95,
-                    }))
-                  }
-                />
-              }
-            />
-          </RadioGroup>
-        </div>
-        <div className="drawer-btn-div">
-          <a className="addnew-btn">+Add New</a>
-          <button class="edit-drawer-done-btn" onClick={props.onClose}>
-            Done
-          </button>
+            <div className="tick-div">
+              {returningUserInputs.deliveryType === "Free Shipping" ? (
+                <DoneIcon sx={{ color: "#e72e80" }} />
+              ) : (
+                ""
+              )}
+            </div>
+            <div className="main-tick-content">
+              <div className="content-main-text">Free Shipping</div>
+              <div className="content-subtext">
+                Estimated delivery: 10-15 days
+              </div>
+            </div>
+          </div>
+          <hr className="hr-drawer" />
+          <div
+            className="drawer-item-div"
+            onClick={() =>
+              setReturningUserInputs((prevState) => ({
+                ...prevState,
+                deliveryType: "Standard Shipping",
+                deliveryTypeAmount: 12.95,
+              }))
+            }
+          >
+            <div className="tick-div">
+              {returningUserInputs.deliveryType === "Standard Shipping" ? (
+                <DoneIcon sx={{ color: "#e72e80" }} />
+              ) : (
+                ""
+              )}
+            </div>
+            <div className="main-tick-content">
+              <div className="content-main-text">
+                Standard Shipping: $12.95{" "}
+              </div>
+              <div className="content-subtext">
+                Estimated delivery: 3-5 days
+              </div>
+            </div>
+          </div>
+          <hr className="hr-drawer" />
+          <div
+            className="drawer-item-div"
+            onClick={() =>
+              setReturningUserInputs((prevState) => ({
+                ...prevState,
+                deliveryType: "Express Shipping",
+                deliveryTypeAmount: 22.95,
+              }))
+            }
+          >
+            <div className="tick-div">
+              {returningUserInputs.deliveryType === "Express Shipping" ? (
+                <DoneIcon sx={{ color: "#e72e80" }} />
+              ) : (
+                ""
+              )}
+            </div>
+            <div className="main-tick-content">
+              <div className="content-main-text">Express Shipping: $22.00</div>
+              <div className="content-subtext">
+                Estimated delivery: 1-2 days
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

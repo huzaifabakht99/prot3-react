@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { DeliveryType } from "../Components/DeliveryType";
 import { Input } from "../Components/Input";
 import { PaymentMethod } from "../Components/PaymentMethod";
@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
       background: "#F6F6F6",
       width: "100%",
 
-      border: "1px solid #C2C2C2",
+      border: "1px solid #F6F6F6",
       borderRadius: "6px",
     },
   },
@@ -102,8 +102,15 @@ export const NewUser = (props) => {
     const result = await geocodeByAddress(value);
     const ll = getLatLng(result[0]);
     console.log(ll);
+
     setAddress(value);
     setCoordinates(ll);
+    setFormInputs((prevState) => ({
+      ...prevState,
+      shippingAddress: value,
+    }));
+    setManualShippingAddress(true);
+    console.log(formInputs.shippingAddress);
   };
 
   const [moreShippingAddress, setMoreShippingAddress] = useState(false);
@@ -200,9 +207,27 @@ export const NewUser = (props) => {
     setMoreShippingAddress(false);
     setManualShippingAddress(false);
   };
+  // const listInnerRef = useRef();
+  // const handleScroll = () => {
+  //   if (listInnerRef.current) {
+  //     const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
+  //     if (scrollTop + clientHeight === scrollHeight) {
+  //       // TO SOMETHING HERE
+  //       console.log("Reached bottom");
+  //     }
+  //   }
+  // };
 
+  //
+  const handleScroll = (event) => {
+    const target = event.target;
+
+    if (target.scrollHeight - target.scrollTop === target.clientHeight) {
+      console.log("sfasfaswer");
+    }
+  };
   return (
-    <>
+    <div id="scroll" onScroll={handleScroll}>
       <ThemeProvider theme={theme}>
         {window.location.pathname === "/new-user" ? <Checkpoints /> : ""}
         <div className="newUser-main">
@@ -786,7 +811,15 @@ export const NewUser = (props) => {
               {/* -------------------1------------------------ */}
 
               <div className="newUser-payment-method">
-                <div className="payment-method-div">
+                <div
+                  className="payment-method-div"
+                  onClick={() =>
+                    setFormInputs((prevState) => ({
+                      ...prevState,
+                      paymentMethod: "cod",
+                    }))
+                  }
+                >
                   <MyFormControlLabel
                     sx={{
                       display: "contents",
@@ -1099,11 +1132,13 @@ export const NewUser = (props) => {
                         sx={{ fontSize: "15px", fontWeight: "800" }}
                         className="verify"
                         onClick={() => onPromoRemove()}
+                        disabled={formInputs.promoCode === ""}
                       >
                         Remove
                       </Button>
                     ) : (
                       <Button
+                        disabled={formInputs.promoCode === ""}
                         sx={{ fontSize: "15px", fontWeight: "800" }}
                         className="verify"
                         onClick={() => onPromoClick()}
@@ -1148,6 +1183,6 @@ export const NewUser = (props) => {
         <div class="dummy-div"></div>
         {/* <footer  className='cartFixed'><CartMenubar/></footer> */}
       </ThemeProvider>
-    </>
+    </div>
   );
 };

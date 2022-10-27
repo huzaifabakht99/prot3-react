@@ -4,6 +4,14 @@ import { makeStyles } from "@mui/styles";
 import MyFormControlLabel from "@mui/material/FormControlLabel";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { inputContext } from "../Context/inputContext";
+import DoneIcon from "@mui/icons-material/Done";
+import PlacesAutocomplete from "react-places-autocomplete";
+
+import {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng,
+} from "react-places-autocomplete";
 
 const theme = createTheme({
   palette: {
@@ -16,20 +24,41 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiFilledInput-root.Mui-focused": {
       backgroundColor: "white",
-      border: "1px solid #E71583",
+      outline: " none",
+      borderColor: "#e72e817a ",
+      boxShadow: " 0 0px 0px 0.15rem #e72e8128",
     },
     "& .MuiFilledInput-root": {
-      background: "white",
+      background: "#F6F6F6",
       width: "100%",
       marginBottom: "10px",
 
-      border: "1px solid #C2C2C2",
+      border: "1px solid #F6F6F6",
+      borderRadius: "6px",
+    },
+  },
+  promo: {
+    "& .MuiFilledInput-root.Mui-focused": {
+      backgroundColor: "white",
+      outline: " none",
+      borderColor: "#e72e817a ",
+      boxShadow: " 0 0px 0px 0.15rem #e72e8128",
+    },
+    "& .MuiFilledInput-root": {
+      background: "#F6F6F6",
+      width: "100%",
+      marginBottom: "10px",
+
+      border: "1px solid #F6F6F6",
       borderRadius: "6px",
     },
   },
   cardInput: {
     border: "1px solid black",
     padding: "20px",
+  },
+  drawerPaper: {
+    borderRadius: "20px 20px 0 0",
   },
 }));
 
@@ -39,12 +68,28 @@ export const EditShippingAddress = (props) => {
 
   const [inputList, setInputList] = useState([
     {
-      name: "Huzaifa Bakht",
-      address: "545 W. 14th Street way ",
-      country: "",
-      state: "NY",
-      city: "",
-      zip: " 77011",
+      name: "Hadia Ali",
+      address: "4717 Crummit Lane",
+      country: "USA",
+      state: " Nebraska",
+      city: "Omaha",
+      zip: " 68102",
+    },
+    {
+      name: "Usman Nasir",
+      address: "52 Hillcrest Circle",
+      country: "USA",
+      state: " Minnesota",
+      city: "Minneapolis",
+      zip: " 55415",
+    },
+    {
+      name: "Jordan Olivas",
+      address: "920 Lynch Street",
+      country: "USA",
+      state: " California",
+      city: "San Jose",
+      zip: " 95110",
     },
   ]);
 
@@ -58,6 +103,32 @@ export const EditShippingAddress = (props) => {
     console.log(inputList.name);
   };
 
+  const [address, setAddress] = useState("");
+  const [coordinates, setCoordinates] = useState({
+    lat: null,
+    long: null,
+  });
+  const handleSelectAddress = async (value) => {
+    const result = await geocodeByAddress(value);
+    const ll = getLatLng(result[0]);
+    console.log(ll);
+    setAddress(value);
+    setCoordinates(ll);
+  };
+  const handleShippingInputChange = (e) => {
+    setFormInputs((prevState) => ({
+      ...prevState,
+      shippingAddress: e.target.value,
+      deliveryTypeAmount: 0,
+    }));
+  };
+  const handleMoreAdd = () => {
+    setMoreShippingAddress(false);
+    setManualShippingAddress(false);
+  };
+
+  const [moreShippingAddress, setMoreShippingAddress] = useState(false);
+  const [manualShippingAddress, setManualShippingAddress] = useState(false);
   const [addNewAddress, setAddNewAddress] = useState(false);
   const { formInputs, setFormInputs } = useContext(inputContext);
   const handleInputChange = (e) => {
@@ -89,42 +160,45 @@ export const EditShippingAddress = (props) => {
           <CloseRoundedIcon className="clear" onClick={props.onClose} />
         </a>
       </div>
+      <hr className="hr-drawer" style={{ position: "absolute", top: "49px" }} />
       <div className="drawer-main">
         {addNewAddress ? (
           ""
         ) : (
           <div className="contactInfo">
-            <RadioGroup
-              onChange={handleShippingAddressChange}
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue={"standard"}
-              name="radio-buttons-group"
-            >
-              {inputList.map((item, i) => {
-                return (
-                  <MyFormControlLabel
-                    label={
-                      <div>
-                        <div>{item.name}</div>
-                        <div>
-                          {item.address + ", " + item.state + " " + item.zip}
-                        </div>
+            {inputList.map((item, i) => {
+              return (
+                <div>
+                  <hr className="hr-drawer" />
+                  <div className="drawer-item-div">
+                    <div className="tick-div">
+                      <DoneIcon sx={{ color: "#e72e80" }} />
+                    </div>
+                    <div className="main-tick-content">
+                      <div className="content-main-text">{item.name}</div>
+                      <div className="content-subtext">
+                        {item.address +
+                          "," +
+                          item.city +
+                          ", " +
+                          item.state +
+                          "," +
+                          item.zip +
+                          "," +
+                          item.country}
                       </div>
-                    }
-                    name={item.name}
-                    value={item.address + ", " + item.state + " " + item.zip}
-                    control={<Radio onClick={handleShippingAddressChange} />}
-                  />
-                );
-              })}
-            </RadioGroup>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
         {addNewAddress ? (
-          <div className="editShippingAddress ">
+          <div className="editShippingAddress " style={{ marginTop: "33px" }}>
             <div>
               <TextField
-                sx={{ width: "100%", paddingTop: "10px" }}
+                sx={{ width: "100%" }}
                 InputProps={{ disableUnderline: true }}
                 name="fullNameEditForm"
                 value={formInputs.fullNameEditForm}
@@ -136,79 +210,176 @@ export const EditShippingAddress = (props) => {
                 variant="filled"
               />
 
-              <TextField
-                sx={{ width: "100%" }}
-                InputProps={{ disableUnderline: true }}
-                name="addressEditForm"
-                value={formInputs.addressEditForm}
-                onChange={handleInputChange}
-                className={classes.root}
-                placeholder=""
-                label="Address"
-                error={false}
-                variant="filled"
-              />
-              <div className="flex-feilds">
-                <TextField
-                  sx={{ width: "100%", paddingRight: "10px" }}
-                  InputProps={{ disableUnderline: true }}
-                  name="countryEditForm"
-                  value={formInputs.countryEditForm}
-                  onChange={handleInputChange}
-                  className={classes.root}
-                  placeholder=""
-                  label="Country"
-                  error={false}
-                  variant="filled"
-                />
-                <TextField
-                  sx={{ width: "100%" }}
-                  InputProps={{ disableUnderline: true }}
-                  name="stateEditForm"
-                  value={formInputs.stateEditForm}
-                  onChange={handleInputChange}
-                  className={classes.root}
-                  placeholder=" "
-                  label="State"
-                  error={false}
-                  variant="filled"
-                />
-              </div>
+              <PlacesAutocomplete
+                value={address}
+                onChange={setAddress}
+                onSelect={handleSelectAddress}
+              >
+                {({
+                  getInputProps,
+                  suggestions,
+                  getSuggestionItemProps,
+                  loading,
+                }) => (
+                  <div>
+                    {/* <input
+                    {...getInputProps({
+                      placeholder: "Search Places ...",
+                      className: "location-search-input",
+                    })}
+                  /> */}
+                    <TextField
+                      {...getInputProps({
+                        // placeholder: "Search Places ...",
+                        className: "location-search-input",
+                      })}
+                      sx={{ width: "100%" }}
+                      name="shippingAddress"
+                      // value={formInputs.shippingAddress}
+                      // onChange={handleShippingInputChange}
+                      InputProps={{ disableUnderline: true }}
+                      className={classes.root}
+                      // placeholder=""
+                      label="Shipping Address"
+                      error={false}
+                      variant="filled"
+                    />
+                    <div className="autocomplete-dropdown-container">
+                      {loading && <div>Loading...</div>}
+                      {suggestions.map((suggestion) => {
+                        const className = suggestion.active
+                          ? "suggestion-item--active"
+                          : "suggestion-item";
+                        // inline style for demonstration purpose
+                        const style = suggestion.active
+                          ? { backgroundColor: "#fafafa", cursor: "pointer" }
+                          : { backgroundColor: "#ffffff", cursor: "pointer" };
+                        return (
+                          <div
+                            {...getSuggestionItemProps(suggestion, {
+                              className,
+                              style,
+                            })}
+                          >
+                            <span>{suggestion.description}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </PlacesAutocomplete>
 
-              <div className="flex-feilds">
-                <TextField
-                  sx={{ width: "100%", paddingRight: "10px" }}
-                  name="cityEditForm"
-                  value={formInputs.cityEditForm}
-                  onChange={handleInputChange}
-                  InputProps={{ disableUnderline: true }}
-                  className={classes.root}
-                  placeholder=""
-                  label="City"
-                  error={false}
-                  variant="filled"
-                />
+              {/* <Input flagIcon={true} placeholder={'Email'} button={false}/>  
+                <Input flagIcon={true} placeholder={'Full Name'} button={false}/> 
+                <Input flagIcon={true} placeholder={'Shipping Address'} button={false}/>  */}
+              {/* <TextField className='newUser-textField' id="outlined-basic" label="Email" variant="outlined" />
+                <TextField className='newUser-textField' id="outlined-basic" label="Full Name" variant="outlined" />
+                <TextField className='newUser-textField' id="outlined-basic" label="Shipping Address" variant="outlined" /> */}
+              <p className="more-add-div">
+                {manualShippingAddress ? (
+                  <a
+                    className="more-shipping-add"
+                    onClick={() => setMoreShippingAddress(!moreShippingAddress)}
+                  >
+                    + Appartment, suit, building, etc.
+                  </a>
+                ) : (
+                  <a
+                    className="manual-address"
+                    onClick={() => setManualShippingAddress(true)}
+                  >
+                    Enter Address Manually
+                  </a>
+                )}
+              </p>
+              {moreShippingAddress ? (
                 <TextField
                   sx={{ width: "100%" }}
-                  name="zipEditForm"
-                  value={formInputs.zipEditForm}
-                  onChange={handleInputChange}
+                  name="shippingAddress"
+                  value={formInputs.shippingAddress}
+                  onChange={handleShippingInputChange}
                   InputProps={{ disableUnderline: true }}
                   className={classes.root}
                   placeholder=""
-                  label="Zip Code"
+                  label="Shipping Address"
                   error={false}
                   variant="filled"
                 />
-              </div>
+              ) : (
+                ""
+              )}
+              {manualShippingAddress ? (
+                <div>
+                  <div className="flex-feilds">
+                    <TextField
+                      sx={{ width: "100%", paddingRight: "10px" }}
+                      name="zip"
+                      value={formInputs.zip}
+                      onChange={handleInputChange}
+                      InputProps={{ disableUnderline: true }}
+                      className={classes.root}
+                      placeholder=""
+                      label="Zip Code"
+                      error={false}
+                      variant="filled"
+                    />
+                    <TextField
+                      sx={{ width: "100%" }}
+                      InputProps={{ disableUnderline: true }}
+                      name="city"
+                      value={formInputs.city}
+                      onChange={handleInputChange}
+                      className={classes.root}
+                      placeholder=""
+                      label="City"
+                      error={false}
+                      variant="filled"
+                    />
+                  </div>
+                  <div className="flex-feilds">
+                    <TextField
+                      sx={{ width: "100%", paddingRight: "10px" }}
+                      InputProps={{ disableUnderline: true }}
+                      name="province"
+                      value={formInputs.state}
+                      onChange={handleInputChange}
+                      className={classes.root}
+                      placeholder=" "
+                      label="State"
+                      error={false}
+                      variant="filled"
+                    />
+                    <TextField
+                      sx={{ width: "100%" }}
+                      name="country"
+                      value={formInputs.country}
+                      onChange={handleInputChange}
+                      InputProps={{ disableUnderline: true }}
+                      className={classes.root}
+                      placeholder=""
+                      label="Country"
+                      error={false}
+                      variant="filled"
+                    />
+                  </div>
+                  <p className="more-add-div">
+                    <a className="more-shipping-add" onClick={handleMoreAdd}>
+                      or use Google auto fill address
+                    </a>
+                  </p>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
             <div className="addNew-shipping ">
               <button
-                style={{ marginTop: "53px", marginBottom: "28px" }}
+                style={{ marginTop: "33px", marginBottom: "28px" }}
                 className="save-btn"
                 onClick={() => onSave()}
               >
-                Save
+                Save Address
               </button>
             </div>
           </div>
@@ -218,16 +389,16 @@ export const EditShippingAddress = (props) => {
         {addNewAddress ? (
           ""
         ) : (
-          <div className="drawer-btn-div">
+          <div
+            className="drawer-btn-div"
+            style={{ marginTop: "25px", marginBottom: "25px" }}
+          >
             <a
               className="addnew-btn"
               onClick={() => console.log(setAddNewAddress(true))}
             >
-              +Add New
+              + Add New Shipping Address
             </a>
-            <button class="edit-drawer-done-btn" onClick={props.onClose}>
-              Done
-            </button>
           </div>
         )}
       </div>

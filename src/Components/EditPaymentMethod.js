@@ -3,16 +3,63 @@ import React, { useContext, useState } from "react";
 import MyFormControlLabel from "@mui/material/FormControlLabel";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import cardLogo from "../assets/Group 7546.svg";
+import CreditCardInput from "react-credit-card-input";
+import "react-credit-cards/es/styles-compiled.css";
 import paypalLogo from "../assets/Group 7547.svg";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import klarnaLogo from "../assets/Group 7548 (1).svg";
 import amazonLogo from "../assets/Group 7547 (1).svg";
 import clearpayLogo from "../assets/Frame.svg";
 import cardLogo1 from "../assets/Group 7401.svg";
 import paypalLogo1 from "../assets/Group 7545 (1).svg";
-import klarnaLogo1 from "../assets/Group 7546 (1).svg";
+import klarnaLogo1 from "../assets/Group 7552.svg";
 import amazonLogo1 from "../assets/Group 7547 (1).svg";
-import clearpayLogo1 from "../assets/Frame.svg";
+import { makeStyles } from "@mui/styles";
+import clearpayLogo1 from "../assets/Group 7551 (1).svg";
+import masterCardLogo from "../assets/Group 7546.svg";
+import visaCardLogo from "../assets/Group 774.svg";
+
 import { inputContext } from "../Context/inputContext";
+import DoneIcon from "@mui/icons-material/Done";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& .MuiFilledInput-root.Mui-focused": {
+      backgroundColor: "white",
+      outline: " none",
+      borderColor: "#e72e817a ",
+      boxShadow: " 0 0px 0px 0.15rem #e72e8128",
+    },
+    "& .MuiFilledInput-root": {
+      background: "#F6F6F6",
+      width: "100%",
+      marginBottom: "10px",
+
+      border: "1px solid #F6F6F6",
+      borderRadius: "6px",
+    },
+  },
+  promo: {
+    "& .MuiFilledInput-root.Mui-focused": {
+      backgroundColor: "white",
+      outline: " none",
+      borderColor: "#e72e817a ",
+      boxShadow: " 0 0px 0px 0.15rem #e72e8128",
+    },
+    "& .MuiFilledInput-root": {
+      background: "#F6F6F6",
+      width: "100%",
+      marginBottom: "10px",
+
+      border: "1px solid #F6F6F6",
+      borderRadius: "6px",
+    },
+  },
+  cardInput: {
+    border: "1px solid black",
+    padding: "20px",
+  },
+}));
 
 export const EditPaymentMethod = (props) => {
   const { returningUserInputs, setReturningUserInputs } =
@@ -22,10 +69,15 @@ export const EditPaymentMethod = (props) => {
   const [showAmazon, setShowAmazon] = useState(false);
   const [showClearpay, setShowClearpay] = useState(false);
   const [selectedPaymentMethod, setPaymentMethod] = useState("card");
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardName, setCardName] = useState("");
+  const [cardExpiry, setCardExpiry] = useState("");
+  const [cardCvc, setCardCvc] = useState("");
 
   const handlePaymentMethodChange = (ev) => {
     setPaymentMethod({ selectedDeliveryType: ev.target.value });
   };
+  const classes = useStyles();
   const onAddAmazon = () => {
     setAddNewPayment(false);
     setShowAmazon(true);
@@ -33,6 +85,15 @@ export const EditPaymentMethod = (props) => {
   const onAddClearpay = () => {
     setAddNewPayment(false);
     setShowClearpay(true);
+  };
+  const handleCardNumberInput = (e) => {
+    setCardNumber(e.target.value);
+  };
+  const handleCardExpiryInput = (e) => {
+    setCardExpiry(e.target.value);
+  };
+  const handleCardCvcInput = (e) => {
+    setCardCvc(e.target.value);
   };
   return (
     <>
@@ -42,217 +103,364 @@ export const EditPaymentMethod = (props) => {
           <CloseRoundedIcon className="clear" onClick={props.onClose} />
         </a>
       </div>
-      <div className="drawer-main">
+      <hr className="hr-drawer" />
+      <div
+        className="drawer-main"
+        style={{ minHeight: "auto", paddingBottom: "5px" }}
+      >
         {addNewPaymnet ? (
           ""
         ) : (
           <div className="contactInfo">
-            <RadioGroup
-              onChange={handlePaymentMethodChange}
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue={returningUserInputs.paymentMethod}
-              name="radio-buttons-group"
+            <div
+              className="drawer-item-div"
+              onClick={() =>
+                setReturningUserInputs((prevState) => ({
+                  ...prevState,
+                  paymentMethod: "card1",
+                }))
+              }
             >
-              <MyFormControlLabel
-                sx={{
-                  alignItems: "start",
-                }}
-                label={
-                  <div className="pm-div">
-                    <div className="cod">Cash on Delivery</div>
-                  </div>
-                }
-                value={"cod"}
-                control={
-                  <Radio
-                    sx={{
-                      paddingTop: "0px",
-                      alignItems: "start",
-                    }}
-                    onClick={() =>
-                      setReturningUserInputs((prevState) => ({
-                        ...prevState,
-                        paymentMethod: "cod",
-                      }))
-                    }
-                  />
-                }
-              />
-              <MyFormControlLabel
-                sx={{
-                  alignItems: "start",
-                }}
-                label={
-                  <div className="pm-div">
-                    <img id="img" src={cardLogo} alt="" />
-                    <span> **** 4242</span>
-                  </div>
-                }
-                value={"card"}
-                control={
-                  <Radio
-                    sx={{
-                      paddingTop: "0px",
-                      alignItems: "flexStart",
-                    }}
-                    onClick={() =>
-                      setReturningUserInputs((prevState) => ({
-                        ...prevState,
-                        paymentMethod: "card",
-                      }))
-                    }
-                  />
-                }
-              />
-              <MyFormControlLabel
-                sx={{
-                  alignItems: "start",
-                }}
-                label={
-                  <div className="pm-div">
-                    <img id="img" src={paypalLogo} alt="" />
-                    <span> **** 4242</span>
-                  </div>
-                }
-                value={"paypal"}
-                control={
-                  <Radio
-                    sx={{
-                      paddingTop: "0px",
-                      alignItems: "flexStart",
-                    }}
-                    onClick={() =>
-                      setReturningUserInputs((prevState) => ({
-                        ...prevState,
-                        paymentMethod: "paypal",
-                      }))
-                    }
-                  />
-                }
-              />
-              <MyFormControlLabel
-                sx={{
-                  alignItems: "start",
-                }}
-                label={
-                  <div className="pm-div">
-                    <img id="img" src={klarnaLogo} alt="" />
-                    <span> **** 4242</span>
-                  </div>
-                }
-                value={"klarna"}
-                control={
-                  <Radio
-                    sx={{
-                      paddingTop: "0px",
-                      alignItems: "flexStart",
-                    }}
-                    onClick={() =>
-                      setReturningUserInputs((prevState) => ({
-                        ...prevState,
-                        paymentMethod: "klarna",
-                      }))
-                    }
-                  />
-                }
-              />
+              <div className="tick-div">
+                {" "}
+                {returningUserInputs.paymentMethod === "card1" ? (
+                  <DoneIcon sx={{ color: "#e72e80" }} />
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="main-tick-content">
+                <img src={masterCardLogo} />
+                <span style={{ visibility: "hidden" }}>w</span>
+                ****9087
+              </div>
+            </div>
+            <hr className="hr-drawer" />
+            <div
+              className="drawer-item-div"
+              onClick={() =>
+                setReturningUserInputs((prevState) => ({
+                  ...prevState,
+                  paymentMethod: "card2",
+                }))
+              }
+            >
+              <div className="tick-div">
+                {" "}
+                {returningUserInputs.paymentMethod === "card2" ? (
+                  <DoneIcon sx={{ color: "#e72e80" }} />
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="main-tick-content">
+                <img src={visaCardLogo} />
+                <span style={{ visibility: "hidden" }}>w</span>
+                ****9087
+              </div>
+            </div>
+            <hr className="hr-drawer" />
+            <div
+              className="drawer-item-div"
+              onClick={() =>
+                setReturningUserInputs((prevState) => ({
+                  ...prevState,
+                  paymentMethod: "amazon",
+                }))
+              }
+            >
+              <div className="tick-div">
+                {" "}
+                {returningUserInputs.paymentMethod === "amazon" ? (
+                  <DoneIcon sx={{ color: "#e72e80" }} />
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="main-tick-content">
+                <img src={amazonLogo1} />
+                <div>jordan.olivas@gmail.com</div>
+              </div>
+            </div>
 
-              {showAmazon ? (
-                <MyFormControlLabel
-                  sx={{
-                    alignItems: "start",
-                  }}
-                  label={
-                    <div className="pm-div">
-                      <img id="img" src={amazonLogo} alt="" />
-                      <span> **** 4242</span>
-                    </div>
-                  }
-                  value={"amazon"}
-                  control={
-                    <Radio
-                      sx={{
-                        paddingTop: "0px",
-                        alignItems: "flexStart",
-                      }}
-                      onClick={() =>
-                        setReturningUserInputs((prevState) => ({
-                          ...prevState,
-                          paymentMethod: "amazon",
-                        }))
-                      }
-                    />
-                  }
-                />
-              ) : (
-                ""
-              )}
+            {showAmazon ? (
+              <MyFormControlLabel
+                sx={{
+                  alignItems: "start",
+                }}
+                label={
+                  <div className="pm-div">
+                    <img id="img" src={amazonLogo} alt="" />
+                    <span> **** 4242</span>
+                  </div>
+                }
+                value={"amazon"}
+                control={
+                  <Radio
+                    sx={{
+                      paddingTop: "0px",
+                      alignItems: "flexStart",
+                    }}
+                    onClick={() =>
+                      setReturningUserInputs((prevState) => ({
+                        ...prevState,
+                        paymentMethod: "amazon",
+                      }))
+                    }
+                  />
+                }
+              />
+            ) : (
+              ""
+            )}
 
-              {showClearpay ? (
-                <MyFormControlLabel
-                  sx={{
-                    alignItems: "start",
-                  }}
-                  label={
-                    <div className="pm-div">
-                      <img id="img" src={clearpayLogo} alt="" />
-                      <span> **** 4242</span>
-                    </div>
-                  }
-                  value={"clear"}
-                  control={
-                    <Radio
-                      sx={{
-                        paddingTop: "0px",
-                      }}
-                      onClick={() =>
-                        setReturningUserInputs((prevState) => ({
-                          ...prevState,
-                          paymentMethod: "clearpay",
-                        }))
-                      }
-                    />
-                  }
-                />
-              ) : (
-                ""
-              )}
-            </RadioGroup>
+            {showClearpay ? (
+              <MyFormControlLabel
+                sx={{
+                  alignItems: "start",
+                }}
+                label={
+                  <div className="pm-div">
+                    <img id="img" src={clearpayLogo} alt="" />
+                    <span> **** 4242</span>
+                  </div>
+                }
+                value={"clear"}
+                control={
+                  <Radio
+                    sx={{
+                      paddingTop: "0px",
+                    }}
+                    onClick={() =>
+                      setReturningUserInputs((prevState) => ({
+                        ...prevState,
+                        paymentMethod: "clearpay",
+                      }))
+                    }
+                  />
+                }
+              />
+            ) : (
+              ""
+            )}
+            {addNewPaymnet ? (
+              ""
+            ) : (
+              <div className="drawer-btn-div" style={{ marginTop: "25px" }}>
+                <a
+                  className="addnew-btn"
+                  onClick={() => setAddNewPayment(true)}
+                >
+                  + Add New Credit/Debit Card
+                </a>
+              </div>
+            )}
           </div>
         )}
         {addNewPaymnet ? (
           <div>
-            <button className="card-button btn-pm">
-              <img id="img" src={cardLogo1} alt="" />
-            </button>
-            <button className="paypal btn-pm">
-              <img id="img" src={paypalLogo1} alt="" />
-            </button>
-            <button className="klarna btn-pm">
-              <img id="img" src={klarnaLogo1} alt="" />
-            </button>
-            <button className="amazon btn-pm" onClick={() => onAddAmazon()}>
-              <img id="img" src={amazonLogo1} alt="" />
-            </button>
-            <button className="clearpay btn-pm" onClick={() => onAddClearpay()}>
-              <img id="img" src={clearpayLogo1} alt="" />
-            </button>
+            <div
+              className="card-input"
+              style={{
+                flexDirection: "column",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <div className="cards-div">
+                {/* <div style={{ paddingBottom: "20px" }}>
+                      <Cards
+                        cvc={cardCvc}
+                        expiry={cardExpiry}
+                        focused={focus}
+                        name={cardName}
+                        number={cardNumber}
+                      />
+                    </div> */}
+                {/* <div>
+                      <TextField
+                        sx={{ width: "100%" }}
+                        onChange={handleCardInput}
+                        type="tel"
+                        name="cardNumber"
+                        placeholder="Card Number"
+                        value={cardNumber}
+                        InputProps={{ disableUnderline: true }}
+                        className={classes.root}
+                        label="Card Number"
+                        error={false}
+                        variant="filled"
+                        onFocus={(e) => setFocus(e.target.name)}
+                        onInput={(e) => {
+                          e.target.value = Math.max(0, e.target.value)
+                            .toString()
+                            .slice(0, 16);
+                        }}
+                      />
+                      <TextField
+                        sx={{ width: "100%" }}
+                        onChange={(e) => setCardName(e.target.value)}
+                        name="cardName"
+                        value={cardName}
+                        InputProps={{ disableUnderline: true }}
+                        className={classes.root}
+                        placeholder=" "
+                        label="Card Name"
+                        error={false}
+                        variant="filled"
+                        onFocus={(e) => setFocus(e.target.name)}
+                      />
+                      <div style={{ display: "flex" }}>
+                        <TextField
+                          sx={{ width: "100%", paddingRight: "10px" }}
+                          onChange={(e) => setCardExpiry(e.target.value)}
+                          name="expiry"
+                          value={cardExpiry}
+                          InputProps={{ disableUnderline: true }}
+                          className={classes.root}
+                          placeholder=" "
+                          label="Expiry"
+                          type="number"
+                          error={false}
+                          variant="filled"
+                          onFocus={(e) => setFocus(e.target.name)}
+                          onInput={(e) => {
+                            e.target.value = Math.max(0, e.target.value)
+                              .toString()
+                              .slice(0, 4);
+                          }}
+                        />
+                        <TextField
+                          type="password"
+                          sx={{ width: "100%" }}
+                          onChange={(e) => setCardCvc(e.target.value)}
+                          name="cvc"
+                          value={cardCvc}
+                          InputProps={{ disableUnderline: true }}
+                          className={classes.root}
+                          placeholder=" "
+                          label="CVC"
+                          error={false}
+                          variant="filled"
+                          onFocus={(e) => setFocus(e.target.name)}
+                          onInput={(e) => {
+                            e.target.value = Math.max(0, e.target.value)
+                              .toString()
+                              .slice(0, 3);
+                          }}
+                        />
+                      </div>
+                    </div> */}
+              </div>
+
+              <CreditCardInput
+                className={classes.cardInput}
+                // cardCVCInputProps={{
+                //   onBlur: (e) => console.log("cvc blur", e),
+                //   onChange: (e) => console.log("cvc change", e),
+                //   // onError: (err) => console.log(`cvc error: ${err}`),
+                // }}
+                cardNumberInputProps={{
+                  value: cardNumber,
+                  onChange: handleCardNumberInput,
+                }}
+                cardExpiryInputProps={{
+                  value: cardExpiry,
+                  onChange: handleCardExpiryInput,
+                }}
+                cardCVCInputProps={{
+                  value: cardCvc,
+                  onChange: handleCardCvcInput,
+                }}
+                containerStyle={{}}
+                fieldStyle={{
+                  border: "1px solid #c2c2c2",
+                  padding: "20px 10px",
+                  borderRadius: "6px",
+                }}
+              />
+            </div>
           </div>
         ) : (
           ""
         )}
-        {addNewPaymnet ? (
-          ""
-        ) : (
-          <div className="drawer-btn-div">
-            <a className="addnew-btn" onClick={() => setAddNewPayment(true)}>
-              +Add New
-            </a>
-            <button class="edit-drawer-done-btn" onClick={props.onClose}>
-              Done
-            </button>
+      </div>
+      <hr className="hr-drawer" />
+      <div
+        style={{
+          paddingRight: "20px",
+          paddingLeft: "20px",
+          padding: "0px 20px 22px 20px",
+        }}
+      >
+        <div
+          className="radio-div-payment"
+          onClick={() =>
+            setReturningUserInputs((prevState) => ({
+              ...prevState,
+              paymentMethod: "paypal",
+            }))
+          }
+          style={{ marginTop: "25px" }}
+        >
+          <div>
+            <img src={paypalLogo1} alt="" />
           </div>
-        )}
+          <div className="palns-div">
+            <div className="plans">FULL PAYMENT</div>
+          </div>
+        </div>
+        <div
+          className="radio-div-payment"
+          onClick={() =>
+            setReturningUserInputs((prevState) => ({
+              ...prevState,
+              paymentMethod: "klarna",
+            }))
+          }
+          style={{ marginTop: "25px" }}
+        >
+          <div>
+            <img src={klarnaLogo1} alt="" />
+          </div>
+          <div className="palns-div">
+            <div className="plans">FULL PAYMENT</div>
+          </div>
+        </div>
+        <div
+          className="radio-div-payment"
+          onClick={() =>
+            setReturningUserInputs((prevState) => ({
+              ...prevState,
+              paymentMethod: "clearpay",
+            }))
+          }
+          style={{ marginTop: "25px" }}
+        >
+          <div>
+            <img src={clearpayLogo1} alt="" />
+          </div>
+          <div className="palns-div">
+            <div className="plans">FULL PAYMENT</div>
+          </div>
+        </div>
+        <div
+          className="radio-div-payment"
+          onClick={() =>
+            setReturningUserInputs((prevState) => ({
+              ...prevState,
+              paymentMethod: "amazon",
+            }))
+          }
+          style={{ marginTop: "25px" }}
+        >
+          <div>
+            <img src={amazonLogo1} alt="" />
+          </div>
+          <div className="palns-div">
+            <div className="plans">FULL PAYMENT</div>
+          </div>
+        </div>
       </div>
     </>
   );

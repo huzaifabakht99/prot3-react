@@ -51,6 +51,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const CartMenubar = (props) => {
+  //  const bottom= window.screenBottom
+  //   const screenBottom = {window.screenBottom()?false:true};
   const classes = useStyles();
   const { returningUserInputs, setReturningUserInputs } =
     useContext(inputContext);
@@ -67,8 +69,8 @@ export const CartMenubar = (props) => {
     (formInputs.fullName !== "" &&
       formInputs.email !== "" &&
       formInputs.shippingAddress !== "" &&
-      formInputs.deliveryTypeAmount !== 0 &&
-      formInputs.paymentMethod !== "") ||
+      // formInputs.paymentMethod !== ""&&
+      formInputs.deliveryTypeAmount >= 0) ||
     formInputs.disabledBtn !== false;
 
   return (
@@ -79,9 +81,11 @@ export const CartMenubar = (props) => {
           style={{
             dispaly: "flex",
             flexDirection: "column",
+            paddingBottom: formInputs.station === "" ? "0px" : "14px",
+            minHeight: formInputs.station === "" ? "0px" : "100px",
             boxShadow: formInputs.isAnimation
               ? "0px 0px 7px 0px #e72e80"
-              : "0px 0px 4px 0px rgb(130, 130, 130)",
+              : "0px -1px 10px 0px #0000001A",
           }}
         >
           <div
@@ -93,15 +97,26 @@ export const CartMenubar = (props) => {
               marginBottom: "10px",
             }}
             onClick={() => setIsCartOpen(true)}
+            // onClick={() => console.log(window.screenTop())}
           >
             <div
               style={{
                 display: "flex",
               }}
             >
-              <ShoppingCartIcon fontSize="small" sx={{ padding: "2px" }} />
-              <div className="cart-menubar-text">Order Total (1 item) </div>
-              <KeyboardArrowUpIcon className="right-icon" />
+              {formInputs.station === "" ? (
+                ""
+              ) : (
+                <ShoppingCartIcon fontSize="small" sx={{ padding: "2px" }} />
+              )}
+              <div className="cart-menubar-text">
+                Order Total {formInputs.station === "" ? "" : "(1 item)"}{" "}
+              </div>
+              {formInputs.station === "" ? (
+                ""
+              ) : (
+                <KeyboardArrowUpIcon className="right-icon" />
+              )}
             </div>
             <div className="cart-menubar-text">
               $
@@ -116,34 +131,131 @@ export const CartMenubar = (props) => {
                   formInputs.discount}{" "}
             </div>
           </div>
-          <Button
-            sx={{ width: "100%", height: "45px" }}
-            variant="contained"
-            className="buy-btn"
-            disabled={
-              formInputs.station === "new-user"
-                ? !disable
-                : formInputs.disabledBtn
-            }
-            onClick={() => {
-              formInputs.station === "order-detail"
-                ? setIs3dsOpen(false)
-                : setIs3dsOpen(true);
-            }}
-          >
-            {formInputs.station === "order-detail" ? (
-              ""
-            ) : (
-              <LockIcon fontSize="14px" />
-            )}
-            {formInputs.station === "order-detail" ? (
-              <span style={{ fontSize: "11px", lineHeight: "11px" }}>
-                Continue Shopping
-              </span>
-            ) : (
-              " Place Order"
-            )}
-          </Button>
+          {window.scrollY > 12121233 ? (
+            <div
+              style={{
+                width: "100%",
+                paddingBottom: "17.5px",
+                paddingTop: "7px",
+              }}
+            >
+              <div>
+                <div>
+                  <div className="amount-row">
+                    <div className="text  toBe-text">Subtotal</div>
+                    <div className="amount">
+                      {props.currency}
+                      {props.subtotal}
+                    </div>
+                  </div>
+                  <div className="amount-row">
+                    <div className="text  toBe-text">Shipping</div>
+                    <div className="amount">
+                      {formInputs.station !== "" ||
+                      formInputs.station === "returning-user" ? (
+                        <div>
+                          {props.currency}
+                          {formInputs.station === "returning-user"
+                            ? returningUserInputs.deliveryTypeAmount
+                            : props.shipping}
+                        </div>
+                      ) : (
+                        <div className="toBe-text">To be calculated</div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="amount-row">
+                    <div className="text  toBe-text">
+                      {formInputs.shippingAddress == ""
+                        ? "Estimated Tax"
+                        : "Tax"}
+                    </div>
+                    {formInputs.shippingAddress == "" ? (
+                      <div className="toBe-text">To be calculated</div>
+                    ) : (
+                      <div className="amount">
+                        {props.currency}
+                        {props.tax}
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    className="amount-row"
+                    fxlayout="row"
+                    fxlayoutalign="space-between center"
+                  >
+                    <div className="text toBe-text">Discount </div>
+                    <div className="amount">
+                      {formInputs.promoCode === "2020" ? (
+                        <div>
+                          {props.currency}
+                          {props.discount}
+                        </div>
+                      ) : (
+                        "$0"
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="purchased-items">Purchased Items (5)</div>
+              <div className="order-items">
+                <div className="product-detail">
+                  <div className="product-img-with-detail">
+                    <img className="icon" src={thumbnail} alt="" />
+                    <div className="product">
+                      <div className="text" style={{ fontWeight: "600" }}>
+                        Maverick Strong Adhesive
+                      </div>
+                      <div>
+                        <div className="quantity">
+                          Size: 10ml, Qty: {formInputs.Quantity}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="amount">
+                    <div style={{ fontWeight: "600" }}> $47</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+          {formInputs.station === "" ? (
+            ""
+          ) : (
+            <Button
+              sx={{ width: "100%", height: "45px" }}
+              variant="contained"
+              className="buy-btn"
+              disabled={
+                formInputs.station === "new-user"
+                  ? !disable
+                  : formInputs.disabledBtn
+              }
+              onClick={() => {
+                formInputs.station === "order-detail"
+                  ? setIs3dsOpen(false)
+                  : setIs3dsOpen(true);
+              }}
+            >
+              {formInputs.station === "order-detail" ? (
+                ""
+              ) : (
+                <LockIcon fontSize="14px" />
+              )}
+              {formInputs.station === "order-detail" ? (
+                <span style={{ fontSize: "11px", lineHeight: "11px" }}>
+                  Continue Shopping
+                </span>
+              ) : (
+                " Place Order"
+              )}
+            </Button>
+          )}
         </div>
         <Drawer
           classes={{ paper: classes.drawerPaper }}

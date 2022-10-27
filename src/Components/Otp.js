@@ -13,7 +13,7 @@ export const Otp = (props) => {
   const { formInputs, setFormInputs } = useContext(inputContext);
   const navigate = useNavigate();
   // const [otp, setOtp] = useState(new Array(4).fill(""));
-  const [otp, setOtp] = useState();
+  const [otp, setOtp] = useState("");
 
   // const handleChange = (element, index) => {
   //   if (isNaN(element.value)) return false;
@@ -26,7 +26,14 @@ export const Otp = (props) => {
   //   }
   // };
   const handleChange = (e) => {
-    setOtp(e.target.value);
+    setOtp(e);
+    console.log(otp);
+    if (otp == "111") {
+      navigate("/returning-user");
+    }
+    if (otp == "000") {
+      navigate("/new-user");
+    }
   };
   useEffect(() => {
     console.log("are you workign");
@@ -46,6 +53,7 @@ export const Otp = (props) => {
           </a>
         </div>
         <hr />
+        {/* <button onClick={() => console.log(otp)}>asdasd</button> */}
 
         <div className="otp-body">
           <div style={{ display: "inline-flex" }}>
@@ -57,7 +65,7 @@ export const Otp = (props) => {
               keyboardType="visible-password"
               value={otp}
               isInputNum
-              onChange={(e) => setOtp(e)}
+              onChange={handleChange}
               numInputs={4}
               separator={<span> </span>}
               inputStyle="Otp-Fields-New"
@@ -140,11 +148,16 @@ export const Otp = (props) => {
             /> */}
           </div>
 
-          <div className="otp-text">
+          <div
+            className="otp-text"
+            style={{ paddingTop: "20px", textAlign: "center" }}
+          >
             Enter the code we sent over SMS to{" "}
-            <b>+{formInputs.numberThroughSignin}</b>
+            <div style={{ paddingTop: "10px" }}>
+              <b>+{formInputs.numberThroughSignin}</b>
+            </div>
           </div>
-          <div className="drawer-btn-div-otp">
+          {/* <div className="drawer-btn-div-otp">
             <button
               variant="contained"
               disabled={otp === ""}
@@ -161,7 +174,7 @@ export const Otp = (props) => {
             >
               Returning User
             </button>
-          </div>
+          </div> */}
           <div className="resend">
             <a>Resend code in 20s</a>
           </div>

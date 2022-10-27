@@ -27,7 +27,7 @@ function App() {
     numberThroughSignin: 1,
     fullName: "Huzaifa Bakht",
     shippingAddress: "545 W. 14th Street way , NY 77011",
-    deliveryType: "Standard",
+    deliveryType: "Free Shipping",
     paymentMethod: "cod",
     deliveryTypeAmount: 0,
   });
@@ -43,8 +43,8 @@ function App() {
     state: "",
     country: "",
     zip: "",
-    deliveryType: "",
-    paymentMethod: "",
+    deliveryType: "Standard",
+    paymentMethod: "cod",
     promoCode: "",
     fullNameEditForm: "",
     addressEditForm: "",
@@ -64,6 +64,7 @@ function App() {
     total: 0,
 
     isAnimation: "",
+    cantCancel: false,
   });
 
   return (
@@ -82,6 +83,7 @@ function App() {
       >
         <Routes>
           <Route path="/" element={<SignIn2 />} />
+          {/* <Route path="/" element={<ReturningUser />} /> */}
           <Route path="/new-user" element={<NewUser />} />
           <Route path="/order-detail" element={<OrderDetail />} />
           <Route
@@ -91,9 +93,14 @@ function App() {
           <Route path="/returning-user" element={<ReturningUser />} />
         </Routes>
 
-        <footer className="cartFixed">
-          <CartMenubar />
-        </footer>
+        {formInputs.station === "order-detail" ||
+        formInputs.station === "order-detail-returning" ? (
+          ""
+        ) : (
+          <footer className="cartFixed">
+            <CartMenubar />
+          </footer>
+        )}
       </inputContext.Provider>
     </>
   );

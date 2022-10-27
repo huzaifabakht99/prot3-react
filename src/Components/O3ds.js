@@ -67,12 +67,19 @@ export const O3ds = (props) => {
                 paddingLeft: "20px",
               }}
             >
-              <input
-                id="partitioned"
-                maxLength={4}
-                onChange={handleChange}
+              <OtpInput
+                // android:inputType="textNoSuggestions"
+                // android:inputType="textFilter"
+                keyboardType="visible-password"
                 value={otp}
-                inputMode={"numeric"}
+                isInputNum
+                onChange={(e) => setOtp(e)}
+                numInputs={4}
+                separator={<span> </span>}
+                inputStyle="ds-Fields-New"
+                // isInputSecure
+                // containerStyle="otp-container"
+                shouldAutoFocus={true}
               />
               {/* {otp.map((data, index) => {
                 return (

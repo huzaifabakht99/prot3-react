@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import MyFormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import { Input } from "./Input";
@@ -67,13 +68,23 @@ export const PaymentMethod = (props) => {
             </div>
             <div>
               {" "}
-              <KeyboardArrowDownIcon
-                // style={{
-                //   color:
-                //     formInputs.paymentMethod === props.value ? "#E71583" : " ",
-                // }}
-                className="paymentMethod-icon"
-              />
+              {props.value === props.cardSelectedState ? (
+                <KeyboardArrowUpIcon
+                  // style={{
+                  //   color:
+                  //     formInputs.paymentMethod === props.value ? "#E71583" : " ",
+                  // }}
+                  className="paymentMethod-icon"
+                />
+              ) : (
+                <KeyboardArrowDownIcon
+                  // style={{
+                  //   color:
+                  //     formInputs.paymentMethod === props.value ? "#E71583" : " ",
+                  // }}
+                  className="paymentMethod-icon"
+                />
+              )}
             </div>
           </div>
         </div>
