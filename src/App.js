@@ -19,6 +19,7 @@ import { createContext, useState } from "react";
 import { inputContext } from "./Context/inputContext";
 import { Button } from "@mui/material";
 import { SignIn2 } from "./Pages/SignIn2";
+import { Checkpoints } from "./Components/Checkpoints";
 
 function App() {
   // variavle that have EditForm belongs to edit shipping drawer
@@ -46,8 +47,8 @@ function App() {
     deliveryType: "Standard",
     paymentMethod: "cod",
     promoCode: "",
-    fullNameEditForm: "",
-    addressEditForm: "",
+    fullNameEditForm: "Hadia Ali",
+    addressEditForm: "4717 Crummit Lane,Omaha,  Nebraska, 68102,USA",
     cityEditForm: "",
     stateEditForm: "",
     countryEditForm: "",
@@ -56,6 +57,7 @@ function App() {
     station: "",
     deliveryTypeAmount: 0,
     closeDialog: true,
+    valueForAddress: 0,
 
     productAmount: 360.0,
     Quantity: 1,
@@ -65,6 +67,7 @@ function App() {
 
     isAnimation: "",
     cantCancel: false,
+    bottomCart: false,
   });
 
   return (
@@ -81,6 +84,7 @@ function App() {
           setIs3dsOpen,
         }}
       >
+        {formInputs.station === "new-user" ? <Checkpoints /> : ""}
         <Routes>
           <Route path="/" element={<SignIn2 />} />
           {/* <Route path="/" element={<ReturningUser />} /> */}

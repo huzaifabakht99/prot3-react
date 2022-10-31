@@ -1,10 +1,13 @@
 import { Button, Radio, RadioGroup } from "@mui/material";
 import React, { useContext, useState } from "react";
 import MyFormControlLabel from "@mui/material/FormControlLabel";
+import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import cardLogo from "../assets/Group 7546.svg";
 import CreditCardInput from "react-credit-card-input";
 import "react-credit-cards/es/styles-compiled.css";
+import infoImg2 from "../assets/Page-1.svg";
+import LockIcon from "@mui/icons-material/Lock";
 import paypalLogo from "../assets/Group 7547.svg";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import klarnaLogo from "../assets/Group 7548 (1).svg";
@@ -98,7 +101,16 @@ export const EditPaymentMethod = (props) => {
   return (
     <>
       <div className="edit-drawer-header">
-        <h5 className="drawer-heading">Contact Info</h5>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <KeyboardBackspaceRoundedIcon
+            onClick={() => setAddNewPayment(false)}
+          />
+          <h5 className="drawer-heading" style={{ marginLeft: "10px" }}>
+            {addNewPaymnet
+              ? "Add New Credit/Debit Card"
+              : "Change Payment Method"}
+          </h5>
+        </div>
         <a>
           <CloseRoundedIcon className="clear" onClick={props.onClose} />
         </a>
@@ -112,74 +124,98 @@ export const EditPaymentMethod = (props) => {
           ""
         ) : (
           <div className="contactInfo">
-            <div
-              className="drawer-item-div"
-              onClick={() =>
-                setReturningUserInputs((prevState) => ({
-                  ...prevState,
-                  paymentMethod: "card1",
-                }))
-              }
-            >
-              <div className="tick-div">
-                {" "}
-                {returningUserInputs.paymentMethod === "card1" ? (
-                  <DoneIcon sx={{ color: "#e72e80" }} />
-                ) : (
-                  ""
-                )}
+            <div onClick={props.onClose}>
+              <div
+                className="drawer-item-div"
+                onClick={() =>
+                  setReturningUserInputs((prevState) => ({
+                    ...prevState,
+                    paymentMethod: "cod",
+                  }))
+                }
+              >
+                <div className="tick-div">
+                  {" "}
+                  {returningUserInputs.paymentMethod === "cod" ? (
+                    <DoneIcon sx={{ color: "#e72e80" }} />
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="main-tick-content">
+                  <div className="cod">Cash on delivery</div>
+                </div>
               </div>
-              <div className="main-tick-content">
-                <img src={masterCardLogo} />
-                <span style={{ visibility: "hidden" }}>w</span>
-                ****9087
+              <hr className="hr-drawer" />
+              <div
+                className="drawer-item-div"
+                onClick={() =>
+                  setReturningUserInputs((prevState) => ({
+                    ...prevState,
+                    paymentMethod: "card1",
+                  }))
+                }
+              >
+                <div className="tick-div">
+                  {" "}
+                  {returningUserInputs.paymentMethod === "card1" ? (
+                    <DoneIcon sx={{ color: "#e72e80" }} />
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="main-tick-content">
+                  <img src={masterCardLogo} />
+                  <span style={{ visibility: "hidden" }}>w</span>
+                  ****9087
+                </div>
               </div>
-            </div>
-            <hr className="hr-drawer" />
-            <div
-              className="drawer-item-div"
-              onClick={() =>
-                setReturningUserInputs((prevState) => ({
-                  ...prevState,
-                  paymentMethod: "card2",
-                }))
-              }
-            >
-              <div className="tick-div">
-                {" "}
-                {returningUserInputs.paymentMethod === "card2" ? (
-                  <DoneIcon sx={{ color: "#e72e80" }} />
-                ) : (
-                  ""
-                )}
+              <hr className="hr-drawer" />
+              <div
+                className="drawer-item-div"
+                onClick={() =>
+                  setReturningUserInputs((prevState) => ({
+                    ...prevState,
+                    paymentMethod: "card2",
+                  }))
+                }
+              >
+                <div className="tick-div">
+                  {" "}
+                  {returningUserInputs.paymentMethod === "card2" ? (
+                    <DoneIcon sx={{ color: "#e72e80" }} />
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="main-tick-content">
+                  <img src={visaCardLogo} />
+                  <span style={{ visibility: "hidden" }}>w</span>
+                  ****9087
+                </div>
               </div>
-              <div className="main-tick-content">
-                <img src={visaCardLogo} />
-                <span style={{ visibility: "hidden" }}>w</span>
-                ****9087
-              </div>
-            </div>
-            <hr className="hr-drawer" />
-            <div
-              className="drawer-item-div"
-              onClick={() =>
-                setReturningUserInputs((prevState) => ({
-                  ...prevState,
-                  paymentMethod: "amazon",
-                }))
-              }
-            >
-              <div className="tick-div">
-                {" "}
-                {returningUserInputs.paymentMethod === "amazon" ? (
-                  <DoneIcon sx={{ color: "#e72e80" }} />
-                ) : (
-                  ""
-                )}
-              </div>
-              <div className="main-tick-content">
-                <img src={amazonLogo1} />
-                <div>jordan.olivas@gmail.com</div>
+              <hr className="hr-drawer" />
+              <div
+                className="drawer-item-div"
+                onClick={() =>
+                  setReturningUserInputs((prevState) => ({
+                    ...prevState,
+                    paymentMethod: "amazon",
+                  }))
+                }
+              >
+                <div className="tick-div">
+                  {" "}
+                  {returningUserInputs.paymentMethod === "amazon" ? (
+                    <DoneIcon sx={{ color: "#e72e80" }} />
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="main-tick-content">
+                  <img src={amazonLogo1} />
+                  <div>jordan.olivas@gmail.com</div>
+                </div>
               </div>
             </div>
 
@@ -259,6 +295,17 @@ export const EditPaymentMethod = (props) => {
         )}
         {addNewPaymnet ? (
           <div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "20px",
+                marginBottom: "26px",
+              }}
+            >
+              <div> We accept all major cards </div>
+              <img src={cardLogo1} />
+            </div>
             <div
               className="card-input"
               style={{
@@ -380,88 +427,117 @@ export const EditPaymentMethod = (props) => {
                 }}
               />
             </div>
+            <button
+              className="buttons"
+              style={{ width: "100%", marginTop: "26px", marginBottom: "24px" }}
+            >
+              Add Card
+            </button>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: "25px",
+              }}
+            >
+              {" "}
+              <LockIcon fontSize="10px" />
+              Your information is safe <img src={infoImg2} />
+            </div>
           </div>
         ) : (
           ""
         )}
       </div>
-      <hr className="hr-drawer" />
-      <div
-        style={{
-          paddingRight: "20px",
-          paddingLeft: "20px",
-          padding: "0px 20px 22px 20px",
-        }}
-      >
+      {addNewPaymnet ? "" : <hr className="hr-drawer" />}
+      {addNewPaymnet ? (
+        ""
+      ) : (
         <div
-          className="radio-div-payment"
-          onClick={() =>
-            setReturningUserInputs((prevState) => ({
-              ...prevState,
-              paymentMethod: "paypal",
-            }))
-          }
-          style={{ marginTop: "25px" }}
+          style={{
+            paddingRight: "20px",
+            paddingLeft: "20px",
+            padding: "0px 20px 22px 20px",
+          }}
         >
-          <div>
-            <img src={paypalLogo1} alt="" />
+          <div
+            style={{ marginTop: "19px", fontSize: "14px", color: "#6B6B6B" }}
+          >
+            Other Available Methods
           </div>
-          <div className="palns-div">
-            <div className="plans">FULL PAYMENT</div>
+          <div onClick={props.onClose}>
+            <div
+              className="radio-div-payment"
+              onClick={() =>
+                setReturningUserInputs((prevState) => ({
+                  ...prevState,
+                  paymentMethod: "paypal",
+                }))
+              }
+              style={{ marginTop: "25px" }}
+            >
+              <div>
+                <img src={paypalLogo1} alt="" />
+              </div>
+              <div className="palns-div">
+                <div className="plans">FULL PAYMENT</div>
+              </div>
+            </div>
+            <div
+              className="radio-div-payment"
+              onClick={() =>
+                setReturningUserInputs((prevState) => ({
+                  ...prevState,
+                  paymentMethod: "klarna",
+                }))
+              }
+              style={{ marginTop: "25px" }}
+            >
+              <div>
+                <img src={klarnaLogo1} alt="" />
+              </div>
+              <div className="palns-div">
+                <div className="plans">FULL PAYMENT</div>
+              </div>
+            </div>
+            <div
+              className="radio-div-payment"
+              onClick={() =>
+                setReturningUserInputs((prevState) => ({
+                  ...prevState,
+                  paymentMethod: "clearpay",
+                }))
+              }
+              style={{ marginTop: "25px" }}
+            >
+              <div>
+                <img src={clearpayLogo1} alt="" />
+              </div>
+              <div className="palns-div">
+                <div className="plans">FULL PAYMENT</div>
+              </div>
+            </div>
+            <div
+              className="radio-div-payment"
+              onClick={() =>
+                setReturningUserInputs((prevState) => ({
+                  ...prevState,
+                  paymentMethod: "amazon",
+                }))
+              }
+              style={{ marginTop: "25px" }}
+            >
+              <div>
+                <img src={amazonLogo1} alt="" />
+              </div>
+              <div className="palns-div">
+                <div className="plans">FULL PAYMENT</div>
+              </div>
+            </div>
           </div>
         </div>
-        <div
-          className="radio-div-payment"
-          onClick={() =>
-            setReturningUserInputs((prevState) => ({
-              ...prevState,
-              paymentMethod: "klarna",
-            }))
-          }
-          style={{ marginTop: "25px" }}
-        >
-          <div>
-            <img src={klarnaLogo1} alt="" />
-          </div>
-          <div className="palns-div">
-            <div className="plans">FULL PAYMENT</div>
-          </div>
-        </div>
-        <div
-          className="radio-div-payment"
-          onClick={() =>
-            setReturningUserInputs((prevState) => ({
-              ...prevState,
-              paymentMethod: "clearpay",
-            }))
-          }
-          style={{ marginTop: "25px" }}
-        >
-          <div>
-            <img src={clearpayLogo1} alt="" />
-          </div>
-          <div className="palns-div">
-            <div className="plans">FULL PAYMENT</div>
-          </div>
-        </div>
-        <div
-          className="radio-div-payment"
-          onClick={() =>
-            setReturningUserInputs((prevState) => ({
-              ...prevState,
-              paymentMethod: "amazon",
-            }))
-          }
-          style={{ marginTop: "25px" }}
-        >
-          <div>
-            <img src={amazonLogo1} alt="" />
-          </div>
-          <div className="palns-div">
-            <div className="plans">FULL PAYMENT</div>
-          </div>
-        </div>
-      </div>
+      )}
     </>
   );
 };

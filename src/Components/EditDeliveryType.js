@@ -58,7 +58,7 @@ export const EditDeliveryType = (props) => {
       <hr className="hr-drawer" />
 
       <div className="drawer-main">
-        <div className="contactInfo">
+        <div className="contactInfo" onClick={props.onClose}>
           <div
             className="drawer-item-div"
             onClick={() =>

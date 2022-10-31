@@ -9,6 +9,7 @@ import AddIcon from "@mui/icons-material/Add";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useNavigate } from "react-router-dom";
 
 import flagIcon from "../assets/Group 7554.svg";
 import { OrderReviewCards } from "../Components/OrderReviewCards";
@@ -56,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const SignIn2 = () => {
+  const [deleteCart, setDeleteCart] = useState(false);
   const [orderDetailOpen, setOrderDeatilOpen] = useState(true);
   const [isOtpOpen, setIsOtpOpen] = useState(false);
   const [phone, setPhone] = useState("");
@@ -74,6 +76,7 @@ export const SignIn2 = () => {
 
     console.log(formInputs.numberThroughSignin.length);
   }, []);
+  const navigate = useNavigate();
   const handleInputChange = (e) => {
     setFormInputs((prevState) => ({
       ...prevState,
@@ -198,6 +201,7 @@ export const SignIn2 = () => {
           </div>
           <div className="button-div">
             <button
+              style={{ width: "100%" }}
               className="buttons"
               onClick={() => setIsOtpOpen(true)}
               disabled={formInputs.numberThroughSignin.toString().length < 12}
@@ -205,8 +209,10 @@ export const SignIn2 = () => {
               Send OTP
             </button>
             <button
+              style={{ width: "100%" }}
               disabled={formInputs.numberThroughSignin.toString().length < 12}
               className="white guest-btn buttons"
+              onClick={() => navigate("/new-user")}
             >
               Guest Checkout
             </button>
@@ -218,7 +224,6 @@ export const SignIn2 = () => {
                 alignItems: "center",
                 justifyContent: "space-between",
               }}
-              onClick={() => setOrderDeatilOpen(!orderDetailOpen)}
             >
               <div
                 style={{
@@ -226,6 +231,7 @@ export const SignIn2 = () => {
 
                   alignItems: "center",
                 }}
+                onClick={() => setOrderDeatilOpen(!orderDetailOpen)}
               >
                 <div style={{ display: " flex ", alignItems: "center" }}>
                   <ShoppingCartIcon fontSize="small" sx={{ padding: "2px" }} />
@@ -260,6 +266,15 @@ export const SignIn2 = () => {
                         {" "}
                         ${parseFloat(formInputs.productAmount.toFixed(2))}
                       </div>
+                      <DeleteIcon
+                        fontSize="small"
+                        sx={{
+                          position: "relative",
+                          right: "-16px",
+                          top: "4px",
+                        }}
+                        onClick={() => setDeleteCart(true)}
+                      />
                     </div>
                   </div>
                 </div>

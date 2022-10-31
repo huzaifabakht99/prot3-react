@@ -219,7 +219,7 @@ export const SignIn = () => {
             <NewUser />
           </div>
 
-          <div class="dummy-div"></div>
+          <div className="dummy-div"></div>
           <div className="img-lock">
             <div className="lock">
               <img src={lockImg} alt="" />

@@ -6,10 +6,10 @@ export const Header = (props) => {
   return (
     <>
       <div className="header-main">
-        {/* <div class="none"></div> */}
+        {/* <div className="none"></div> */}
         <div className="images-div">
           <img src={headerImg} alt="" />
-          <span class="yourBrand">Your Brand</span>
+          <span className="yourBrand">Your Brand</span>
         </div>
         {/* <a>
           <CloseRoundedIcon className="clear" />

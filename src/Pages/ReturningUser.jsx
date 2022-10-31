@@ -186,7 +186,9 @@ export const ReturningUser = () => {
       <ThemeProvider theme={theme}>
         <div className="returningUser-main">
           <div style={{ marginBottom: "11px" }}>
-            <h2 className="returningUser-heading">Welcome back Jordan!</h2>
+            <h2 className="returningUser-heading">
+              Welcome back {formInputs.fullNameEditForm}!
+            </h2>
             <h2 className="returningUser-heading">
               Double check your information.
             </h2>
@@ -202,7 +204,7 @@ export const ReturningUser = () => {
                 </div>
                 <div>
                   <div className="shippingNpayment-text">
-                    4717 Crummit Lane,Omaha, Nebraska, 68102,USA
+                    {formInputs.addressEditForm}
                   </div>
                   {/* <div className="shippingNpayment-text">Address</div> */}
                 </div>
@@ -251,10 +253,10 @@ export const ReturningUser = () => {
                 <div className="shippingNpayment-icon">
                   <CreditCardOutlinedIcon fontSize="small" />
                 </div>
-                <div>
+                <div style={{ display: "flex" }}>
                   <div className="shippingNpayment-text">
                     {returningUserInputs.paymentMethod === "cod" ? (
-                      <span className="cod">Cash on delivery</span>
+                      <span>Cash on delivery</span>
                     ) : (
                       ""
                     )}
@@ -301,7 +303,10 @@ export const ReturningUser = () => {
                       ""
                     )}
                   </div>
-                  <div className="shippingNpayment-text">
+                  <div
+                    className="shippingNpayment-text"
+                    style={{ marginLeft: "5px" }}
+                  >
                     {returningUserInputs.paymentMethod === "card1"
                       ? "****6754"
                       : ""}
@@ -436,7 +441,7 @@ export const ReturningUser = () => {
             </button>
           </div>
         </div>
-        <div class="dummy-div"></div>
+        <div className="dummy-div"></div>
         {/* <footer  className='cartFixed'><CartMenubar/></footer> */}
         <Drawer
           classes={{ paper: classes.drawerPaper }}

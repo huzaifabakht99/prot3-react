@@ -13,6 +13,11 @@ import { Button, createTheme, Dialog, ThemeProvider } from "@mui/material";
 import { inputContext } from "../Context/inputContext";
 import { makeStyles } from "@mui/styles";
 import LockIcon from "@mui/icons-material/Lock";
+import clearpayLogo from "../assets/Frame.svg";
+import cardLogo1 from "../assets/Group 7401.svg";
+import paypalLogo1 from "../assets/Group 7545 (1).svg";
+import klarnaLogo1 from "../assets/Group 7552.svg";
+import amazonLogo1 from "../assets/Group 7547 (1).svg";
 
 const theme = createTheme({
   palette: {
@@ -46,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buyBtn: {},
   cartBtn: {
-    backgroudColor: "#111111",
+    backgroundColor: "#111111",
   },
 }));
 
@@ -68,7 +73,7 @@ export const CartMenubar = (props) => {
   const disable =
     (formInputs.fullName !== "" &&
       formInputs.email !== "" &&
-      formInputs.shippingAddress !== "" &&
+      // formInputs.shippingAddress !== "" &&
       // formInputs.paymentMethod !== ""&&
       formInputs.deliveryTypeAmount >= 0) ||
     formInputs.disabledBtn !== false;
@@ -88,173 +93,430 @@ export const CartMenubar = (props) => {
               : "0px -1px 10px 0px #0000001A",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "100%",
-              paddingTop: "7px",
-              marginBottom: "10px",
-            }}
-            onClick={() => setIsCartOpen(true)}
-            // onClick={() => console.log(window.screenTop())}
-          >
+          <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
             <div
               style={{
                 display: "flex",
-              }}
-            >
-              {formInputs.station === "" ? (
-                ""
-              ) : (
-                <ShoppingCartIcon fontSize="small" sx={{ padding: "2px" }} />
-              )}
-              <div className="cart-menubar-text">
-                Order Total {formInputs.station === "" ? "" : "(1 item)"}{" "}
-              </div>
-              {formInputs.station === "" ? (
-                ""
-              ) : (
-                <KeyboardArrowUpIcon className="right-icon" />
-              )}
-            </div>
-            <div className="cart-menubar-text">
-              $
-              {formInputs.station === "returning-user"
-                ? formInputs.productAmount * formInputs.Quantity +
-                  returningUserInputs.deliveryTypeAmount +
-                  formInputs.tax * formInputs.Quantity -
-                  formInputs.discount
-                : formInputs.productAmount * formInputs.Quantity +
-                  formInputs.deliveryTypeAmount +
-                  formInputs.tax * formInputs.Quantity -
-                  formInputs.discount}{" "}
-            </div>
-          </div>
-          {window.scrollY > 12121233 ? (
-            <div
-              style={{
+                justifyContent: "space-between",
                 width: "100%",
-                paddingBottom: "17.5px",
                 paddingTop: "7px",
+                marginBottom: "10px",
               }}
+              onClick={() => setIsCartOpen(true)}
+              // onClick={() => console.log(window.screenTop())}
             >
-              <div>
-                <div>
-                  <div className="amount-row">
-                    <div className="text  toBe-text">Subtotal</div>
-                    <div className="amount">
-                      {props.currency}
-                      {props.subtotal}
-                    </div>
-                  </div>
-                  <div className="amount-row">
-                    <div className="text  toBe-text">Shipping</div>
-                    <div className="amount">
-                      {formInputs.station !== "" ||
-                      formInputs.station === "returning-user" ? (
-                        <div>
-                          {props.currency}
-                          {formInputs.station === "returning-user"
-                            ? returningUserInputs.deliveryTypeAmount
-                            : props.shipping}
-                        </div>
-                      ) : (
-                        <div className="toBe-text">To be calculated</div>
-                      )}
-                    </div>
-                  </div>
+              <div
+                style={{
+                  display: "flex",
+                }}
+              >
+                {formInputs.station === "" ? (
+                  ""
+                ) : (
+                  <ShoppingCartIcon fontSize="small" sx={{ padding: "2px" }} />
+                )}
+                <div className="cart-menubar-text">
+                  Order Total {formInputs.station === "" ? "" : "(1 item)"}{" "}
+                </div>
+                {formInputs.station === "" ? (
+                  ""
+                ) : (
+                  <KeyboardArrowUpIcon className="right-icon" />
+                )}
+              </div>
+              <div className="cart-menubar-text">
+                $
+                {formInputs.station === "returning-user"
+                  ? formInputs.productAmount * formInputs.Quantity +
+                    returningUserInputs.deliveryTypeAmount +
+                    formInputs.tax * formInputs.Quantity -
+                    formInputs.discount
+                  : formInputs.productAmount * formInputs.Quantity +
+                    formInputs.deliveryTypeAmount +
+                    formInputs.tax * formInputs.Quantity -
+                    formInputs.discount}{" "}
+              </div>
+            </div>
 
-                  <div className="amount-row">
-                    <div className="text  toBe-text">
-                      {formInputs.shippingAddress == ""
-                        ? "Estimated Tax"
-                        : "Tax"}
-                    </div>
-                    {formInputs.shippingAddress == "" ? (
-                      <div className="toBe-text">To be calculated</div>
-                    ) : (
+            {formInputs.bottomCart && formInputs.station === "new-user" ? (
+              <div
+                style={{
+                  width: "100%",
+                  paddingBottom: "17.5px",
+                  paddingTop: "7px",
+                }}
+              >
+                <div>
+                  <div>
+                    <div className="amount-row">
+                      <div className="text  toBe-text">Subtotal</div>
                       <div className="amount">
                         {props.currency}
-                        {props.tax}
+                        {props.subtotal}
                       </div>
-                    )}
-                  </div>
-                  <div
-                    className="amount-row"
-                    fxlayout="row"
-                    fxlayoutalign="space-between center"
-                  >
-                    <div className="text toBe-text">Discount </div>
-                    <div className="amount">
-                      {formInputs.promoCode === "2020" ? (
-                        <div>
-                          {props.currency}
-                          {props.discount}
-                        </div>
+                    </div>
+                    <div className="amount-row">
+                      <div className="text  toBe-text">Shipping</div>
+                      <div className="amount">
+                        {formInputs.station !== "" ||
+                        formInputs.station === "returning-user" ? (
+                          <div>
+                            {props.currency}
+                            {formInputs.station === "returning-user"
+                              ? returningUserInputs.deliveryTypeAmount
+                              : props.shipping}
+                          </div>
+                        ) : (
+                          <div className="toBe-text">To be calculated</div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="amount-row">
+                      <div className="text  toBe-text">
+                        {formInputs.shippingAddress == ""
+                          ? "Estimated Tax"
+                          : "Tax"}
+                      </div>
+                      {formInputs.shippingAddress == "" ? (
+                        <div className="toBe-text">To be calculated</div>
                       ) : (
-                        "$0"
+                        <div className="amount">
+                          {props.currency}
+                          {props.tax}
+                        </div>
                       )}
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div className="purchased-items">Purchased Items (5)</div>
-              <div className="order-items">
-                <div className="product-detail">
-                  <div className="product-img-with-detail">
-                    <img className="icon" src={thumbnail} alt="" />
-                    <div className="product">
-                      <div className="text" style={{ fontWeight: "600" }}>
-                        Maverick Strong Adhesive
-                      </div>
-                      <div>
-                        <div className="quantity">
-                          Size: 10ml, Qty: {formInputs.Quantity}
-                        </div>
+                    <div
+                      className="amount-row"
+                      fxlayout="row"
+                      fxlayoutalign="space-between center"
+                    >
+                      <div className="text toBe-text">Discount </div>
+                      <div className="amount">
+                        {formInputs.promoCode === "2020" ? (
+                          <div>
+                            {props.currency}
+                            {props.discount}
+                          </div>
+                        ) : (
+                          "$0"
+                        )}
                       </div>
                     </div>
                   </div>
-                  <div className="amount">
-                    <div style={{ fontWeight: "600" }}> $47</div>
+                </div>
+                <div className="purchased-items">Purchased Items (5)</div>
+                <div className="order-items">
+                  <div className="product-detail">
+                    <div className="product-img-with-detail">
+                      <img className="icon" src={thumbnail} alt="" />
+                      <div className="product">
+                        <div className="text" style={{ fontWeight: "600" }}>
+                          Maverick Strong Adhesive
+                        </div>
+                        <div>
+                          <div className="quantity">
+                            Size: 10ml, Qty: {formInputs.Quantity}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="amount">
+                      <div style={{ fontWeight: "600" }}> $47</div>
+                    </div>
+                  </div>
+                </div>
+                {/* 1 */}
+                <div className="order-items">
+                  <div className="product-detail">
+                    <div className="product-img-with-detail">
+                      <img className="icon" src={thumbnail} alt="" />
+                      <div className="product">
+                        <div className="text" style={{ fontWeight: "600" }}>
+                          Maverick Strong Adhesive
+                        </div>
+                        <div>
+                          <div className="quantity">
+                            Size: 10ml, Qty: {formInputs.Quantity}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="amount">
+                      <div style={{ fontWeight: "600" }}> $47</div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ) : (
-            ""
-          )}
+            ) : (
+              ""
+            )}
+          </div>
           {formInputs.station === "" ? (
             ""
           ) : (
-            <Button
-              sx={{ width: "100%", height: "45px" }}
-              variant="contained"
-              className="buy-btn"
-              disabled={
-                formInputs.station === "new-user"
-                  ? !disable
-                  : formInputs.disabledBtn
-              }
-              onClick={() => {
-                formInputs.station === "order-detail"
-                  ? setIs3dsOpen(false)
-                  : setIs3dsOpen(true);
-              }}
-            >
-              {formInputs.station === "order-detail" ? (
+            <div style={{ width: "100%" }}>
+              {formInputs.station === "new-user" ? (
+                <div>
+                  {formInputs.paymentMethod == "card" ||
+                  formInputs.paymentMethod == "cod" ? (
+                    <button
+                      style={{ width: "100%", height: "45px" }}
+                      variant="contained"
+                      className="buy-btn"
+                      disabled={
+                        formInputs.station === "new-user"
+                          ? !disable
+                          : formInputs.disabledBtn
+                      }
+                      onClick={() => {
+                        formInputs.station === "order-detail"
+                          ? setIs3dsOpen(false)
+                          : setIs3dsOpen(true);
+                      }}
+                    >
+                      <LockIcon fontSize="14px" />
+                      <span style={{ visibility: "hidden" }}>t</span>Place Order
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                  {formInputs.paymentMethod == "paypal" ? (
+                    <button
+                      style={{
+                        width: "100%",
+                        height: "45px",
+                        backgroundColor: "#FFBE43",
+                      }}
+                      variant="contained"
+                      className="buy-btn"
+                      disabled={
+                        formInputs.station === "new-user"
+                          ? !disable
+                          : formInputs.disabledBtn
+                      }
+                      onClick={() => {
+                        formInputs.station === "order-detail"
+                          ? setIs3dsOpen(false)
+                          : setIs3dsOpen(true);
+                      }}
+                    >
+                      <img src={paypalLogo1} />
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                  {formInputs.paymentMethod == "amazon" ? (
+                    <button
+                      style={{
+                        width: "100%",
+                        height: "45px",
+                        backgroundColor: "#F6CE7C",
+                      }}
+                      variant="contained"
+                      className="buy-btn"
+                      disabled={
+                        formInputs.station === "new-user"
+                          ? !disable
+                          : formInputs.disabledBtn
+                      }
+                      onClick={() => {
+                        formInputs.station === "order-detail"
+                          ? setIs3dsOpen(false)
+                          : setIs3dsOpen(true);
+                      }}
+                    >
+                      <img src={amazonLogo1} />
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                  {formInputs.paymentMethod == "klarna" ? (
+                    <button
+                      style={{
+                        width: "100%",
+                        height: "45px",
+                        backgroundColor: "#FFA9C0",
+                      }}
+                      variant="contained"
+                      className="buy-btn"
+                      disabled={
+                        formInputs.station === "new-user"
+                          ? !disable
+                          : formInputs.disabledBtn
+                      }
+                      onClick={() => {
+                        formInputs.station === "order-detail"
+                          ? setIs3dsOpen(false)
+                          : setIs3dsOpen(true);
+                      }}
+                    >
+                      <img src={klarnaLogo1} />
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                  {formInputs.paymentMethod == "clearpay" ? (
+                    <button
+                      style={{
+                        width: "100%",
+                        height: "45px",
+                        backgroundColor: "#B2FCE3",
+                      }}
+                      variant="contained"
+                      className="buy-btn"
+                      disabled={
+                        formInputs.station === "new-user"
+                          ? !disable
+                          : formInputs.disabledBtn
+                      }
+                      onClick={() => {
+                        formInputs.station === "order-detail"
+                          ? setIs3dsOpen(false)
+                          : setIs3dsOpen(true);
+                      }}
+                    >
+                      <img src={clearpayLogo} />
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              ) : (
                 ""
-              ) : (
-                <LockIcon fontSize="14px" />
               )}
-              {formInputs.station === "order-detail" ? (
-                <span style={{ fontSize: "11px", lineHeight: "11px" }}>
-                  Continue Shopping
-                </span>
+              {formInputs.station === "returning-user" ? (
+                <div style={{ width: "100%" }}>
+                  {returningUserInputs.paymentMethod == "card1" ||
+                  returningUserInputs.paymentMethod == "card2" ||
+                  returningUserInputs.paymentMethod == "cod" ? (
+                    <button
+                      style={{ width: "100%", height: "45px" }}
+                      variant="contained"
+                      className="buy-btn"
+                      disabled={
+                        formInputs.station === "new-user"
+                          ? !disable
+                          : formInputs.disabledBtn
+                      }
+                      onClick={() => {
+                        formInputs.station === "order-detail"
+                          ? setIs3dsOpen(false)
+                          : setIs3dsOpen(true);
+                      }}
+                    >
+                      <LockIcon fontSize="14px" />
+                      <span style={{ visibility: "hidden" }}>t</span>Place Order
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                  {returningUserInputs.paymentMethod == "paypal" ? (
+                    <button
+                      style={{
+                        width: "100%",
+                        height: "45px",
+                        backgroundColor: "#FFBE43",
+                      }}
+                      variant="contained"
+                      className="buy-btn"
+                      disabled={
+                        formInputs.station === "new-user"
+                          ? !disable
+                          : formInputs.disabledBtn
+                      }
+                      onClick={() => {
+                        formInputs.station === "order-detail"
+                          ? setIs3dsOpen(false)
+                          : setIs3dsOpen(true);
+                      }}
+                    >
+                      <img src={paypalLogo1} />
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                  {returningUserInputs.paymentMethod == "amazon" ? (
+                    <button
+                      style={{
+                        width: "100%",
+                        height: "45px",
+                        backgroundColor: "#F6CE7C",
+                      }}
+                      variant="contained"
+                      className="buy-btn"
+                      disabled={
+                        formInputs.station === "new-user"
+                          ? !disable
+                          : formInputs.disabledBtn
+                      }
+                      onClick={() => {
+                        formInputs.station === "order-detail"
+                          ? setIs3dsOpen(false)
+                          : setIs3dsOpen(true);
+                      }}
+                    >
+                      <img src={amazonLogo1} />
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                  {returningUserInputs.paymentMethod == "klarna" ? (
+                    <button
+                      style={{
+                        width: "100%",
+                        height: "45px",
+                        backgroundColor: "#FFA9C0",
+                      }}
+                      variant="contained"
+                      className="buy-btn"
+                      disabled={
+                        formInputs.station === "new-user"
+                          ? !disable
+                          : formInputs.disabledBtn
+                      }
+                      onClick={() => {
+                        formInputs.station === "order-detail"
+                          ? setIs3dsOpen(false)
+                          : setIs3dsOpen(true);
+                      }}
+                    >
+                      <img src={klarnaLogo1} />
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                  {returningUserInputs.paymentMethod == "clearpay" ? (
+                    <button
+                      style={{
+                        width: "100%",
+                        height: "45px",
+                        backgroundColor: "#B2FCE3",
+                      }}
+                      variant="contained"
+                      className="buy-btn"
+                      disabled={
+                        formInputs.station === "new-user"
+                          ? !disable
+                          : formInputs.disabledBtn
+                      }
+                      onClick={() => {
+                        formInputs.station === "order-detail"
+                          ? setIs3dsOpen(false)
+                          : setIs3dsOpen(true);
+                      }}
+                    >
+                      <img src={clearpayLogo} />
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                </div>
               ) : (
-                " Place Order"
+                ""
               )}
-            </Button>
+            </div>
           )}
         </div>
         <Drawer

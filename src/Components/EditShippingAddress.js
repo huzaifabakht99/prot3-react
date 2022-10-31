@@ -69,27 +69,27 @@ export const EditShippingAddress = (props) => {
   const [inputList, setInputList] = useState([
     {
       name: "Hadia Ali",
-      address: "4717 Crummit Lane",
-      country: "USA",
-      state: " Nebraska",
-      city: "Omaha",
-      zip: " 68102",
+      address: "4717 Crummit Lane, Omaha,Nebraska, 68102, USA",
+      // country: "USA",
+      // state: " Nebraska",
+      // city: "Omaha",
+      // zip: " 68102",
     },
     {
       name: "Usman Nasir",
-      address: "52 Hillcrest Circle",
-      country: "USA",
-      state: " Minnesota",
-      city: "Minneapolis",
-      zip: " 55415",
+      address: "52 Hillcrest Circle, Minneapolis,Minnesota, 55415, USA",
+      // country: "USA",
+      // state: " Minnesota",
+      // city: "Minneapolis",
+      // zip: " 55415",
     },
     {
       name: "Jordan Olivas",
-      address: "920 Lynch Street",
-      country: "USA",
-      state: " California",
-      city: "San Jose",
-      zip: " 95110",
+      address: "920 Lynch Street, San Jose,California,  95110, USA",
+      // country: "USA",
+      // state: " California",
+      // city: "San Jose",
+      // zip: " 95110",
     },
   ]);
 
@@ -114,6 +114,10 @@ export const EditShippingAddress = (props) => {
     console.log(ll);
     setAddress(value);
     setCoordinates(ll);
+    setFormInputs((prevState) => ({
+      ...prevState,
+      addressEditForm: value,
+    }));
   };
   const handleShippingInputChange = (e) => {
     setFormInputs((prevState) => ({
@@ -126,7 +130,7 @@ export const EditShippingAddress = (props) => {
     setMoreShippingAddress(false);
     setManualShippingAddress(false);
   };
-
+  const [valueForAddress, setValueForAddress] = useState(0);
   const [moreShippingAddress, setMoreShippingAddress] = useState(false);
   const [manualShippingAddress, setManualShippingAddress] = useState(false);
   const [addNewAddress, setAddNewAddress] = useState(false);
@@ -137,6 +141,7 @@ export const EditShippingAddress = (props) => {
       [e.target.name]: e.target.value,
     }));
   };
+
   const onSave = () => {
     setAddNewAddress(false);
     setInputList([
@@ -168,25 +173,30 @@ export const EditShippingAddress = (props) => {
           <div className="contactInfo">
             {inputList.map((item, i) => {
               return (
-                <div>
+                <div onClick={props.onClose}>
                   <hr className="hr-drawer" />
-                  <div className="drawer-item-div">
+                  <div
+                    className="drawer-item-div"
+                    onClick={() =>
+                      setFormInputs((prevState) => ({
+                        ...prevState,
+                        fullNameEditForm: item.name,
+                        addressEditForm: item.address,
+
+                        valueForAddress: i,
+                      }))
+                    }
+                  >
                     <div className="tick-div">
-                      <DoneIcon sx={{ color: "#e72e80" }} />
+                      {formInputs.valueForAddress === i ? (
+                        <DoneIcon sx={{ color: "#e72e80" }} />
+                      ) : (
+                        ""
+                      )}
                     </div>
                     <div className="main-tick-content">
                       <div className="content-main-text">{item.name}</div>
-                      <div className="content-subtext">
-                        {item.address +
-                          "," +
-                          item.city +
-                          ", " +
-                          item.state +
-                          "," +
-                          item.zip +
-                          "," +
-                          item.country}
-                      </div>
+                      <div className="content-subtext">{item.address}</div>
                     </div>
                   </div>
                 </div>
@@ -234,7 +244,7 @@ export const EditShippingAddress = (props) => {
                         className: "location-search-input",
                       })}
                       sx={{ width: "100%" }}
-                      name="shippingAddress"
+                      name="shippingAddressEditForm"
                       // value={formInputs.shippingAddress}
                       // onChange={handleShippingInputChange}
                       InputProps={{ disableUnderline: true }}

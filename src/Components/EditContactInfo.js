@@ -177,7 +177,7 @@ export const EditContactInfo = (props) => {
               MObile OTP Verification
             </h3>
             <h6 className="editContact-h6">We Just Texted You</h6>
-            <div class="editContact-otp-text">
+            <div className="editContact-otp-text">
               Please enter the 4-digit verification code we just sent to{" "}
               <b>{"nomber"}</b>{" "}
             </div>
@@ -215,7 +215,7 @@ export const EditContactInfo = (props) => {
               />
             </div>
             <div
-              class="email-text"
+              className="email-text"
               style={{ marginTop: "25px", marginBottom: "55px" }}
             >
               Didn't receive code yet? Resend Code to{" "}
@@ -237,7 +237,7 @@ export const EditContactInfo = (props) => {
             <a className="addnew-btn" onClick={() => setAddNewContact(true)}>
               +Add New
             </a>
-            <button class="edit-drawer-done-btn" onClick={props.onClose}>
+            <button className="edit-drawer-done-btn" onClick={props.onClose}>
               Done
             </button>
           </div>

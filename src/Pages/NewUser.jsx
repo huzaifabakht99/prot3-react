@@ -45,6 +45,7 @@ import {
   geocodeByPlaceId,
   getLatLng,
 } from "react-places-autocomplete";
+import { ExpandableCart } from "../Components/ExpandableCart";
 
 // import TextField from '@mui/material/TextField';
 const theme = createTheme({
@@ -176,6 +177,8 @@ export const NewUser = (props) => {
       ...prevState,
       disabledBtn: false,
       station: "new-user",
+      paymentMethod: "cod",
+      bottomCart: false,
     }));
   }, []);
 
@@ -223,13 +226,29 @@ export const NewUser = (props) => {
     const target = event.target;
 
     if (target.scrollHeight - target.scrollTop === target.clientHeight) {
-      console.log("sfasfaswer");
+      setFormInputs((prevState) => ({
+        ...prevState,
+
+        bottomCart: true,
+      }));
+      console.log(formInputs.bottomCart);
+    }
+    if (target.scrollHeight - target.scrollTop > target.clientHeight) {
+      setFormInputs((prevState) => ({
+        ...prevState,
+
+        bottomCart: false,
+      }));
+      console.log(formInputs.bottomCart);
     }
   };
   return (
-    <div id="scroll" onScroll={handleScroll}>
+    <div
+      id="scroll"
+      onScroll={handleScroll}
+      style={{ height: "800px", overflowY: "auto" }}
+    >
       <ThemeProvider theme={theme}>
-        {window.location.pathname === "/new-user" ? <Checkpoints /> : ""}
         <div className="newUser-main">
           <form onSubmit={handleSubmit}>
             {/* <CustomCheckbox defaultChecked /> */}
@@ -551,8 +570,8 @@ export const NewUser = (props) => {
             <hr className="newUser-hr" />
 
             <h2 className="newUser-headings">Select Delivery Type</h2>
-            {/* <div class="box disabled" >
-                        <div class="required-shippingadd">Shipping options will show up once you enter shipping address</div>
+            {/* <div className="box disabled" >
+                        <div className="required-shippingadd">Shipping options will show up once you enter shipping address</div>
                     </div> */}
             {formInputs.shippingAddress ? (
               <RadioGroup
@@ -717,13 +736,13 @@ export const NewUser = (props) => {
                     />
                   </AccordionSummary>
                   <AccordionDetails>
-                    <div class="option-expandes-more">
-                      <div class="website-link">
-                        <div class="text">
+                    <div className="option-expandes-more">
+                      <div className="website-link">
+                        <div className="text">
                           Complete your transaction via PayPal by clicking on
                           the button below
                         </div>
-                        <div class="accordion-grey-text">
+                        <div className="accordion-grey-text">
                           PayPal will open in a new tab.
                         </div>
                       </div>
@@ -747,7 +766,7 @@ export const NewUser = (props) => {
                     />
                   </AccordionSummary>
                   <AccordionDetails>
-                    <div class="klarna-div">
+                    <div className="klarna-div">
                       <img src={klarnaImg} alt="" />
                     </div>
                   </AccordionDetails>
@@ -769,8 +788,8 @@ export const NewUser = (props) => {
                     />
                   </AccordionSummary>
                   <AccordionDetails>
-                    <div class="option-expandes-more">
-                      <div class="afterpay-div">
+                    <div className="option-expandes-more">
+                      <div className="afterpay-div">
                         <img src={afterpayImg} alt="" />
                       </div>
                     </div>
@@ -793,13 +812,13 @@ export const NewUser = (props) => {
                     />
                   </AccordionSummary>
                   <AccordionDetails>
-                    <div class="option-expandes-more">
-                      <div class="website-link">
-                        <div class="accordion-text">
+                    <div className="option-expandes-more">
+                      <div className="website-link">
+                        <div className="accordion-text">
                           Complete your transaction via PayPal by clicking on
                           the button below
                         </div>
-                        <div class="accordion-grey-text">
+                        <div className="accordion-grey-text">
                           Amazon will open in a new tab.
                         </div>
                       </div>
@@ -1007,13 +1026,13 @@ export const NewUser = (props) => {
                 />
               </div>
               {formInputs.paymentMethod == "paypal" ? (
-                <div class="option-expandes-more">
-                  <div class="website-link">
-                    <div class="accordion-text">
+                <div className="option-expandes-more">
+                  <div className="website-link">
+                    <div className="accordion-text">
                       Complete your transaction via PayPal by clicking on the
                       Buy button below
                     </div>
-                    <div class="accordion-grey-text">
+                    <div className="accordion-grey-text">
                       PayPal will open in a new tab.
                     </div>
                   </div>
@@ -1033,7 +1052,7 @@ export const NewUser = (props) => {
                 />
               </div>
               {formInputs.paymentMethod == "klarna" ? (
-                <div class="klarna-div">
+                <div className="klarna-div">
                   <img src={klarnaImg} alt="" />
                 </div>
               ) : (
@@ -1051,8 +1070,8 @@ export const NewUser = (props) => {
                 />
               </div>
               {formInputs.paymentMethod == "clearpay" ? (
-                <div class="option-expandes-more">
-                  <div class="afterpay-div">
+                <div className="option-expandes-more">
+                  <div className="afterpay-div">
                     <img src={afterpayImg} alt="" />
                   </div>
                 </div>
@@ -1071,13 +1090,13 @@ export const NewUser = (props) => {
                 />
               </div>
               {formInputs.paymentMethod == "amazon" ? (
-                <div class="option-expandes-more">
-                  <div class="website-link">
-                    <div class="accordion-text">
+                <div className="option-expandes-more">
+                  <div className="website-link">
+                    <div className="accordion-text">
                       Complete your transaction via PayPal by clicking on the
                       Buy button below
                     </div>
-                    <div class="accordion-grey-text">
+                    <div className="accordion-grey-text">
                       Amazon will open in a new tab.
                     </div>
                   </div>
@@ -1180,7 +1199,21 @@ export const NewUser = (props) => {
             )}
           </form>
         </div>
-        <div class="dummy-div"></div>
+        {/* <div
+          style={{
+            position: "sticky",
+            bottom: "100px",
+            backgroundColor: "white",
+            minWidth: "300px",
+            maxWidth: "700px",
+            width: "375px",
+            zIndex: "9999999999",
+          }}
+        >
+          {" "}
+          <ExpandableCart />
+        </div> */}
+        <div className="dummy-div" style={{ height: "300px" }}></div>
         {/* <footer  className='cartFixed'><CartMenubar/></footer> */}
       </ThemeProvider>
     </div>

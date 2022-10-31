@@ -24,6 +24,7 @@ import LocalShippingIcon from "../assets/Vector (3).svg";
 import thumbnail from "../assets/Rectangle 206 (1).svg";
 import "../orderDetail.css";
 import qrImg from "../assets/image 38.svg";
+import masterCardLogo from "../assets/Group 7546.svg";
 
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -104,128 +105,191 @@ export const OrderDetail = () => {
               </div>
             </div>
             {hideAllItem ? (
-              ""
-            ) : (
-              <div className="puchasedItems-div">
-                <div className="purchased-items">Purchased Items (5)</div>
-                <div className="order-items">
-                  <div className="product-detail">
-                    <div className="product-img-with-detail">
-                      <img className="icon" src={thumbnail} alt="" />
-                      <div className="product">
-                        <div className="text" style={{ fontWeight: "600" }}>
-                          Maverick Strong Adhesive
-                        </div>
-                        <div>
-                          <div className="quantity">
-                            Size: 10ml, Qty: {formInputs.Quantity}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="amount">
-                      <div style={{ fontWeight: "600" }}> $47</div>
-                    </div>
+              <div style={{ paddingTop: "10px" }}>
+                <div className="amount-row">
+                  <div className="text toBe-text">Subtotal</div>
+                  <div className="amount">
+                    $
+                    {formInputs.productAmount.toLocaleString(undefined, {
+                      maximumFractionDigits: 2,
+                    }) * formInputs.Quantity}
                   </div>
                 </div>
-                <div className="order-items">
-                  <div className="product-detail">
-                    <div className="product-img-with-detail">
-                      <img className="icon" src={thumbnail} alt="" />
-                      <div className="product">
-                        <div className="text" style={{ fontWeight: "600" }}>
-                          Maverick Strong Adhesive
-                        </div>
-                        <div>
-                          <div className="quantity">
-                            Size: 10ml, Qty: {formInputs.Quantity}
+                <div className="amount-row">
+                  <div className="text toBe-text">Shipping</div>
+                  <div className="amount" style={{ display: "flex" }}>
+                    $
+                    {formInputs.station !== "" ||
+                    formInputs.station === "returning-user" ? (
+                      <span>
+                        {formInputs.station === "returning-user" ? (
+                          formInputs.deliveryTypeAmount
+                        ) : (
+                          <div>
+                            {parseFloat(
+                              formInputs.deliveryTypeAmount.toFixed(2)
+                            )}
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="amount">
-                      <div style={{ fontWeight: "600" }}> $47</div>
-                    </div>
+                        )}
+                      </span>
+                    ) : (
+                      <div className="toBe-text">To be calculated</div>
+                    )}
                   </div>
                 </div>
-                {showAllItem ? (
-                  <div>
-                    <div className="order-items">
-                      <div className="product-detail">
-                        <div className="product-img-with-detail">
-                          <img className="icon" src={thumbnail} alt="" />
-                          <div className="product">
-                            <div className="text" style={{ fontWeight: "600" }}>
-                              Maverick Strong Adhesive
-                            </div>
-                            <div>
-                              <div className="quantity">
-                                Size: 10ml, Qty: {formInputs.Quantity}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="amount">
-                          <div style={{ fontWeight: "600" }}> $47</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="order-items">
-                      <div className="product-detail">
-                        <div className="product-img-with-detail">
-                          <img className="icon" src={thumbnail} alt="" />
-                          <div className="product">
-                            <div className="text" style={{ fontWeight: "600" }}>
-                              Maverick Strong Adhesive
-                            </div>
-                            <div>
-                              <div className="quantity">
-                                Size: 10ml, Qty: {formInputs.Quantity}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="amount">
-                          <div style={{ fontWeight: "600" }}> $47</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="order-items">
-                      <div className="product-detail">
-                        <div className="product-img-with-detail">
-                          <img className="icon" src={thumbnail} alt="" />
-                          <div className="product">
-                            <div className="text" style={{ fontWeight: "600" }}>
-                              Maverick Strong Adhesive
-                            </div>
-                            <div>
-                              <div className="quantity">
-                                Size: 10ml, Qty: {formInputs.Quantity}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="amount">
-                          <div style={{ fontWeight: "600" }}> $47</div>
-                        </div>
-                      </div>
-                    </div>
+
+                <div className="amount-row">
+                  <div className="text toBe-text">
+                    {formInputs.shippingAddress == "" ? "Estimated Tax" : "Tax"}
                   </div>
-                ) : (
-                  ""
-                )}
+
+                  <div className="amount">
+                    ${" "}
+                    {parseFloat(formInputs.tax * formInputs.Quantity).toFixed(
+                      2
+                    )}
+                  </div>
+                </div>
                 <div
-                  className="arrow-div"
-                  onClick={() => setShowAllItem(!showAllItem)}
+                  className="amount-row"
+                  fxlayout="row"
+                  fxlayoutalign="space-between center"
                 >
-                  {showAllItem ? (
-                    <KeyboardArrowUpIcon />
-                  ) : (
-                    <KeyboardArrowDownIcon />
-                  )}
+                  <div className="text toBe-text">Discount </div>
+                  <div className="amount">
+                    {formInputs.promoCode === "2020" ? (
+                      <div>${formInputs.discount}</div>
+                    ) : (
+                      "$0"
+                    )}
+                  </div>
                 </div>
               </div>
+            ) : (
+              ""
             )}
+            <div className="puchasedItems-div">
+              <div className="purchased-items">Purchased Items (5)</div>
+              <div
+                style={{
+                  height: showAllItem ? "auto" : "140px",
+                  overflow: "hidden",
+                }}
+              >
+                <div className="order-items">
+                  <div className="product-detail">
+                    <div className="product-img-with-detail">
+                      <img className="icon" src={thumbnail} alt="" />
+                      <div className="product">
+                        <div className="text" style={{ fontWeight: "600" }}>
+                          Maverick Strong Adhesive
+                        </div>
+                        <div>
+                          <div className="quantity">
+                            Size: 10ml, Qty: {formInputs.Quantity}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="amount">
+                      <div style={{ fontWeight: "600" }}> $47</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="order-items">
+                  <div className="product-detail">
+                    <div className="product-img-with-detail">
+                      <img className="icon" src={thumbnail} alt="" />
+                      <div className="product">
+                        <div className="text" style={{ fontWeight: "600" }}>
+                          Maverick Strong Adhesive
+                        </div>
+                        <div>
+                          <div className="quantity">
+                            Size: 10ml, Qty: {formInputs.Quantity}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="amount">
+                      <div style={{ fontWeight: "600" }}> $47</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="order-items">
+                  <div className="product-detail">
+                    <div className="product-img-with-detail">
+                      <img className="icon" src={thumbnail} alt="" />
+                      <div className="product">
+                        <div className="text" style={{ fontWeight: "600" }}>
+                          Maverick Strong Adhesive
+                        </div>
+                        <div>
+                          <div className="quantity">
+                            Size: 10ml, Qty: {formInputs.Quantity}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="amount">
+                      <div style={{ fontWeight: "600" }}> $47</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="order-items">
+                  <div className="product-detail">
+                    <div className="product-img-with-detail">
+                      <img className="icon" src={thumbnail} alt="" />
+                      <div className="product">
+                        <div className="text" style={{ fontWeight: "600" }}>
+                          Maverick Strong Adhesive
+                        </div>
+                        <div>
+                          <div className="quantity">
+                            Size: 10ml, Qty: {formInputs.Quantity}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="amount">
+                      <div style={{ fontWeight: "600" }}> $47</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="order-items">
+                  <div className="product-detail">
+                    <div className="product-img-with-detail">
+                      <img className="icon" src={thumbnail} alt="" />
+                      <div className="product">
+                        <div className="text" style={{ fontWeight: "600" }}>
+                          Maverick Strong Adhesive
+                        </div>
+                        <div>
+                          <div className="quantity">
+                            Size: 10ml, Qty: {formInputs.Quantity}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="amount">
+                      <div style={{ fontWeight: "600" }}> $47</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                className="arrow-div"
+                onClick={() => setShowAllItem(!showAllItem)}
+              >
+                {showAllItem ? (
+                  <KeyboardArrowUpIcon />
+                ) : (
+                  <KeyboardArrowDownIcon />
+                )}
+              </div>
+            </div>
           </div>
           <div className="shippingNpayment-div">
             <div className="shippingNpayment-heading">Shipping and Payment</div>
@@ -265,36 +329,43 @@ export const OrderDetail = () => {
               <div className="shippingNpayment-icon">
                 <CreditCardOutlinedIcon fontSize="small" />
               </div>
-              <div style={{ width: "100%" }}>
+              <div
+                style={{
+                  width: "100%",
+                }}
+              >
                 <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    width: "100%",
-                  }}
+                  style={{ display: "flex", justifyContent: "space-between" }}
                 >
                   <div className="shippingNpayment-text">
                     {formInputs.paymentMethod === "cod" ? (
-                      <span className="cod">Cash on delivery</span>
+                      <span>Cash on delivery</span>
                     ) : (
                       ""
                     )}
                     {formInputs.paymentMethod === "card" ? (
-                      <img src={cardLogo} alt="" />
+                      <img src={masterCardLogo} alt="" />
                     ) : (
                       ""
                     )}
                     {formInputs.paymentMethod === "paypal" ? (
-                      <img src={paypalLogo} alt="" />
+                      <div>
+                        <img src={paypalLogo} alt="" />
+                        <div>{formInputs.email}</div>
+                      </div>
                     ) : (
                       ""
                     )}
                     {formInputs.paymentMethod === "amazon" ? (
-                      <img
-                        style={{ transform: "scale(0.9)", paddingTop: "3px" }}
-                        src={amazonLogo1}
-                        alt=""
-                      />
+                      <div>
+                        <img
+                          style={{ transform: "scale(0.9)", paddingTop: "3px" }}
+                          src={amazonLogo1}
+                          alt=""
+                        />
+
+                        <div>{formInputs.email}</div>
+                      </div>
                     ) : (
                       ""
                     )}
@@ -322,12 +393,6 @@ export const OrderDetail = () => {
                   <div className="shippingNpayment-text">
                     {" "}
                     {formInputs.paymentMethod === "card" ? "****6754" : ""}
-                    {formInputs.paymentMethod === "paypal"
-                      ? formInputs.email
-                      : ""}
-                    {formInputs.paymentMethod === "amazon"
-                      ? formInputs.email
-                      : ""}
                     {formInputs.paymentMethod === "clearpay"
                       ? "Visa card ending with 4362"
                       : ""}
