@@ -26,9 +26,9 @@ Header {
   z-index: 1089;
   background-color: rgb(255, 255, 255);
   top: 0px;
-  padding: 0px 10px;
+  /* padding: 0px 10px; */
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   box-shadow: 0px 0px 4px 0px rgb(130, 130, 130);
   height: 45px;
@@ -713,7 +713,7 @@ button:disabled {
   font-weight: 500;
   line-height: 19px;
   letter-spacing: 0em;
-  text-align: right;
+  /* text-align: right; */
   color: #6b6b6b;
 }
 .cart-main {
@@ -779,6 +779,7 @@ button:hover {
 .single-otp-input:valid {
   box-shadow: 0 0 0.2rem #e72380;
 }
+
 .single-otp-input-3ds {
   color: black;
   background-color: transparent;
@@ -1031,6 +1032,24 @@ input {
   background-color: #6a656596;
   height: 1300px;
   bottom: 1181.5px;
+}
+.downloadNow-app {
+  margin-top: 20px;
+  margin-bottom: 26px;
+}
+.downloadNow-app,
+.downloadApp-qr {
+  display: block;
+}
+@media only screen and (min-width: 750px) {
+  .downloadNow-app {
+    display: none !important;
+  }
+}
+@media only screen and (max-width: 750px) {
+  .downloadApp-qr {
+    display: none !important;
+  }
 }
 @media only screen and (max-width: 3000px) {
   .img-lock {
@@ -1494,4 +1513,21 @@ input {
   background-color: white;
   color: #e72e80;
   border: 1px #e72e80 solid;
+}
+
+/* cartAMinmatiom */
+
+section {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  min-height: 100vh;
+  width: 100%;
+}
+.card-input {
+  transition: all 1s;
+}
+.show {
+  opacity: 1;
+  transform: translate(0);
 }

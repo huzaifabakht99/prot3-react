@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
@@ -15,6 +15,10 @@ export const Cart = (props) => {
   const [showCounter, setShowCounter] = useState(false);
   const { returningUserInputs, setReturningUserInputs } =
     useContext(inputContext);
+
+  const closeIFrame = () => {
+    document.getElementById("closeIframe").remove();
+  };
 
   return (
     <>
@@ -50,6 +54,7 @@ export const Cart = (props) => {
               <div className="deleteCart-button-div">
                 <button
                   className="deleteCart-buttons"
+                  onClick={() => closeIFrame()}
                   // onClick={() => setIsOtpOpen(true)}
                 >
                   Yes, close this checkout
@@ -83,7 +88,7 @@ export const Cart = (props) => {
                     <div>
                       {" "}
                       {props.currency}
-                      {props.productAmount}
+                      {props.productAmount + ".00"}
                     </div>
                     <DeleteIcon
                       fontSize="small"
@@ -134,7 +139,7 @@ export const Cart = (props) => {
                   <div className="text">Subtotal</div>
                   <div className="amount">
                     {props.currency}
-                    {props.subtotal}
+                    {props.subtotal + ".00"}
                   </div>
                 </div>
                 <div className="amount-row">
@@ -177,7 +182,7 @@ export const Cart = (props) => {
                     {formInputs.promoCode === "2020" ? (
                       <div>
                         {props.currency}
-                        {props.discount}
+                        {props.discount + ".00"}
                       </div>
                     ) : (
                       "$0"

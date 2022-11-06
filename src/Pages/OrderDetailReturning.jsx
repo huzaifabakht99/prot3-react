@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import checkGif from "../assets/check-circle.gif";
+import checkGif from "../assets/data-150x150 (1).gif";
 import checkGif2 from "../assets/success.gif";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
@@ -7,6 +7,7 @@ import img2 from "../assets/Group 7489.svg";
 import img1 from "../assets/Untitled-1-02 1.svg";
 import { OrderReviewCards } from "../Components/OrderReviewCards";
 import amazonLogo1 from "../assets/Group 7547 (1).svg";
+import { makeStyles } from "@mui/styles";
 
 import clearpayLogo1 from "../assets/Group 7551 (1).svg";
 import masterCardLogo from "../assets/Group 7546.svg";
@@ -45,6 +46,12 @@ import klarnaLogo from "../assets/Group 7552.svg";
 import amazonLogo from "../assets/Group 6969.svg";
 import clearpayLogo from "../assets/Group 7551 (1).svg";
 import { useState } from "react";
+import { Drawer } from "@mui/material";
+import product1 from "../assets/Rectangle 207.svg";
+import product2 from "../assets/Rectangle 1808.svg";
+import product3 from "../assets/Rectangle 1806.svg";
+import product4 from "../assets/Rectangle 1805.svg";
+import Timeline from "../assets/Group 75569.svg";
 const theme = createTheme({
   palette: {
     primary: {
@@ -52,8 +59,53 @@ const theme = createTheme({
     },
   },
 });
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& .MuiFilledInput-root.Mui-focused": {
+      backgroundColor: "white",
+      outline: " none",
+      borderColor: "#e72e817a ",
+      boxShadow: " 0 0px 0px 0.15rem #e72e8128",
+    },
+    "& .MuiFilledInput-root": {
+      background: "#F6F6F6",
+      width: "100%",
+      marginBottom: "10px",
+
+      border: "1px solid #F6F6F6",
+      borderRadius: "6px",
+    },
+  },
+  promo: {
+    "& .MuiFilledInput-root.Mui-focused": {
+      backgroundColor: "white",
+      outline: " none",
+      borderColor: "#e72e817a ",
+      boxShadow: " 0 0px 0px 0.15rem #e72e8128",
+    },
+    "& .MuiFilledInput-root": {
+      background: "#F6F6F6",
+      width: "100%",
+      marginBottom: "10px",
+
+      border: "1px solid #F6F6F6",
+      borderRadius: "6px",
+    },
+  },
+  drawerPaper: {
+    borderRadius: "20px 20px 0 0",
+  },
+  cardInput: {
+    border: "1px solid black",
+    padding: "20px",
+  },
+}));
 
 export const OrderDetailReturning = () => {
+  const classes = useStyles();
+  const [openInstallmentsPlan, setOpenInstallmentsPlan] = useState(false);
+  const [rewardPointsOpen, setRewardPointsOpen] = useState(false);
+  const [deleteCart, setDeleteCart] = useState(false);
   const { formInputs, setFormInputs } = useContext(inputContext);
   const [showAllItem, setShowAllItem] = useState(false);
   const [hideAllItem, setHideAllItem] = useState(false);
@@ -91,8 +143,8 @@ export const OrderDetailReturning = () => {
                 Congrats! You’ve earned 140 points
               </div>
             </div>
-            <div className="eye-icon">
-              <RemoveRedEyeIcon fontSize="small" />
+            <div className="eye-icon" onClick={() => setRewardPointsOpen(true)}>
+              <KeyboardArrowDownIcon />
             </div>
           </div>
           <div className="orderDetail-products-div">
@@ -186,7 +238,7 @@ export const OrderDetailReturning = () => {
                 <div className="order-items">
                   <div className="product-detail">
                     <div className="product-img-with-detail">
-                      <img className="icon" src={thumbnail} alt="" />
+                      <img className="icon" src={product1} alt="" />
                       <div className="product">
                         <div className="text" style={{ fontWeight: "600" }}>
                           Maverick Strong Adhesive
@@ -199,27 +251,27 @@ export const OrderDetailReturning = () => {
                       </div>
                     </div>
                     <div className="amount">
-                      <div style={{ fontWeight: "600" }}> $47</div>
+                      <div style={{ fontWeight: "600" }}> $47.00</div>
                     </div>
                   </div>
                 </div>
                 <div className="order-items">
                   <div className="product-detail">
                     <div className="product-img-with-detail">
-                      <img className="icon" src={thumbnail} alt="" />
+                      <img className="icon" src={product2} alt="" />
                       <div className="product">
                         <div className="text" style={{ fontWeight: "600" }}>
-                          Maverick Strong Adhesive
+                          Lash Lift And Brow Lamination Kit
                         </div>
                         <div>
                           <div className="quantity">
-                            Size: 10ml, Qty: {formInputs.Quantity}
+                            Size: Small, Qty: {formInputs.Quantity}
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="amount">
-                      <div style={{ fontWeight: "600" }}> $47</div>
+                      <div style={{ fontWeight: "600" }}> $147.00</div>
                     </div>
                   </div>
                 </div>
@@ -227,47 +279,47 @@ export const OrderDetailReturning = () => {
                 <div className="order-items">
                   <div className="product-detail">
                     <div className="product-img-with-detail">
-                      <img className="icon" src={thumbnail} alt="" />
+                      <img className="icon" src={product3} alt="" />
                       <div className="product">
                         <div className="text" style={{ fontWeight: "600" }}>
-                          Maverick Strong Adhesive
+                          Gel Remover
                         </div>
                         <div>
                           <div className="quantity">
-                            Size: 10ml, Qty: {formInputs.Quantity}
+                            Size: Small, Qty: {formInputs.Quantity}
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="amount">
-                      <div style={{ fontWeight: "600" }}> $47</div>
+                      <div style={{ fontWeight: "600" }}> $18.00</div>
                     </div>
                   </div>
                 </div>
                 <div className="order-items">
                   <div className="product-detail">
                     <div className="product-img-with-detail">
-                      <img className="icon" src={thumbnail} alt="" />
+                      <img className="icon" src={product4} alt="" />
                       <div className="product">
                         <div className="text" style={{ fontWeight: "600" }}>
-                          Maverick Strong Adhesive
+                          Bandana
                         </div>
                         <div>
                           <div className="quantity">
-                            Size: 10ml, Qty: {formInputs.Quantity}
+                            Black, Qty: {formInputs.Quantity}
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="amount">
-                      <div style={{ fontWeight: "600" }}> $47</div>
+                      <div style={{ fontWeight: "600" }}> $18.00</div>
                     </div>
                   </div>
                 </div>
                 <div className="order-items">
                   <div className="product-detail">
                     <div className="product-img-with-detail">
-                      <img className="icon" src={thumbnail} alt="" />
+                      <img className="icon" src={product1} alt="" />
                       <div className="product">
                         <div className="text" style={{ fontWeight: "600" }}>
                           Maverick Strong Adhesive
@@ -280,7 +332,7 @@ export const OrderDetailReturning = () => {
                       </div>
                     </div>
                     <div className="amount">
-                      <div style={{ fontWeight: "600" }}> $47</div>
+                      <div style={{ fontWeight: "600" }}> $47.00</div>
                     </div>
                   </div>
                 </div>
@@ -336,10 +388,11 @@ export const OrderDetailReturning = () => {
               <div className="shippingNpayment-icon">
                 <CreditCardOutlinedIcon fontSize="small" />
               </div>
-              <div style={{}}>
+              <div style={{ width: "100%" }}>
                 <div
                   style={{
                     display: "flex",
+                    justifyContent: "space-between",
                   }}
                 >
                   <div className="shippingNpayment-text">
@@ -385,7 +438,12 @@ export const OrderDetailReturning = () => {
                   </div>
                   {returningUserInputs.paymentMethod === "klarna" ||
                   returningUserInputs.paymentMethod === "clearpay" ? (
-                    <div className="pink-btn">View Plan</div>
+                    <div
+                      className="pink-btn"
+                      onClick={() => setOpenInstallmentsPlan(true)}
+                    >
+                      View Plan
+                    </div>
                   ) : (
                     ""
                   )}
@@ -427,6 +485,7 @@ export const OrderDetailReturning = () => {
               <button
                 disabled={formInputs.cantCancel}
                 className="pink-cancle-btn"
+                onClick={() => setDeleteCart(true)}
               >
                 {" "}
                 cancel order
@@ -437,6 +496,7 @@ export const OrderDetailReturning = () => {
             <div className="downloadApp-text">
               Download the Qisstpay App to get latest discounts and track orders
             </div>
+            <div className="downloadNow-app">Download Now</div>
             <div className="downloadApp-qr">
               <img src={qrImg} alt="" className="downloadApp-qr-img" />
               <div className="downloadApp-qr-text">
@@ -445,11 +505,250 @@ export const OrderDetailReturning = () => {
             </div>
           </div>
           <div className="closeCheckout-div pink-cancle-btn">
-            Close Checkout Window
+            Continue Shopping
           </div>
         </div>
-        <div className="dummy-div"></div>
       </ThemeProvider>
+      <Drawer
+        classes={{ paper: classes.drawerPaper }}
+        sx={{
+          borderRadius: "5px",
+          position: "absolute",
+          bottom: "100px",
+          paddingBottom: "8px",
+        }}
+        anchor="bottom"
+        open={deleteCart}
+        onClose={() => setDeleteCart(false)}
+      >
+        <div className="edit-drawer-header">
+          <h5 className="drawer-heading">Cancel Order</h5>
+          <a>
+            <CloseRoundedIcon
+              className="clear"
+              onClick={() => setDeleteCart(false)}
+            />
+          </a>
+        </div>
+        <hr className="hr-drawer" />
+        <div style={{ padding: "0px 20px 20px 20px" }}>
+          <div className="deleteCart-main">
+            <p className="deleteCart-heading">Hey, What Happened?</p>
+
+            <p className="deleteCart-text">
+              Your order has been placed successfully. It will arrive within few
+              days. Are you sure, you want to cancel order?
+            </p>
+            <div className="deleteCart-button-div">
+              <button
+                className="deleteCart-buttons"
+                // onClick={() => setIsOtpOpen(true)}
+              >
+                No, Don’t Cancel Order
+              </button>
+              <button
+                onClick={() => setDeleteCart(false)}
+                className="deleteCart-white deleteCart-buttons"
+              >
+                Yes, Cancel Order
+              </button>
+            </div>
+          </div>
+        </div>
+      </Drawer>
+      <Drawer
+        classes={{ paper: classes.drawerPaper }}
+        sx={{
+          borderRadius: "5px",
+          position: "absolute",
+          bottom: "100px",
+          paddingBottom: "8px",
+        }}
+        anchor="bottom"
+        open={rewardPointsOpen}
+        onClose={() => setRewardPointsOpen(false)}
+      >
+        <div className="edit-drawer-header">
+          <div className="none"></div>
+          <h5 className="drawer-heading">Reward Points</h5>
+          <a>
+            <CloseRoundedIcon
+              className="clear"
+              onClick={() => setRewardPointsOpen(false)}
+            />
+          </a>
+        </div>
+
+        <hr className="hr-drawer" />
+        <div style={{ padding: "20px 20px 37px 20px" }}>
+          <div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                fontSize: "14px",
+                fontWeight: "700",
+              }}
+            >
+              <div>Total Points Earned</div>
+              <div style={{ display: "flex" }}>
+                {" "}
+                <div
+                  style={{ width: "20px", height: "20px" }}
+                  className="roundStar"
+                >
+                  <StarIcon fontSize="10px" />
+                </div>
+                <div style={{ visibility: "hidden" }}>t</div>140 Points
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                paddingTop: "25px",
+              }}
+            >
+              <div className="toBe-text">Maverick Strong Adhesive</div>
+              <div className="toBe-text">+20 Points</div>
+            </div>
+            <hr className="hr-drawer" />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                paddingTop: "12px",
+              }}
+            >
+              <div className="toBe-text">Lash Lift And Brow Lamination Kit</div>
+              <div className="toBe-text">+100 Points</div>
+            </div>
+
+            <hr className="hr-drawer" />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                paddingTop: "12px",
+              }}
+            >
+              <div className="toBe-text">Gel Remover</div>
+              <div className="toBe-text">+5 Points</div>
+            </div>
+            <hr className="hr-drawer" />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                paddingTop: "12px",
+              }}
+            >
+              <div className="toBe-text">Bandana</div>
+              <div className="toBe-text">+5 Points</div>
+            </div>
+            <hr className="hr-drawer" />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                paddingTop: "12px",
+              }}
+            >
+              <div className="toBe-text">MJ'S Isolation Tweezers</div>
+              <div className="toBe-text">+10 Points</div>
+            </div>
+          </div>
+          <div
+            style={{ paddingTop: "40px", fontSize: "18px", fontWeight: "500" }}
+          >
+            Use QisstPay mobile app to redeem reward points.
+          </div>
+          <div style={{ paddingTop: "15px" }}>
+            Don’t have mobile app?
+            <span className="pink-cancle-btn">Download Now</span>
+          </div>
+        </div>
+      </Drawer>
+      <Drawer
+        classes={{ paper: classes.drawerPaper }}
+        sx={{
+          borderRadius: "5px",
+          position: "absolute",
+          bottom: "100px",
+          paddingBottom: "8px",
+        }}
+        anchor="bottom"
+        open={openInstallmentsPlan}
+        onClose={() => setOpenInstallmentsPlan(false)}
+      >
+        <div className="edit-drawer-header">
+          <h5 className="drawer-heading">Installments Plan</h5>
+          <a>
+            <CloseRoundedIcon
+              className="clear"
+              onClick={() => setOpenInstallmentsPlan(false)}
+            />
+          </a>
+        </div>
+        <hr className="hr-drawer" />
+        <div>
+          <div style={{ padding: " 0px 20px", paddingTop: "20px" }}>
+            <img src={klarnaLogo} alt="" />
+          </div>
+          {/* <div>Visa card ending with 4362</div> */}
+          <div style={{ padding: " 0px 20px" }}>
+            <img src={Timeline} />
+          </div>
+          {/* <Timeline>
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>
+                <div>
+                  <div>$65.75</div>
+                  <div>Paid on 18 Oct 2022</div>
+                </div>
+              </TimelineContent>
+            </TimelineItem>
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>
+                <div>
+                  <div>$65.75</div>
+                  <div>Due two weeks from purchase date.</div>
+                </div>
+              </TimelineContent>
+            </TimelineItem>
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+              </TimelineSeparator>
+              <TimelineContent>
+                <div>
+                  <div>$65.75</div>
+                  <div>Due four weeks from purchase date.</div>
+                </div>
+              </TimelineContent>
+            </TimelineItem>
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+              </TimelineSeparator>
+              <TimelineContent>
+                <div>
+                  <div>$65.75</div>
+                  <div>Final payment. Six weeks from purchase date.</div>
+                </div>
+              </TimelineContent>
+            </TimelineItem>
+          </Timeline> */}
+        </div>
+      </Drawer>
     </>
   );
 };

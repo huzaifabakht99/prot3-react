@@ -133,7 +133,11 @@ export const Checkpoints = () => {
           <div className="checkpoint-lense">
             <FiberManualRecordRoundedIcon
               style={{
-                color: formInputs.station === "new-user" ? "#E71583" : "",
+                color:
+                  formInputs.station === "new-user" ||
+                  formInputs.station === "guest"
+                    ? "#E71583"
+                    : "",
               }}
               fontSize="small"
             />
@@ -141,7 +145,11 @@ export const Checkpoints = () => {
           <div
             className="checkpoint-text"
             style={{
-              color: formInputs.station === "new-user" ? "#E71583" : "",
+              color:
+                formInputs.station === "new-user" ||
+                formInputs.station === "guest"
+                  ? "#E71583"
+                  : "",
             }}
           >
             Shipping

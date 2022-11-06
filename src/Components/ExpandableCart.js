@@ -10,7 +10,7 @@ export const ExpandableCart = (props) => {
     useContext(inputContext);
   const { formInputs, setFormInputs } = useContext(inputContext);
   return (
-    <div>
+    <div style={{ width: "100%", padding: "20px", boxSizing: "border-box" }}>
       <div
         style={{
           display: "flex",
@@ -57,7 +57,7 @@ export const ExpandableCart = (props) => {
         </div>
       </div>
 
-      {formInputs.bottomCart && formInputs.station === "new-user" ? (
+      {formInputs.bottomCart === false && formInputs.station === "new-user" ? (
         <div
           style={{
             width: "100%",
@@ -124,174 +124,6 @@ export const ExpandableCart = (props) => {
             </div>
           </div>
           <div className="purchased-items">Purchased Items (5)</div>
-          <div className="order-items">
-            <div className="product-detail">
-              <div className="product-img-with-detail">
-                <img className="icon" src={thumbnail} alt="" />
-                <div className="product">
-                  <div className="text" style={{ fontWeight: "600" }}>
-                    Maverick Strong Adhesive
-                  </div>
-                  <div>
-                    <div className="quantity">
-                      Size: 10ml, Qty: {formInputs.Quantity}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="amount">
-                <div style={{ fontWeight: "600" }}> $47</div>
-              </div>
-            </div>
-          </div>
-          {/* 1 */}
-          <div className="order-items">
-            <div className="product-detail">
-              <div className="product-img-with-detail">
-                <img className="icon" src={thumbnail} alt="" />
-                <div className="product">
-                  <div className="text" style={{ fontWeight: "600" }}>
-                    Maverick Strong Adhesive
-                  </div>
-                  <div>
-                    <div className="quantity">
-                      Size: 10ml, Qty: {formInputs.Quantity}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="amount">
-                <div style={{ fontWeight: "600" }}> $47</div>
-              </div>
-            </div>
-          </div>
-          {/* 1 */}
-          <div className="order-items">
-            <div className="product-detail">
-              <div className="product-img-with-detail">
-                <img className="icon" src={thumbnail} alt="" />
-                <div className="product">
-                  <div className="text" style={{ fontWeight: "600" }}>
-                    Maverick Strong Adhesive
-                  </div>
-                  <div>
-                    <div className="quantity">
-                      Size: 10ml, Qty: {formInputs.Quantity}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="amount">
-                <div style={{ fontWeight: "600" }}> $47</div>
-              </div>
-            </div>
-          </div>
-          {/* 1 */}
-          <div className="order-items">
-            <div className="product-detail">
-              <div className="product-img-with-detail">
-                <img className="icon" src={thumbnail} alt="" />
-                <div className="product">
-                  <div className="text" style={{ fontWeight: "600" }}>
-                    Maverick Strong Adhesive
-                  </div>
-                  <div>
-                    <div className="quantity">
-                      Size: 10ml, Qty: {formInputs.Quantity}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="amount">
-                <div style={{ fontWeight: "600" }}> $47</div>
-              </div>
-            </div>
-          </div>
-          {/* 1 */}
-          <div className="order-items">
-            <div className="product-detail">
-              <div className="product-img-with-detail">
-                <img className="icon" src={thumbnail} alt="" />
-                <div className="product">
-                  <div className="text" style={{ fontWeight: "600" }}>
-                    Maverick Strong Adhesive
-                  </div>
-                  <div>
-                    <div className="quantity">
-                      Size: 10ml, Qty: {formInputs.Quantity}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="amount">
-                <div style={{ fontWeight: "600" }}> $47</div>
-              </div>
-            </div>
-          </div>
-          {/* 1 */}
-          <div className="order-items">
-            <div className="product-detail">
-              <div className="product-img-with-detail">
-                <img className="icon" src={thumbnail} alt="" />
-                <div className="product">
-                  <div className="text" style={{ fontWeight: "600" }}>
-                    Maverick Strong Adhesive
-                  </div>
-                  <div>
-                    <div className="quantity">
-                      Size: 10ml, Qty: {formInputs.Quantity}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="amount">
-                <div style={{ fontWeight: "600" }}> $47</div>
-              </div>
-            </div>
-          </div>
-          {/* 1 */}
-          <div className="order-items">
-            <div className="product-detail">
-              <div className="product-img-with-detail">
-                <img className="icon" src={thumbnail} alt="" />
-                <div className="product">
-                  <div className="text" style={{ fontWeight: "600" }}>
-                    Maverick Strong Adhesive
-                  </div>
-                  <div>
-                    <div className="quantity">
-                      Size: 10ml, Qty: {formInputs.Quantity}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="amount">
-                <div style={{ fontWeight: "600" }}> $47</div>
-              </div>
-            </div>
-          </div>
-          {/* 1 */}
-          <div className="order-items">
-            <div className="product-detail">
-              <div className="product-img-with-detail">
-                <img className="icon" src={thumbnail} alt="" />
-                <div className="product">
-                  <div className="text" style={{ fontWeight: "600" }}>
-                    Maverick Strong Adhesive
-                  </div>
-                  <div>
-                    <div className="quantity">
-                      Size: 10ml, Qty: {formInputs.Quantity}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="amount">
-                <div style={{ fontWeight: "600" }}> $47</div>
-              </div>
-            </div>
-          </div>
-          {/* 1 */}
           <div className="order-items">
             <div className="product-detail">
               <div className="product-img-with-detail">

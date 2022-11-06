@@ -20,6 +20,7 @@ import { inputContext } from "./Context/inputContext";
 import { Button } from "@mui/material";
 import { SignIn2 } from "./Pages/SignIn2";
 import { Checkpoints } from "./Components/Checkpoints";
+import { Guest } from "./Pages/Guest";
 
 function App() {
   // variavle that have EditForm belongs to edit shipping drawer
@@ -68,12 +69,12 @@ function App() {
     isAnimation: "",
     cantCancel: false,
     bottomCart: false,
+
+    autoHeight: "",
   });
 
   return (
     <>
-      <Header />
-
       <inputContext.Provider
         value={{
           formInputs,
@@ -84,9 +85,15 @@ function App() {
           setIs3dsOpen,
         }}
       >
-        {formInputs.station === "new-user" ? <Checkpoints /> : ""}
+        <Header />
+        {formInputs.station === "new-user" || formInputs.station === "guest" ? (
+          <Checkpoints />
+        ) : (
+          ""
+        )}
         <Routes>
           <Route path="/" element={<SignIn2 />} />
+          <Route path="/guest" element={<Guest />} />
           {/* <Route path="/" element={<ReturningUser />} /> */}
           <Route path="/new-user" element={<NewUser />} />
           <Route path="/order-detail" element={<OrderDetail />} />
@@ -102,6 +109,7 @@ function App() {
           ""
         ) : (
           <footer className="cartFixed">
+            {/* <NewUser /> */}
             <CartMenubar />
           </footer>
         )}

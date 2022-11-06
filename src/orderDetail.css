@@ -207,12 +207,13 @@
   font-weight: 700;
   line-height: 18px;
   letter-spacing: 0em;
+  color: #e72e80;
 
   text-align: left;
   border-radius: 4px;
   background-color: white;
   border: none;
-  color: #e72e80;
+
   padding: 0px;
   padding-left: 3px;
 }
@@ -223,7 +224,7 @@
   padding-left: 3px;
 }
 .closeCheckout-div {
-  height: 122px;
+  height: 70px;
   padding-top: 20px;
   text-align: center;
 }
@@ -274,4 +275,14 @@ guest-btn[disabled] {
   border: none;
   background-color: white;
   background: none;
+}
+.downloadNow-app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 0em;
+  color: #e72e80;
 }

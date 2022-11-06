@@ -4,6 +4,7 @@ import MyFormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import { inputContext } from "../Context/inputContext";
 import { Email } from "@mui/icons-material";
+import { PaymentMethod } from "./PaymentMethod";
 
 export const DeliveryType = (props) => {
   const { formInputs, setFormInputs } = useContext(inputContext);
@@ -26,15 +27,19 @@ export const DeliveryType = (props) => {
                   </span>
                   {props.heading}
                   <span className="delivery-type-heading-price">
-                    ${props.price}
-                    <span>{props.price !== 0 ? "" : " Free"}</span>
+                    {props.DeliveryType === "Free Shipping"
+                      ? ""
+                      : ": $" + props.price}
                   </span>
                 </h4>
                 <p className="delivery-type-text-detail">
-                  Order within{" "}
-                  <span className="detail-date-time">6 hrs 1 min</span> to get
-                  it by
-                  <span className="detail-date-time">{props.date}</span>
+                  Estimated delivery:
+                  <b>
+                    {props.DeliveryType === "Free Shipping" ? "10-15" : ""}
+                    {props.DeliveryType === "Standard Shipping" ? "3-5" : ""}
+                    {props.DeliveryType === "Express Shipping" ? "1-2" : ""}
+                  </b>{" "}
+                  days
                 </p>
               </div>
             }

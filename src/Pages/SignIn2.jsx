@@ -212,7 +212,7 @@ export const SignIn2 = () => {
               style={{ width: "100%" }}
               disabled={formInputs.numberThroughSignin.toString().length < 12}
               className="white guest-btn buttons"
-              onClick={() => navigate("/new-user")}
+              onClick={() => navigate("/guest")}
             >
               Guest Checkout
             </button>

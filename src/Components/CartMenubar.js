@@ -18,6 +18,7 @@ import cardLogo1 from "../assets/Group 7401.svg";
 import paypalLogo1 from "../assets/Group 7545 (1).svg";
 import klarnaLogo1 from "../assets/Group 7552.svg";
 import amazonLogo1 from "../assets/Group 7547 (1).svg";
+import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
 
 const theme = createTheme({
   palette: {
@@ -73,7 +74,7 @@ export const CartMenubar = (props) => {
   const disable =
     (formInputs.fullName !== "" &&
       formInputs.email !== "" &&
-      // formInputs.shippingAddress !== "" &&
+      formInputs.shippingAddress !== "" &&
       // formInputs.paymentMethod !== ""&&
       formInputs.deliveryTypeAmount >= 0) ||
     formInputs.disabledBtn !== false;
@@ -81,11 +82,13 @@ export const CartMenubar = (props) => {
   return (
     <>
       <ThemeProvider theme={theme}>
+        {/* <SwipeableBottomSheet overflowHeight={50}> */}
         <div
           className="main"
           style={{
             dispaly: "flex",
             flexDirection: "column",
+            paddingTop: "5px",
             paddingBottom: formInputs.station === "" ? "0px" : "14px",
             minHeight: formInputs.station === "" ? "0px" : "100px",
             boxShadow: formInputs.isAnimation
@@ -93,14 +96,17 @@ export const CartMenubar = (props) => {
               : "0px -1px 10px 0px #0000001A",
           }}
         >
-          <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
+          <div
+            className="expandable-cart"
+            style={{ height: "100%", width: "100%", overflow: "auto" }}
+          >
             <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
                 width: "100%",
                 paddingTop: "7px",
-                marginBottom: "10px",
+                marginBottom: "14px",
               }}
               onClick={() => setIsCartOpen(true)}
               // onClick={() => console.log(window.screenTop())}
@@ -138,7 +144,9 @@ export const CartMenubar = (props) => {
               </div>
             </div>
 
-            {formInputs.bottomCart && formInputs.station === "new-user" ? (
+            {formInputs.bottomCart &&
+            (formInputs.station === "new-user" ||
+              formInputs.station === "guest") ? (
               <div
                 style={{
                   width: "100%",
@@ -227,7 +235,7 @@ export const CartMenubar = (props) => {
                     </div>
                   </div>
                 </div>
-                {/* 1 */}
+
                 <div className="order-items">
                   <div className="product-detail">
                     <div className="product-img-with-detail">
@@ -257,7 +265,8 @@ export const CartMenubar = (props) => {
             ""
           ) : (
             <div style={{ width: "100%" }}>
-              {formInputs.station === "new-user" ? (
+              {formInputs.station === "new-user" ||
+              formInputs.station === "guest" ? (
                 <div>
                   {formInputs.paymentMethod == "card" ||
                   formInputs.paymentMethod == "cod" ? (
@@ -519,6 +528,7 @@ export const CartMenubar = (props) => {
             </div>
           )}
         </div>
+        {/* </SwipeableBottomSheet> */}
         <Drawer
           classes={{ paper: classes.drawerPaper }}
           sx={{

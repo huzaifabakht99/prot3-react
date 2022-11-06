@@ -181,6 +181,25 @@ export const ReturningUser = () => {
     }));
   };
   const classes = useStyles();
+  const isBottom = (el) => {
+    return el.getBoundingClientRect().bottom <= window.innerHeight;
+  };
+
+  const omponentDidMount = () => {
+    document.addEventListener("scroll", trackScrolling);
+  };
+
+  const componentWillUnmount = () => {
+    document.removeEventListener("scroll", trackScrolling);
+  };
+
+  const trackScrolling = () => {
+    const wrappedElement = document.getElementById("returningUser-main");
+    if (isBottom(wrappedElement)) {
+      console.log("header bottom reached");
+      document.removeEventListener("scroll", trackScrolling);
+    }
+  };
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -253,7 +272,15 @@ export const ReturningUser = () => {
                 <div className="shippingNpayment-icon">
                   <CreditCardOutlinedIcon fontSize="small" />
                 </div>
-                <div style={{ display: "flex" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection:
+                      returningUserInputs.paymentMethod === "amazon"
+                        ? "column"
+                        : "row",
+                  }}
+                >
                   <div className="shippingNpayment-text">
                     {returningUserInputs.paymentMethod === "cod" ? (
                       <span>Cash on delivery</span>
